@@ -104,7 +104,7 @@ export const TrackingControlBar: React.FC<TrackingControlBarProps> = ({
       setSession(newSession);
       if (onSessionUpdated) onSessionUpdated(newSession);
     } catch (err: any) {
-      alert(err.detail || "Failed to start tracking session");
+      console.warn("Tracking start fallback active", err);
     } finally {
       setIsActionBusy(false);
     }
@@ -117,7 +117,7 @@ export const TrackingControlBar: React.FC<TrackingControlBarProps> = ({
       await TrackingService.pauseTracking(session.session_id, "Driver rest / mountain halt");
       setSession({ ...session, status: "PAUSED" });
     } catch (err: any) {
-      alert(err.detail || "Failed to pause tracking");
+      console.warn("Tracking pause error", err);
     } finally {
       setIsActionBusy(false);
     }
@@ -130,7 +130,7 @@ export const TrackingControlBar: React.FC<TrackingControlBarProps> = ({
       await TrackingService.resumeTracking(session.session_id);
       setSession({ ...session, status: "ACTIVE" });
     } catch (err: any) {
-      alert(err.detail || "Failed to resume tracking");
+      console.warn("Tracking resume error", err);
     } finally {
       setIsActionBusy(false);
     }
@@ -140,7 +140,7 @@ export const TrackingControlBar: React.FC<TrackingControlBarProps> = ({
     if (!session) return;
     setIsActionBusy(true);
     try {
-      const completed = await TrackingService.stopTracking(
+      await TrackingService.stopTracking(
         session.session_id,
         gps?.latitude,
         gps?.longitude,
@@ -150,7 +150,7 @@ export const TrackingControlBar: React.FC<TrackingControlBarProps> = ({
       setShowStopConfirm(false);
       if (onSessionUpdated) onSessionUpdated(null);
     } catch (err: any) {
-      alert(err.detail || "Failed to stop tracking session");
+      console.warn("Tracking stop error", err);
     } finally {
       setIsActionBusy(false);
     }
