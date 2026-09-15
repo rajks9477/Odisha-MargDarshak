@@ -14,10 +14,20 @@ import {
   ShieldCheck,
   Zap,
   Mountain,
-  Truck
+  Truck,
+  Building2,
+  HardHat,
+  Users,
+  CheckCircle2,
+  Loader2,
+  Shield,
+  Lock,
+  ChevronRight
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LanguageSelector } from "@/components/common/LanguageSelector";
+import { useAuth } from "@/context/AuthContext";
+import { DEMO_USERS, UserRole, ROLE_CONFIGS } from "@/lib/constants";
 
 interface MovingVehicle {
   id: string;
@@ -33,10 +43,43 @@ interface MovingVehicle {
 
 export const FullScreenLiveMapHero: React.FC = () => {
   const { t, language } = useLanguage();
+  const { login } = useAuth();
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const vehicleMarkersRef = useRef<{ [id: string]: any }>({});
   const [mapStyle, setMapStyle] = useState<"LIGHT" | "TERRAIN" | "SATELLITE">("LIGHT");
+  const [loggingInRole, setLoggingInRole] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
+
+  const handle1ClickLogin = async (demo: typeof DEMO_USERS[0]) => {
+    setLoggingInRole(demo.role);
+    setLoginError(null);
+    setLoginSuccess(null);
+    try {
+      const loggedUser = await login(demo.email, demo.password);
+      setLoginSuccess(`Authenticated as ${loggedUser.name}! Opening ${loggedUser.role} operational dashboard...`);
+    } catch (err: any) {
+      setLoginError(err.detail || "Authentication error. Please try again.");
+    } finally {
+      setLoggingInRole(null);
+    }
+  };
+
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case "CENTRAL_ADMIN":
+        return <Globe2 className="w-4 h-4 text-rose-700" />;
+      case "DISTRICT_ADMIN":
+        return <Building2 className="w-4 h-4 text-blue-700" />;
+      case "FIELD_OFFICER":
+        return <HardHat className="w-4 h-4 text-amber-700" />;
+      case "DRIVER":
+        return <Truck className="w-4 h-4 text-emerald-800" />;
+      default:
+        return <Users className="w-4 h-4 text-teal-700" />;
+    }
+  };
 
   // Comprehensive NER Highway Grid covering Every Visible Road across all 8 States
   const HIGHWAYS = [
@@ -568,46 +611,130 @@ export const FullScreenLiveMapHero: React.FC = () => {
         </div>
       </header>
 
-      {/* 3. Center Floating Hero (Dynamic Multi-Lingual Translation with Ultra-Premium Typography) */}
-      <div className="relative z-20 max-w-4xl w-full mx-auto text-center my-auto pointer-events-auto space-y-4 px-4">
-        {/* Top Kicker - Dynamic Regional Language */}
-        <div 
-          style={letterBorderSub}
-          className="flex items-center justify-center gap-2 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-emerald-950"
-        >
-          <Sparkles className="w-4 h-4 text-emerald-800" />
-          <span>{t.kicker}</span>
-        </div>
+      {/* 3. Center Floating Operational Launchpad & Regional Hub (Dynamic Multi-Lingual Translation) */}
+      <div className="relative z-20 max-w-3xl w-full mx-auto my-auto pointer-events-auto px-2 sm:px-4">
+        <div className="bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-4 max-h-[82vh] overflow-y-auto">
+          {/* Top Kicker - Dynamic Regional Language */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+              <span>{t.kicker}</span>
+            </div>
+            <div className="text-[11px] font-mono font-bold text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full border border-stone-200">
+              8 NER States Live
+            </div>
+          </div>
 
-        {/* Main Title - Pure Branded Luxury in Chosen Language */}
-        <h1 
-          style={letterBorderHeadline}
-          className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.12]"
-        >
-          <span className="text-stone-950 font-black">{t.title1}</span> <br />
-          <span className="text-emerald-800 font-black">
-            {t.title2}
-          </span>{" "}
-          <span className="text-stone-950 font-black">{t.title3}</span>
-        </h1>
+          {/* Main Title */}
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-stone-900 tracking-tight leading-tight">
+              {t.title1} <span className="text-emerald-800">{t.title2}</span> {t.title3}
+            </h1>
+            <p className="mt-1.5 text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
+              {t.subtitle}
+            </p>
+          </div>
 
-        {/* Subtitle - Translated in Chosen Regional Language */}
-        <p 
-          style={letterBorderSub}
-          className="text-sm sm:text-base md:text-lg text-stone-900 font-extrabold leading-relaxed max-w-2xl mx-auto"
-        >
-          {t.subtitle}
-        </p>
+          {/* Success / Error Notifications */}
+          {loginSuccess && (
+            <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center gap-2 animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+              <span>{loginSuccess}</span>
+            </div>
+          )}
+          {loginError && (
+            <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+              <span>{loginError}</span>
+            </div>
+          )}
 
-        {/* Single Prominent Glowing Login or Signup Button */}
-        <div className="pt-4 flex items-center justify-center">
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-black text-base bg-emerald-800 hover:bg-emerald-900 text-white shadow-2xl hover:scale-105 transition-all border-2 border-emerald-600 cursor-pointer"
-          >
-            <span>{t.ctaButton}</span>
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          {/* 1-Click Fast Role Launchpad */}
+          <div className="pt-2 border-t border-stone-100 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-black uppercase tracking-wider text-stone-700">
+                1-Click Operational Role Gateway:
+              </span>
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                Instant Demo Access
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {DEMO_USERS.map((demo) => {
+                const isLoggingIn = loggingInRole === demo.role;
+                return (
+                  <button
+                    key={demo.role}
+                    type="button"
+                    onClick={() => handle1ClickLogin(demo)}
+                    disabled={!!loggingInRole}
+                    className="flex flex-col text-left p-3 rounded-2xl border border-stone-200 hover:border-emerald-500 bg-stone-50/80 hover:bg-emerald-50/40 hover:shadow-md transition-all group cursor-pointer disabled:opacity-50"
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="p-1.5 rounded-xl bg-white border border-stone-200 shadow-2xs group-hover:bg-emerald-100 transition-colors">
+                        {getRoleIcon(demo.role)}
+                      </div>
+                      {isLoggingIn ? (
+                        <Loader2 className="w-3.5 h-3.5 text-emerald-800 animate-spin" />
+                      ) : (
+                        <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-emerald-800 group-hover:translate-x-0.5 transition-all" />
+                      )}
+                    </div>
+                    <div className="font-bold text-xs text-stone-900 group-hover:text-emerald-950 truncate">
+                      {demo.title}
+                    </div>
+                    <div className="text-[10px] text-stone-500 font-medium truncate mt-0.5">
+                      {demo.name}
+                    </div>
+                    <div className="text-[9px] text-emerald-800 font-mono font-semibold mt-1">
+                      {demo.badge}
+                    </div>
+                  </button>
+                );
+              })}
+
+              {/* Public Citizen Portal Card */}
+              <Link
+                href="/citizen"
+                className="flex flex-col text-left p-3 rounded-2xl border border-teal-200 hover:border-teal-500 bg-teal-50/60 hover:bg-teal-50 hover:shadow-md transition-all group cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="p-1.5 rounded-xl bg-white border border-teal-200 shadow-2xs group-hover:bg-teal-100 transition-colors">
+                    <Globe2 className="w-4 h-4 text-teal-700" />
+                  </div>
+                  <ChevronRight className="w-3.5 h-3.5 text-teal-600 group-hover:translate-x-0.5 transition-all" />
+                </div>
+                <div className="font-bold text-xs text-teal-950 truncate">
+                  Citizen 360° Safety Map
+                </div>
+                <div className="text-[10px] text-teal-700 font-medium truncate mt-0.5">
+                  Public Road Hazard Portal
+                </div>
+                <div className="text-[9px] text-teal-800 font-bold uppercase tracking-wider mt-1">
+                  No Login Required ➔
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Action Row */}
+          <div className="pt-2 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+            <Link
+              href="/citizen"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+            >
+              <Globe2 className="w-3.5 h-3.5" />
+              <span>Explore Public Citizen Safety Map</span>
+            </Link>
+
+            <Link
+              href="/login"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Custom Password Login / Register ➔</span>
+            </Link>
+          </div>
         </div>
       </div>
 

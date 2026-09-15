@@ -14,6 +14,7 @@ import {
   EyeOff, 
   AlertCircle, 
   ArrowRight, 
+  ArrowLeft,
   CheckCircle2,
   Sparkles,
   Shield,
@@ -92,6 +93,25 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-stone-50/60 flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 font-sans text-stone-900">
       <div className="max-w-6xl w-full mx-auto space-y-6">
+        {/* Top Navigation Back to Map Home */}
+        <div className="flex flex-wrap items-center justify-between gap-3 max-w-4xl mx-auto">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 hover:text-emerald-800 hover:border-emerald-300 text-xs font-bold transition-all shadow-2xs group cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 text-stone-500 group-hover:text-emerald-800 group-hover:-translate-x-0.5 transition-transform" />
+            <span>⬅ Return to NER Interactive Live Map (Home Page)</span>
+          </Link>
+
+          <Link
+            href="/citizen"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 hover:bg-teal-100 text-xs font-bold transition-all shadow-2xs cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-teal-700" />
+            <span>Citizen Safety Map (No Login Required) ➔</span>
+          </Link>
+        </div>
+
         {/* Brand Header */}
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <Link href="/" className="inline-flex items-center gap-2.5 group">
