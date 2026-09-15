@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FAF8F5;
+  --foreground: #1C1917;
+  --card-bg: #FFFFFF;
+  --card-border: #E8E2D8;
+  --card-muted: #F4EFEB;
+  --forest-green: #1B4332;
+  --emerald-accent: #2D6A4F;
+  --emerald-light: #E9F5ED;
+  --warm-brown: #8C6D46;
+  --warm-sand: #D4A373;
+  --warm-parchment: #F9F6F0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: #FAF8F5;
+  color: #1C1917;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFEB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D5CDC2;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8AC9D;
+}
+
+/* Earth-Light Card Glassmorphism & Shadow Utilities */
+.earth-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E2D8;
+  box-shadow: 0 1px 3px 0 rgba(140, 109, 70, 0.05), 0 1px 2px -1px rgba(140, 109, 70, 0.05);
+  border-radius: 1rem;
+}
+
+.earth-card-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.earth-card-hover:hover {
+  border-color: #D4A373;
+  box-shadow: 0 4px 12px -2px rgba(140, 109, 70, 0.12), 0 2px 6px -2px rgba(27, 67, 50, 0.08);
+  transform: translateY(-1px);
+}
+
+.earth-badge-green {
+  background-color: #E9F5ED;
+  color: #1B4332;
+  border: 1px solid #C2E2CC;
+}
+
+.earth-badge-brown {
+  background-color: #F8F4EE;
+  color: #7F5539;
+  border: 1px solid #E4D5C5;
+}
+
+.earth-badge-amber {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.earth-input {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E2D8;
+  color: #1C1917;
+  border-radius: 0.75rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.earth-input:focus {
+  outline: none;
+  border-color: #2D6A4F;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
