@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import "leaflet/dist/leaflet.css";
 import {
   Layers,
@@ -76,7 +76,7 @@ export interface HighwayRiskEntity {
   coordinates: [number, number][];
 }
 
-// Center coordinates and zooms for States
+// State Center Coordinates & Zooms
 export const STATE_CENTERS: Record<string, { center: [number, number]; zoom: number }> = {
   ALL: { center: [26.15, 92.80], zoom: 7 },
   "Arunachal Pradesh": { center: [27.50, 94.00], zoom: 8 },
@@ -89,570 +89,410 @@ export const STATE_CENTERS: Record<string, { center: [number, number]; zoom: num
   Tripura: { center: [23.80, 91.60], zoom: 9 },
 };
 
-// District Center Coordinates, Weather, and Risk Overview
-export const DISTRICT_CENTERS: Record<string, { center: [number, number]; zoom: number; weather: string; risk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" }> = {
-  // Assam
-  "Kamrup Metropolitan": { center: [26.185, 91.745], zoom: 11, weather: "Partly Cloudy • 28°C", risk: "LOW" },
-  "Kamrup": { center: [26.310, 91.600], zoom: 11, weather: "Clear • 29°C", risk: "LOW" },
-  "Cachar": { center: [24.833, 92.779], zoom: 11, weather: "Heavy Showers • 25°C", risk: "HIGH" },
-  "Dima Hasao": { center: [25.176, 93.018], zoom: 11, weather: "Overcast Mist • 22°C", risk: "LOW" },
-  "Nagaon": { center: [26.345, 92.684], zoom: 11, weather: "Light Rain • 27°C", risk: "MEDIUM" },
-  "Golaghat": { center: [26.520, 93.970], zoom: 11, weather: "River Rise • 26°C", risk: "HIGH" },
-  "Jorhat": { center: [26.750, 94.216], zoom: 11, weather: "Moderate Rain • 26°C", risk: "HIGH" },
-  "Dibrugarh": { center: [27.472, 94.912], zoom: 11, weather: "Heavy Monsoons • 24°C", risk: "HIGH" },
-  "Tinsukia": { center: [27.500, 95.360], zoom: 11, weather: "Passing Storm • 25°C", risk: "MEDIUM" },
-  "Sonitpur": { center: [26.652, 92.793], zoom: 11, weather: "Scattered Rain • 27°C", risk: "LOW" },
-  "Morigaon": { center: [26.250, 92.340], zoom: 11, weather: "Clear • 28°C", risk: "LOW" },
-  "Hojai": { center: [26.000, 92.850], zoom: 11, weather: "Clear • 28°C", risk: "LOW" },
-  "Dhubri": { center: [26.020, 89.980], zoom: 11, weather: "River Mist • 28°C", risk: "LOW" },
-  "Goalpara": { center: [26.180, 90.620], zoom: 11, weather: "Clear • 29°C", risk: "LOW" },
-  "Karimganj": { center: [24.870, 92.350], zoom: 11, weather: "Monsoon Rain • 25°C", risk: "MEDIUM" },
-  "Hailakandi": { center: [24.680, 92.560], zoom: 11, weather: "Rain Squalls • 25°C", risk: "MEDIUM" },
-  "Bongaigaon": { center: [26.500, 90.540], zoom: 11, weather: "Clear • 28°C", risk: "LOW" },
-  "Kokrajhar": { center: [26.400, 90.270], zoom: 11, weather: "Clear • 28°C", risk: "LOW" },
+// Comprehensive District Center Coordinates, Weather, and Geological Risk Profiles
+export const DISTRICT_CENTERS: Record<string, { center: [number, number]; zoom: number; weather: string; risk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"; roadCode: string }> = {
+  // --- Arunachal Pradesh (26 Districts) ---
+  "Tawang": { center: [27.586, 91.866], zoom: 11, weather: "Freezing Rain • 4°C", risk: "CRITICAL", roadCode: "NH-13" },
+  "West Kameng": { center: [27.264, 92.416], zoom: 11, weather: "Chilly Slush • 9°C", risk: "HIGH", roadCode: "NH-13" },
+  "East Kameng": { center: [27.300, 93.000], zoom: 11, weather: "Cloudy Hills • 14°C", risk: "MEDIUM", roadCode: "SH-Seppa" },
+  "Papum Pare": { center: [27.100, 93.600], zoom: 11, weather: "Passing Rain • 22°C", risk: "LOW", roadCode: "NH-415" },
+  "Kurung Kumey": { center: [27.900, 93.350], zoom: 11, weather: "Hill Fog • 13°C", risk: "HIGH", roadCode: "SH-Koloriang" },
+  "Kra Daadi": { center: [27.750, 93.700], zoom: 11, weather: "Mountain Showers • 15°C", risk: "MEDIUM", roadCode: "SH-Palin" },
+  "Lower Subansiri": { center: [27.550, 93.830], zoom: 11, weather: "Mist & Drizzle • 16°C", risk: "MEDIUM", roadCode: "NH-13" },
+  "Upper Subansiri": { center: [28.000, 94.150], zoom: 11, weather: "Heavy Showers • 16°C", risk: "HIGH", roadCode: "SH-Daporijo" },
+  "West Siang": { center: [28.250, 94.650], zoom: 11, weather: "Cloudy Mist • 18°C", risk: "MEDIUM", roadCode: "NH-515" },
+  "East Siang": { center: [28.060, 95.330], zoom: 11, weather: "River Surge • 24°C", risk: "MEDIUM", roadCode: "NH-515" },
+  "Siang": { center: [28.300, 95.000], zoom: 11, weather: "Continuous Rain • 17°C", risk: "HIGH", roadCode: "SH-Pangin" },
+  "Upper Siang": { center: [28.600, 94.900], zoom: 11, weather: "Mountain Rain • 16°C", risk: "HIGH", roadCode: "SH-Yingkiong" },
+  "Lower Siang": { center: [27.800, 94.800], zoom: 11, weather: "Scattered Rain • 21°C", risk: "MEDIUM", roadCode: "NH-515" },
+  "Lower Dibang Valley": { center: [28.150, 95.840], zoom: 11, weather: "Heavy Monsoons • 20°C", risk: "HIGH", roadCode: "NH-115" },
+  "Dibang Valley": { center: [28.800, 95.900], zoom: 11, weather: "High Mountain Rain • 11°C", risk: "CRITICAL", roadCode: "SH-Anini" },
+  "Anjaw": { center: [28.000, 96.800], zoom: 11, weather: "Border Ridge Fog • 12°C", risk: "CRITICAL", roadCode: "NH-113" },
+  "Lohit": { center: [27.900, 96.160], zoom: 11, weather: "Clear Mountain • 22°C", risk: "LOW", roadCode: "NH-115" },
+  "Namsai": { center: [27.670, 95.860], zoom: 11, weather: "Partly Cloudy • 26°C", risk: "LOW", roadCode: "NH-52" },
+  "Changlang": { center: [27.120, 95.740], zoom: 11, weather: "Scattered Rain • 23°C", risk: "MEDIUM", roadCode: "NH-215" },
+  "Tirap": { center: [27.000, 95.500], zoom: 11, weather: "Hill Fog • 21°C", risk: "MEDIUM", roadCode: "NH-215" },
+  "Longding": { center: [26.850, 95.300], zoom: 11, weather: "Heavy Squalls • 22°C", risk: "HIGH", roadCode: "SH-Longding" },
+  "Kamle": { center: [27.600, 94.000], zoom: 11, weather: "Rain Spells • 19°C", risk: "MEDIUM", roadCode: "SH-Raga" },
+  "Pakke Kessang": { center: [27.150, 93.200], zoom: 11, weather: "Drizzle • 20°C", risk: "MEDIUM", roadCode: "SH-Pakke" },
+  "Shi Yomi": { center: [28.500, 94.300], zoom: 11, weather: "Glacial Rain • 9°C", risk: "CRITICAL", roadCode: "SH-Tato" },
+  "Leparada": { center: [27.900, 94.500], zoom: 11, weather: "Overcast Mist • 18°C", risk: "MEDIUM", roadCode: "NH-13" },
+  "Itanagar Capital Complex": { center: [27.084, 93.605], zoom: 11, weather: "Clear Valley • 24°C", risk: "LOW", roadCode: "NH-415" },
 
-  // Meghalaya
-  "East Khasi Hills": { center: [25.578, 91.893], zoom: 11, weather: "Mountain Fog • 18°C", risk: "LOW" },
-  "East Jaintia Hills": { center: [25.105, 92.361], zoom: 11, weather: "Torrential 88mm Rain • 20°C", risk: "CRITICAL" },
-  "West Jaintia Hills": { center: [25.446, 92.203], zoom: 11, weather: "Heavy Monsoons • 21°C", risk: "HIGH" },
-  "Ri Bhoi": { center: [25.900, 91.880], zoom: 11, weather: "Passing Clouds • 24°C", risk: "LOW" },
-  "West Garo Hills": { center: [25.520, 90.220], zoom: 11, weather: "Warm Humid • 27°C", risk: "LOW" },
-  "South Garo Hills": { center: [25.300, 90.630], zoom: 11, weather: "Rain Spells • 26°C", risk: "MEDIUM" },
+  // --- Assam (35 Districts) ---
+  "Kamrup Metropolitan": { center: [26.185, 91.745], zoom: 11, weather: "Partly Cloudy • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Kamrup": { center: [26.310, 91.600], zoom: 11, weather: "Clear • 29°C", risk: "LOW", roadCode: "NH-27" },
+  "Cachar": { center: [24.833, 92.779], zoom: 11, weather: "Heavy Showers • 25°C", risk: "HIGH", roadCode: "NH-6" },
+  "Dima Hasao": { center: [25.176, 93.018], zoom: 11, weather: "Overcast Mist • 22°C", risk: "LOW", roadCode: "SH-Haflong" },
+  "Nagaon": { center: [26.345, 92.684], zoom: 11, weather: "Light Rain • 27°C", risk: "MEDIUM", roadCode: "NH-37" },
+  "Golaghat": { center: [26.520, 93.970], zoom: 11, weather: "River Rise • 26°C", risk: "HIGH", roadCode: "NH-37" },
+  "Jorhat": { center: [26.750, 94.216], zoom: 11, weather: "Moderate Rain • 26°C", risk: "HIGH", roadCode: "NH-37" },
+  "Dibrugarh": { center: [27.472, 94.912], zoom: 11, weather: "Heavy Monsoons • 24°C", risk: "HIGH", roadCode: "NH-37" },
+  "Tinsukia": { center: [27.500, 95.360], zoom: 11, weather: "Passing Storm • 25°C", risk: "MEDIUM", roadCode: "NH-37" },
+  "Sonitpur": { center: [26.652, 92.793], zoom: 11, weather: "Scattered Rain • 27°C", risk: "LOW", roadCode: "NH-15" },
+  "Morigaon": { center: [26.250, 92.340], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-37" },
+  "Hojai": { center: [26.000, 92.850], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Dhubri": { center: [26.020, 89.980], zoom: 11, weather: "River Mist • 28°C", risk: "LOW", roadCode: "NH-17" },
+  "Goalpara": { center: [26.180, 90.620], zoom: 11, weather: "Clear • 29°C", risk: "LOW", roadCode: "NH-17" },
+  "Karimganj": { center: [24.870, 92.350], zoom: 11, weather: "Monsoon Rain • 25°C", risk: "MEDIUM", roadCode: "NH-8" },
+  "Hailakandi": { center: [24.680, 92.560], zoom: 11, weather: "Rain Squalls • 25°C", risk: "MEDIUM", roadCode: "NH-154" },
+  "Bongaigaon": { center: [26.500, 90.540], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Kokrajhar": { center: [26.400, 90.270], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Baksa": { center: [26.650, 91.350], zoom: 11, weather: "Clear Foothills • 27°C", risk: "LOW", roadCode: "SH-Baksa" },
+  "Barpeta": { center: [26.320, 91.000], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-127" },
+  "Biswanath": { center: [26.730, 93.150], zoom: 11, weather: "Passing Rain • 26°C", risk: "MEDIUM", roadCode: "NH-15" },
+  "Charaideo": { center: [26.950, 94.900], zoom: 11, weather: "Light Rain • 25°C", risk: "LOW", roadCode: "SH-Sonari" },
+  "Chirang": { center: [26.550, 90.500], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Darrang": { center: [26.450, 92.030], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-15" },
+  "Dhemaji": { center: [27.480, 94.580], zoom: 11, weather: "River Surge • 24°C", risk: "HIGH", roadCode: "NH-15" },
+  "Karbi Anglong": { center: [26.000, 93.400], zoom: 11, weather: "Hill Mist • 24°C", risk: "MEDIUM", roadCode: "NH-29" },
+  "Lakhimpur": { center: [27.230, 94.100], zoom: 11, weather: "Monsoon Surge • 24°C", risk: "HIGH", roadCode: "NH-15" },
+  "Majuli": { center: [26.950, 94.200], zoom: 11, weather: "Brahmaputra Crest • 25°C", risk: "HIGH", roadCode: "SH-Majuli" },
+  "Nalbari": { center: [26.450, 91.440], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Sivasagar": { center: [26.980, 94.630], zoom: 11, weather: "Drizzle • 26°C", risk: "MEDIUM", roadCode: "NH-37" },
+  "South Salmara-Mankachar": { center: [25.850, 89.850], zoom: 11, weather: "River Rain • 27°C", risk: "MEDIUM", roadCode: "SH-Mankachar" },
+  "Udalguri": { center: [26.740, 92.100], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "SH-Udalguri" },
+  "West Karbi Anglong": { center: [25.800, 92.600], zoom: 11, weather: "Hill Drizzle • 23°C", risk: "MEDIUM", roadCode: "SH-Hamren" },
+  "Bajali": { center: [26.500, 91.200], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "NH-27" },
+  "Tamulpur": { center: [26.600, 91.550], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "SH-Tamulpur" },
 
-  // Arunachal Pradesh
-  "Tawang": { center: [27.586, 91.866], zoom: 11, weather: "Freezing Rain • 4°C", risk: "CRITICAL" },
-  "West Kameng": { center: [27.264, 92.416], zoom: 11, weather: "Chilly Slush • 9°C", risk: "HIGH" },
-  "East Kameng": { center: [27.300, 93.000], zoom: 11, weather: "Cloudy Hills • 14°C", risk: "MEDIUM" },
-  "Papum Pare": { center: [27.100, 93.600], zoom: 11, weather: "Passing Rain • 22°C", risk: "LOW" },
-  "Itanagar Capital Complex": { center: [27.084, 93.605], zoom: 11, weather: "Clear Valley • 24°C", risk: "LOW" },
-  "East Siang": { center: [28.060, 95.330], zoom: 11, weather: "River Surge • 24°C", risk: "MEDIUM" },
-  "Upper Siang": { center: [28.600, 94.900], zoom: 11, weather: "Mountain Rain • 16°C", risk: "HIGH" },
-  "Lohit": { center: [27.900, 96.160], zoom: 11, weather: "Clear Mountain • 22°C", risk: "LOW" },
-  "Changlang": { center: [27.120, 95.740], zoom: 11, weather: "Scattered Rain • 23°C", risk: "MEDIUM" },
+  // --- Meghalaya (12 Districts) ---
+  "East Khasi Hills": { center: [25.578, 91.893], zoom: 11, weather: "Mountain Fog • 18°C", risk: "LOW", roadCode: "NH-6" },
+  "East Jaintia Hills": { center: [25.105, 92.361], zoom: 11, weather: "Torrential 88mm Rain • 20°C", risk: "CRITICAL", roadCode: "NH-6" },
+  "West Jaintia Hills": { center: [25.446, 92.203], zoom: 11, weather: "Heavy Monsoons • 21°C", risk: "HIGH", roadCode: "NH-6" },
+  "Ri Bhoi": { center: [25.900, 91.880], zoom: 11, weather: "Passing Clouds • 24°C", risk: "LOW", roadCode: "NH-6" },
+  "West Garo Hills": { center: [25.520, 90.220], zoom: 11, weather: "Warm Humid • 27°C", risk: "LOW", roadCode: "NH-51" },
+  "South Garo Hills": { center: [25.300, 90.630], zoom: 11, weather: "Rain Spells • 26°C", risk: "MEDIUM", roadCode: "NH-62" },
+  "East Garo Hills": { center: [25.600, 90.580], zoom: 11, weather: "Drizzle • 25°C", risk: "MEDIUM", roadCode: "NH-51" },
+  "Eastern West Khasi Hills": { center: [25.550, 91.450], zoom: 11, weather: "Foggy Mist • 19°C", risk: "MEDIUM", roadCode: "SH-Mairang" },
+  "North Garo Hills": { center: [25.900, 90.550], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "SH-Resubelpara" },
+  "South West Garo Hills": { center: [25.450, 89.900], zoom: 11, weather: "Clear • 28°C", risk: "LOW", roadCode: "SH-Ampati" },
+  "South West Khasi Hills": { center: [25.350, 91.300], zoom: 11, weather: "Heavy Mountain Squall • 19°C", risk: "HIGH", roadCode: "SH-Mawkyrwat" },
+  "West Khasi Hills": { center: [25.520, 91.250], zoom: 11, weather: "Mist • 20°C", risk: "MEDIUM", roadCode: "NH-106" },
 
-  // Sikkim
-  "Gangtok": { center: [27.338, 88.606], zoom: 11, weather: "Continuous Rain • 16°C", risk: "CRITICAL" },
-  "Pakyong": { center: [27.230, 88.580], zoom: 11, weather: "Teesta Surge 94mm • 18°C", risk: "CRITICAL" },
-  "Mangan": { center: [27.510, 88.530], zoom: 11, weather: "Cloudburst Alert • 12°C", risk: "CRITICAL" },
-  "Namchi": { center: [27.170, 88.350], zoom: 11, weather: "Mist & Fog • 17°C", risk: "MEDIUM" },
-  "Gyalshing": { center: [27.280, 88.250], zoom: 11, weather: "Cloudy Hills • 15°C", risk: "LOW" },
-  "Soreng": { center: [27.160, 88.200], zoom: 11, weather: "Clear Ridge • 17°C", risk: "LOW" },
+  // --- Sikkim (6 Districts) ---
+  "Gangtok": { center: [27.338, 88.606], zoom: 11, weather: "Continuous Rain • 16°C", risk: "CRITICAL", roadCode: "NH-10" },
+  "Pakyong": { center: [27.230, 88.580], zoom: 11, weather: "Teesta Surge 94mm • 18°C", risk: "CRITICAL", roadCode: "NH-10" },
+  "Mangan": { center: [27.510, 88.530], zoom: 11, weather: "Cloudburst Alert • 12°C", risk: "CRITICAL", roadCode: "SH-NorthSikkim" },
+  "Namchi": { center: [27.170, 88.350], zoom: 11, weather: "Mist & Fog • 17°C", risk: "MEDIUM", roadCode: "SH-Namchi" },
+  "Gyalshing": { center: [27.280, 88.250], zoom: 11, weather: "Cloudy Hills • 15°C", risk: "LOW", roadCode: "SH-Gyalshing" },
+  "Soreng": { center: [27.160, 88.200], zoom: 11, weather: "Clear Ridge • 17°C", risk: "LOW", roadCode: "SH-Soreng" },
 
-  // Mizoram
-  "Aizawl": { center: [23.730, 92.717], zoom: 11, weather: "Heavy Monsoons • 21°C", risk: "HIGH" },
-  "Kolasib": { center: [24.225, 92.678], zoom: 11, weather: "Mud Slush • 23°C", risk: "MEDIUM" },
-  "Lunglei": { center: [22.880, 92.740], zoom: 11, weather: "Rain Squalls • 22°C", risk: "MEDIUM" },
-  "Champhai": { center: [23.470, 93.320], zoom: 11, weather: "Mountain Mist • 19°C", risk: "LOW" },
-  "Mamit": { center: [23.930, 92.480], zoom: 11, weather: "Passing Rain • 24°C", risk: "LOW" },
-  "Serchhip": { center: [23.340, 92.850], zoom: 11, weather: "Cloudy • 22°C", risk: "LOW" },
+  // --- Mizoram (11 Districts) ---
+  "Aizawl": { center: [23.730, 92.717], zoom: 11, weather: "Heavy Monsoons • 21°C", risk: "HIGH", roadCode: "NH-306" },
+  "Kolasib": { center: [24.225, 92.678], zoom: 11, weather: "Mud Slush • 23°C", risk: "MEDIUM", roadCode: "NH-306" },
+  "Lunglei": { center: [22.880, 92.740], zoom: 11, weather: "Rain Squalls • 22°C", risk: "MEDIUM", roadCode: "NH-54" },
+  "Champhai": { center: [23.470, 93.320], zoom: 11, weather: "Mountain Mist • 19°C", risk: "LOW", roadCode: "NH-6" },
+  "Mamit": { center: [23.930, 92.480], zoom: 11, weather: "Passing Rain • 24°C", risk: "LOW", roadCode: "SH-Mamit" },
+  "Serchhip": { center: [23.340, 92.850], zoom: 11, weather: "Cloudy • 22°C", risk: "LOW", roadCode: "NH-54" },
+  "Hnahthial": { center: [22.960, 92.930], zoom: 11, weather: "Overcast • 21°C", risk: "MEDIUM", roadCode: "SH-Hnahthial" },
+  "Khawzawl": { center: [23.530, 93.180], zoom: 11, weather: "Mist • 20°C", risk: "LOW", roadCode: "SH-Khawzawl" },
+  "Lawngtlai": { center: [22.520, 92.890], zoom: 11, weather: "Heavy Rain • 22°C", risk: "HIGH", roadCode: "NH-54" },
+  "Saitual": { center: [23.680, 92.970], zoom: 11, weather: "Clear • 22°C", risk: "LOW", roadCode: "SH-Saitual" },
+  "Siaha": { center: [22.480, 92.980], zoom: 11, weather: "Monsoon Showers • 22°C", risk: "HIGH", roadCode: "SH-Siaha" },
 
-  // Nagaland
-  "Kohima": { center: [25.675, 94.108], zoom: 11, weather: "Sinking Fault Active • 18°C", risk: "HIGH" },
-  "Dimapur": { center: [25.906, 93.727], zoom: 11, weather: "Light Rain • 27°C", risk: "LOW" },
-  "Mokokchung": { center: [26.320, 94.520], zoom: 11, weather: "Mountain Drizzle • 20°C", risk: "MEDIUM" },
-  "Mon": { center: [26.750, 95.050], zoom: 11, weather: "Heavy Mist • 19°C", risk: "HIGH" },
-  "Wokha": { center: [26.100, 94.260], zoom: 11, weather: "Rain Spells • 22°C", risk: "MEDIUM" },
-  "Phek": { center: [25.660, 94.460], zoom: 11, weather: "Overcast • 18°C", risk: "LOW" },
+  // --- Nagaland (16 Districts) ---
+  "Kohima": { center: [25.675, 94.108], zoom: 11, weather: "Sinking Fault Active • 18°C", risk: "HIGH", roadCode: "NH-2" },
+  "Dimapur": { center: [25.906, 93.727], zoom: 11, weather: "Light Rain • 27°C", risk: "LOW", roadCode: "NH-29" },
+  "Mokokchung": { center: [26.320, 94.520], zoom: 11, weather: "Mountain Drizzle • 20°C", risk: "MEDIUM", roadCode: "NH-702" },
+  "Mon": { center: [26.750, 95.050], zoom: 11, weather: "Heavy Mist • 19°C", risk: "HIGH", roadCode: "SH-Mon" },
+  "Wokha": { center: [26.100, 94.260], zoom: 11, weather: "Rain Spells • 22°C", risk: "MEDIUM", roadCode: "NH-2" },
+  "Phek": { center: [25.660, 94.460], zoom: 11, weather: "Overcast • 18°C", risk: "LOW", roadCode: "SH-Phek" },
+  "Chümoukedima": { center: [25.780, 93.770], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "NH-29" },
+  "Kiphire": { center: [25.860, 94.780], zoom: 11, weather: "Hill Fog • 19°C", risk: "HIGH", roadCode: "SH-Kiphire" },
+  "Longleng": { center: [26.470, 94.810], zoom: 11, weather: "Mud Squalls • 20°C", risk: "HIGH", roadCode: "SH-Longleng" },
+  "Niuland": { center: [25.950, 93.850], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "SH-Niuland" },
+  "Noklak": { center: [26.200, 95.000], zoom: 11, weather: "Ridge Drizzle • 17°C", risk: "HIGH", roadCode: "SH-Noklak" },
+  "Peren": { center: [25.510, 93.730], zoom: 11, weather: "Passing Clouds • 22°C", risk: "MEDIUM", roadCode: "SH-Peren" },
+  "Shamator": { center: [26.050, 94.880], zoom: 11, weather: "Heavy Showers • 19°C", risk: "HIGH", roadCode: "SH-Shamator" },
+  "Tseminyü": { center: [25.920, 94.210], zoom: 11, weather: "Mist • 21°C", risk: "MEDIUM", roadCode: "NH-2" },
+  "Tuensang": { center: [26.280, 94.830], zoom: 11, weather: "Heavy Mist • 18°C", risk: "HIGH", roadCode: "SH-Tuensang" },
+  "Zünheboto": { center: [25.970, 94.520], zoom: 11, weather: "Fog • 19°C", risk: "MEDIUM", roadCode: "SH-Zunheboto" },
 
-  // Manipur
-  "Imphal West": { center: [24.817, 93.936], zoom: 11, weather: "Overcast Valley • 26°C", risk: "MEDIUM" },
-  "Imphal East": { center: [24.820, 94.000], zoom: 11, weather: "Passing Clouds • 26°C", risk: "LOW" },
-  "Senapati": { center: [25.260, 94.020], zoom: 11, weather: "Hill Slush • 20°C", risk: "HIGH" },
-  "Churachandpur": { center: [24.330, 93.680], zoom: 11, weather: "Sinking Slope • 23°C", risk: "HIGH" },
-  "Bishnupur": { center: [24.630, 93.760], zoom: 11, weather: "Lake Inundation • 26°C", risk: "MEDIUM" },
-  "Thoubal": { center: [24.640, 93.990], zoom: 11, weather: "Clear • 27°C", risk: "LOW" },
-  "Ukhrul": { center: [25.110, 94.360], zoom: 11, weather: "Foggy Ridge • 17°C", risk: "MEDIUM" },
+  // --- Manipur (16 Districts) ---
+  "Imphal West": { center: [24.817, 93.936], zoom: 11, weather: "Overcast Valley • 26°C", risk: "MEDIUM", roadCode: "NH-2" },
+  "Imphal East": { center: [24.820, 94.000], zoom: 11, weather: "Passing Clouds • 26°C", risk: "LOW", roadCode: "NH-2" },
+  "Senapati": { center: [25.260, 94.020], zoom: 11, weather: "Hill Slush • 20°C", risk: "HIGH", roadCode: "NH-2" },
+  "Churachandpur": { center: [24.330, 93.680], zoom: 11, weather: "Sinking Slope • 23°C", risk: "HIGH", roadCode: "NH-102B" },
+  "Bishnupur": { center: [24.630, 93.760], zoom: 11, weather: "Lake Inundation • 26°C", risk: "MEDIUM", roadCode: "NH-102B" },
+  "Thoubal": { center: [24.640, 93.990], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "NH-102" },
+  "Ukhrul": { center: [25.110, 94.360], zoom: 11, weather: "Foggy Ridge • 17°C", risk: "MEDIUM", roadCode: "NH-202" },
+  "Chandel": { center: [24.320, 94.000], zoom: 11, weather: "Hill Mud • 23°C", risk: "HIGH", roadCode: "NH-102" },
+  "Jiribam": { center: [24.800, 93.120], zoom: 11, weather: "River Flash • 25°C", risk: "HIGH", roadCode: "NH-37" },
+  "Kakching": { center: [24.480, 93.980], zoom: 11, weather: "Clear • 27°C", risk: "LOW", roadCode: "SH-Kakching" },
+  "Kamjong": { center: [24.850, 94.500], zoom: 11, weather: "Border Rain • 19°C", risk: "HIGH", roadCode: "SH-Kamjong" },
+  "Kangpokpi": { center: [25.150, 93.970], zoom: 11, weather: "Slope Creep • 21°C", risk: "HIGH", roadCode: "NH-2" },
+  "Noney": { center: [24.800, 93.600], zoom: 11, weather: "Landslide Alert 82mm • 21°C", risk: "CRITICAL", roadCode: "NH-37" },
+  "Pherzawl": { center: [24.250, 93.200], zoom: 11, weather: "Mountain Showers • 22°C", risk: "HIGH", roadCode: "SH-Pherzawl" },
+  "Tamenglong": { center: [25.000, 93.500], zoom: 11, weather: "Heavy Mudflow • 19°C", risk: "CRITICAL", roadCode: "NH-37" },
+  "Tengnoupal": { center: [24.380, 94.150], zoom: 11, weather: "Border Fog • 22°C", risk: "HIGH", roadCode: "NH-102" },
 
-  // Tripura
-  "West Tripura": { center: [23.831, 91.286], zoom: 11, weather: "Clear • 30°C", risk: "LOW" },
-  "North Tripura": { center: [24.370, 92.160], zoom: 11, weather: "Light Rain • 28°C", risk: "LOW" },
-  "Dhalai": { center: [23.920, 91.850], zoom: 11, weather: "Scattered Showers • 27°C", risk: "LOW" },
-  "Gomati": { center: [23.530, 91.480], zoom: 11, weather: "Clear • 29°C", risk: "LOW" },
-  "Khowai": { center: [24.060, 91.600], zoom: 11, weather: "Monsoon Puddles • 28°C", risk: "MEDIUM" },
-  "South Tripura": { center: [23.160, 91.500], zoom: 11, weather: "Clear • 30°C", risk: "LOW" },
-  "Unakoti": { center: [24.320, 92.010], zoom: 11, weather: "Passing Rain • 28°C", risk: "LOW" },
-  "Sepahijala": { center: [23.680, 91.310], zoom: 11, weather: "Clear • 29°C", risk: "LOW" },
+  // --- Tripura (8 Districts) ---
+  "West Tripura": { center: [23.831, 91.286], zoom: 11, weather: "Clear • 30°C", risk: "LOW", roadCode: "NH-8" },
+  "North Tripura": { center: [24.370, 92.160], zoom: 11, weather: "Light Rain • 28°C", risk: "LOW", roadCode: "NH-8" },
+  "Dhalai": { center: [23.920, 91.850], zoom: 11, weather: "Scattered Showers • 27°C", risk: "LOW", roadCode: "NH-8" },
+  "Gomati": { center: [23.530, 91.480], zoom: 11, weather: "Clear • 29°C", risk: "LOW", roadCode: "NH-8" },
+  "Khowai": { center: [24.060, 91.600], zoom: 11, weather: "Monsoon Puddles • 28°C", risk: "MEDIUM", roadCode: "NH-8" },
+  "South Tripura": { center: [23.160, 91.500], zoom: 11, weather: "Clear • 30°C", risk: "LOW", roadCode: "NH-8" },
+  "Unakoti": { center: [24.320, 92.010], zoom: 11, weather: "Passing Rain • 28°C", risk: "LOW", roadCode: "NH-8" },
+  "Sepahijala": { center: [23.680, 91.310], zoom: 11, weather: "Clear • 29°C", risk: "LOW", roadCode: "NH-8" },
 };
 
-export const REGIONAL_HIGHWAYS_DATA: HighwayRiskEntity[] = [
-  // 1. NH-6 Sonapur Tunnel Mountain Pass (RED - Critical Landslide)
-  {
-    id: "RD-NH-6-SONAPUR",
-    road_number: "NH-6",
-    name: "NH-6 Sonapur Tunnel Mountain Pass (Shillong ➔ Silchar)",
-    state: "Meghalaya",
-    districts_traversed: ["East Jaintia Hills", "West Jaintia Hills", "Cachar", "Ri Bhoi", "East Khasi Hills"],
-    risk_level: "CRITICAL",
-    risk_score: 84.5,
-    disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "Severe Mountain Landslide & Heavy Mudflow",
-    threat_time_window: "Imminent / Active (Next 2 to 6 Hours)",
-    precipitation_mm_24h: 88.5,
-    slope_gradient_deg: 36.2,
-    soil_saturation_pct: 96,
-    historical_failures_count: 7,
-    ai_explanation: "Continuous 88.5 mm monsoonal precipitation combined with a 36.2° steep slope has oversaturated the subsoil to 96% capacity, creating high hydrostatic pressure and active slope failure near the tunnel ingress.",
-    recommended_action: "Halt multi-axle freight convoys at Jowai and divert emergency light cargo via Umrangso-Haflong bypass.",
-    coordinates: [
-      [25.578, 91.893], // Shillong
-      [25.446, 92.203], // Jowai
-      [25.105, 92.361], // Sonapur Tunnel (Landslide Hazard)
-      [24.950, 92.650], // Lumshnong
-      [24.833, 92.779], // Silchar
-    ],
-  },
-  // 2. NH-37 Brahmaputra Valley & Kaziranga Highway (ORANGE - High Flood Inundation)
-  {
-    id: "RD-NH-37-KAZIRANGA",
-    road_number: "NH-37",
-    name: "NH-37 Brahmaputra Valley & Kaziranga Highway",
-    state: "Assam",
-    districts_traversed: ["Kamrup Metropolitan", "Morigaon", "Nagaon", "Golaghat", "Jorhat", "Dibrugarh", "Tinsukia"],
-    risk_level: "HIGH",
-    risk_score: 68.0,
-    disaster_type: "FLASH_FLOOD_OVERFLOW",
-    disaster_title: "Brahmaputra River Inundation & Flash Flood Submergence",
-    threat_time_window: "Next 6 to 14 Hours (River Peak Level Approaching)",
-    precipitation_mm_24h: 72.0,
-    slope_gradient_deg: 4.5,
-    soil_saturation_pct: 94,
-    historical_failures_count: 4,
-    ai_explanation: "Upstream surge from Arunachal foothills is elevating the Brahmaputra water table, causing riverback water overflow onto low-lying road stretches between Bokakhat and Kohora.",
-    recommended_action: "Impose 30 km/h speed limit, activate SDRF boat standby at animal crossing corridors, and prepare flood barriers.",
-    coordinates: [
-      [26.185, 91.745], // Guwahati
-      [26.250, 92.340], // Morigaon
-      [26.345, 92.684], // Nagaon
-      [26.580, 93.170], // Kaziranga
-      [26.750, 94.216], // Jorhat
-      [27.472, 94.912], // Dibrugarh
-      [27.500, 95.360], // Tinsukia
-    ],
-  },
-  // 3. NH-27 East-West Commercial Expressway (GREEN - Clear Low Risk)
-  {
-    id: "RD-NH-27-EXPRESS",
-    road_number: "NH-27",
-    name: "NH-27 East-West Commercial Expressway (Guwahati ➔ Lumding)",
-    state: "Assam",
-    districts_traversed: ["Kamrup Metropolitan", "Kamrup", "Morigaon", "Hojai", "Nagaon"],
-    risk_level: "LOW",
-    risk_score: 18.0,
-    disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Normal All-Weather Smooth Transit",
-    threat_time_window: "Safe Transit Window (Next 48 Hours Stable)",
-    precipitation_mm_24h: 18.0,
-    slope_gradient_deg: 2.1,
-    soil_saturation_pct: 35,
-    historical_failures_count: 0,
-    ai_explanation: "4-lane reinforced elevated embankment with automated culvert drainage operating with zero obstruction.",
-    recommended_action: "Maintain standard high-speed logistics dispatch schedules.",
-    coordinates: [
-      [26.185, 91.745], // Guwahati
-      [26.250, 92.340], // Morigaon
-      [26.000, 92.850], // Doboka
-      [25.750, 93.180], // Lumding
-    ],
-  },
-  // 4. NH-13 Trans-Arunachal & Sela Pass (ORANGE/RED - High Ice/Rockfall)
-  {
-    id: "RD-NH-13-TAWANG",
-    road_number: "NH-13",
-    name: "NH-13 Trans-Arunachal Highway & Sela Tunnel (Tezpur ➔ Tawang)",
-    state: "Arunachal Pradesh",
-    districts_traversed: ["Sonitpur", "West Kameng", "Tawang", "East Kameng", "Papum Pare"],
-    risk_level: "CRITICAL",
-    risk_score: 82.5,
-    disaster_type: "SNOW_ICE_BLOCK",
-    disaster_title: "High-Altitude Sela Pass Rockfall & Ice Glaze",
-    threat_time_window: "Next 4 to 12 Hours (Night Frost & Slush Drop)",
-    precipitation_mm_24h: 54.0,
-    slope_gradient_deg: 38.0,
-    soil_saturation_pct: 82,
-    historical_failures_count: 5,
-    ai_explanation: "Sub-zero mountain temperatures combined with wet precipitation have formed black ice on switchbacks approaching Sela Pass tunnel approach, with minor loose boulder movement.",
-    recommended_action: "Enforce anti-skid tire chains and deploy BRO snow clearing graders at Jaswant Garh checkpoint.",
-    coordinates: [
-      [26.652, 92.793], // Tezpur
-      [27.264, 92.416], // Bomdila
-      [27.502, 92.103], // Sela Pass
-      [27.586, 91.866], // Tawang
-    ],
-  },
-  // 5. NH-10 Teesta Valley Lifeline (RED - Critical Bank Erosion)
-  {
-    id: "RD-NH-10-GANGTOK",
-    road_number: "NH-10",
-    name: "NH-10 Teesta Valley Mountain Arterial (Siliguri ➔ Gangtok)",
-    state: "Sikkim",
-    districts_traversed: ["Pakyong", "Gangtok", "Namchi"],
-    risk_level: "CRITICAL",
-    risk_score: 86.0,
-    disaster_type: "FLASH_FLOOD_OVERFLOW",
-    disaster_title: "Teesta River Turbulent Overflow & Bank Erosion",
-    threat_time_window: "Immediate Alert (Next 1 to 5 Hours)",
-    precipitation_mm_24h: 94.0,
-    slope_gradient_deg: 41.0,
-    soil_saturation_pct: 98,
-    historical_failures_count: 8,
-    ai_explanation: "Teesta river water level is running 1.4m above warning level near 29th Mile, washing away road embankment toe and threatening severe carriageway collapse.",
-    recommended_action: "Total suspension of non-essential civilian vehicles. Divert essential traffic via Lava-Algarah ridge.",
-    coordinates: [
-      [26.720, 88.420], // Siliguri
-      [27.170, 88.530], // Rangpo
-      [27.230, 88.580], // Pakyong
-      [27.338, 88.606], // Gangtok
-    ],
-  },
-  // 6. NH-306 Southern Arterial Lifeline (YELLOW - Moderate Rain)
-  {
-    id: "RD-NH-306-AIZAWL",
-    road_number: "NH-306",
-    name: "NH-306 Southern Arterial Lifeline (Silchar ➔ Aizawl)",
-    state: "Mizoram",
-    districts_traversed: ["Cachar", "Kolasib", "Aizawl", "Mamit"],
-    risk_level: "MEDIUM",
-    risk_score: 48.0,
-    disaster_type: "TORRENTIAL_RAINFALL",
-    disaster_title: "Moderate Hill Slush & Heavy Mountain Downpour",
-    threat_time_window: "Next 8 to 18 Hours (Heavy Rainfall Passing)",
-    precipitation_mm_24h: 62.0,
-    slope_gradient_deg: 26.5,
-    soil_saturation_pct: 78,
-    historical_failures_count: 3,
-    ai_explanation: "Continuous monsoon squall is creating surface mud accumulation near Vairengte checkpost. Road foundation remains stable but braking distance is increased.",
-    recommended_action: "Single-lane convoy pacing with mandatory 50-meter separation between fuel tankers.",
-    coordinates: [
-      [24.833, 92.779], // Silchar
-      [24.505, 92.756], // Vairengte
-      [24.225, 92.678], // Kolasib
-      [23.730, 92.717], // Aizawl
-    ],
-  },
-  // 7. NH-2 Trans-Hills Corridor (ORANGE - Pagala Pahar Sinking Zone)
-  {
-    id: "RD-NH-2-KOHIMA",
-    road_number: "NH-2",
-    name: "NH-2 Trans-Hills Corridor (Dimapur ➔ Kohima ➔ Imphal)",
-    state: "Nagaland",
-    districts_traversed: ["Dimapur", "Kohima", "Senapati", "Imphal West", "Thoubal"],
-    risk_level: "HIGH",
-    risk_score: 70.0,
-    disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "Pagala Pahar Sinking Zone & Mud Debris",
-    threat_time_window: "Next 3 to 10 Hours (Active Slope Creep)",
-    precipitation_mm_24h: 69.0,
-    slope_gradient_deg: 33.0,
-    soil_saturation_pct: 89,
-    historical_failures_count: 6,
-    ai_explanation: "Pagala Pahar geological fault line is experiencing localized soil displacement following 69 mm rain, causing road shoulder subsidence.",
-    recommended_action: "Deploy SDRF spotters at sinking zones and restrict heavy goods vehicles above 20 tons.",
-    coordinates: [
-      [25.906, 93.727], // Dimapur
-      [25.675, 94.108], // Kohima
-      [25.260, 94.020], // Senapati
-      [24.817, 93.936], // Imphal
-    ],
-  },
-  // 8. NH-8 Southern Link Corridor (GREEN - Low Risk)
-  {
-    id: "RD-NH-8-AGARTALA",
-    road_number: "NH-8",
-    name: "NH-8 Southern Link Corridor (Silchar ➔ Agartala)",
-    state: "Tripura",
-    districts_traversed: ["North Tripura", "Unakoti", "Dhalai", "Khowai", "West Tripura", "Sepahijala", "South Tripura"],
-    risk_level: "LOW",
-    risk_score: 22.0,
-    disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Low Risk Stable Valley Passage",
-    threat_time_window: "Safe Transit Window (Next 36 Hours Stable)",
-    precipitation_mm_24h: 24.0,
-    slope_gradient_deg: 8.0,
-    soil_saturation_pct: 45,
-    historical_failures_count: 1,
-    ai_explanation: "Widened 2-lane bituminous highway with sound concrete retaining walls and clear water channels.",
-    recommended_action: "All freight vehicles cleared for unrestricted transit.",
-    coordinates: [
-      [24.833, 92.779], // Silchar
-      [24.370, 92.160], // Dharmanagar
-      [23.920, 91.850], // Ambassa
-      [23.831, 91.286], // Agartala
-      [23.160, 91.500], // South Tripura
-    ],
-  },
-  // 9. Haflong-Umrangso All-Weather Green Bypass (GREEN - Safe Detour)
-  {
-    id: "RD-HAFLONG-BYPASS",
-    road_number: "SH-Haflong",
-    name: "Haflong-Umrangso All-Weather Green Bypass Corridor",
-    state: "Assam",
-    districts_traversed: ["Dima Hasao", "Cachar", "Karbi Anglong"],
-    risk_level: "LOW",
-    risk_score: 16.5,
-    disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Safe Valley Detour for Blocked NH-6 Freight",
-    threat_time_window: "Safe Transit Window (Recommended Alternative)",
-    precipitation_mm_24h: 22.0,
-    slope_gradient_deg: 12.0,
-    soil_saturation_pct: 42,
-    historical_failures_count: 0,
-    ai_explanation: "Stable geological ridge with deep RCC culverts and zero landslide vulnerability.",
-    recommended_action: "Recommended as prime diversion route for all Southern Assam & Mizoram relief convoys.",
-    coordinates: [
-      [25.510, 92.740], // Umrangso
-      [25.176, 93.018], // Haflong
-      [24.833, 92.779], // Silchar
-    ],
-  },
-  // 10. NH-102B Imphal - Churachandpur Arterial (ORANGE - Sinking Hill Slope)
-  {
-    id: "RD-NH-102B-CHURA",
-    road_number: "NH-102B",
-    name: "NH-102B Imphal ➔ Churachandpur Arterial Highway",
-    state: "Manipur",
-    districts_traversed: ["Imphal West", "Bishnupur", "Churachandpur"],
-    risk_level: "HIGH",
-    risk_score: 66.0,
-    disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "Loktak Basin Waterlogging & Hill Embankment Slump",
-    threat_time_window: "Next 5 to 12 Hours (Continuous Drizzle)",
-    precipitation_mm_24h: 58.0,
-    slope_gradient_deg: 24.0,
-    soil_saturation_pct: 86,
-    historical_failures_count: 3,
-    ai_explanation: "Hill slopes between Bishnupur and Churachandpur border showing tension cracks. Road surface has localized water pooling.",
-    recommended_action: "Caution signboards deployed. Night freight convoy restrictions active.",
-    coordinates: [
-      [24.817, 93.936], // Imphal West
-      [24.630, 93.760], // Bishnupur
-      [24.330, 93.680], // Churachandpur
-    ],
-  },
-  // 11. SH-Mangan-Lachen North Sikkim Pass (RED - Cloudburst Mudflow)
-  {
-    id: "RD-SH-MANGAN-LACHEN",
-    road_number: "SH-NorthSikkim",
-    name: "Mangan ➔ Chungthang ➔ Lachen Frontier Pass",
-    state: "Sikkim",
-    districts_traversed: ["Mangan", "Gangtok"],
-    risk_level: "CRITICAL",
-    risk_score: 91.0,
-    disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "High-Altitude Glacial Stream Overflow & Mudflow",
-    threat_time_window: "Active Road Closure (Next 24 Hours)",
-    precipitation_mm_24h: 104.0,
-    slope_gradient_deg: 44.0,
-    soil_saturation_pct: 99,
-    historical_failures_count: 9,
-    ai_explanation: "Cloudburst runoff has triggered severe debris slide at Chungthang culvert bridge. Heavy machinery mobilized for clearing.",
-    recommended_action: "Complete road closure. Army & Border Logistics convoys halted at Mangan.",
-    coordinates: [
-      [27.338, 88.606], // Gangtok
-      [27.510, 88.530], // Mangan
-      [27.600, 88.640], // Chungthang
-      [27.720, 88.550], // Lachen
-    ],
-  },
-];
+// State Vehicle Plate Prefixes and Sample Drivers
+const STATE_PLATE_PREFIX: Record<string, string> = {
+  "Arunachal Pradesh": "AR",
+  "Assam": "AS",
+  "Manipur": "MN",
+  "Meghalaya": "ML",
+  "Mizoram": "MZ",
+  "Nagaland": "NL",
+  "Sikkim": "SK",
+  "Tripura": "TR",
+};
 
-export const REGIONAL_ACTIVE_VEHICLES: HighwayVehicleEntity[] = [
-  {
-    id: "VEH-AS-01-GB-4819",
-    vehicle_number: "AS-01-GB-4819",
-    vehicle_type: "FUEL_TANKER",
-    type_label: "10-Wheeler Petroleum Tanker",
-    driver_name: "Biren Das",
-    driver_phone: "+91 98640 12345",
-    current_road_id: "RD-NH-6-SONAPUR",
-    current_road_name: "NH-6 Sonapur Tunnel Mountain Pass",
-    cargo: "20,000 Litres High Speed Diesel (IOCL)",
-    speed_kmh: 42,
-    lat: 25.140,
-    lng: 92.340,
-    threat_status: "IN_DANGER",
-    danger_distance_km: 3.8,
-    hazard_ahead_description: "Active Landslide & Mud Debris Blockage at Sonapur Tunnel (3.8 km ahead)",
-    state: "Meghalaya",
-    district: "East Jaintia Hills",
-  },
-  {
-    id: "VEH-AS-11-BC-3042",
-    vehicle_number: "AS-11-BC-3042",
-    vehicle_type: "HEAVY_TRUCK",
-    type_label: "14-Wheeler Essential Grain Carrier",
-    driver_name: "Rajesh Kalita",
-    driver_phone: "+91 94350 78901",
-    current_road_id: "RD-NH-37-KAZIRANGA",
-    current_road_name: "NH-37 Kaziranga Brahmaputra Highway",
-    cargo: "25 Metric Tonnes Rice (FCI Depot)",
-    speed_kmh: 52,
-    lat: 26.540,
-    lng: 93.120,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 11.4,
-    hazard_ahead_description: "Brahmaputra River Overtopping & Waterlogging (11.4 km ahead)",
-    state: "Assam",
-    district: "Golaghat",
-  },
-  {
-    id: "VEH-AR-01-M-9081",
-    vehicle_number: "AR-01-M-9081",
-    vehicle_type: "HEAVY_TRUCK",
-    type_label: "All-Terrain Mountain Cargo Carrier",
-    driver_name: "Tashi Norbu",
-    driver_phone: "+91 94360 45678",
-    current_road_id: "RD-NH-13-TAWANG",
-    current_road_name: "NH-13 Trans-Arunachal & Sela Pass",
-    cargo: "Medical Gas Cylinders & High-Altitude Ration",
-    speed_kmh: 34,
-    lat: 27.460,
-    lng: 92.140,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 6.2,
-    hazard_ahead_description: "Sub-zero Black Ice Glaze & Rockfall Risk (6.2 km ahead)",
-    state: "Arunachal Pradesh",
-    district: "Tawang",
-  },
-  {
-    id: "VEH-SK-01-P-5511",
-    vehicle_number: "SK-01-P-5511",
-    vehicle_type: "FUEL_TANKER",
-    type_label: "LPG Bulk Cryogenic Tanker",
-    driver_name: "Pema Bhutia",
-    driver_phone: "+91 98320 88776",
-    current_road_id: "RD-NH-10-GANGTOK",
-    current_road_name: "NH-10 Teesta Valley Lifeline",
-    cargo: "14 MT Liquid Petroleum Gas (Indane)",
-    speed_kmh: 28,
-    lat: 27.190,
-    lng: 88.540,
-    threat_status: "IN_DANGER",
-    danger_distance_km: 2.1,
-    hazard_ahead_description: "Teesta River 29th Mile Embankment Washout (2.1 km ahead)",
-    state: "Sikkim",
-    district: "Pakyong",
-  },
-  {
-    id: "VEH-MZ-01-A-4422",
-    vehicle_number: "MZ-01-A-4422",
-    vehicle_type: "AMBULANCE",
-    type_label: "Advanced Life Support Ambulance",
-    driver_name: "Lalhmingthanga",
-    driver_phone: "+91 98620 54321",
-    current_road_id: "RD-NH-306-AIZAWL",
-    current_road_name: "NH-306 Southern Arterial",
-    cargo: "Emergency Patient Transit & Plasma Units",
-    speed_kmh: 58,
-    lat: 24.320,
-    lng: 92.690,
-    threat_status: "SAFE",
-    danger_distance_km: 0,
-    hazard_ahead_description: "Moderate hill rain - clear transit with caution",
-    state: "Mizoram",
-    district: "Kolasib",
-  },
-  {
-    id: "VEH-NL-07-C-1290",
-    vehicle_number: "NL-07-C-1290",
-    vehicle_type: "RATION_CARRIER",
-    type_label: "Multi-Axle Supply Truck",
-    driver_name: "Kevichusa Angami",
-    driver_phone: "+91 94360 11223",
-    current_road_id: "RD-NH-2-KOHIMA",
-    current_road_name: "NH-2 Trans-Hills Corridor",
-    cargo: "Essential Baby Food & Medical Supplies",
-    speed_kmh: 38,
-    lat: 25.540,
-    lng: 94.080,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 5.5,
-    hazard_ahead_description: "Pagala Pahar Sinking Zone Soil Displacement (5.5 km ahead)",
-    state: "Nagaland",
-    district: "Kohima",
-  },
-  {
-    id: "VEH-AS-01-X-8800",
-    vehicle_number: "AS-01-X-8800",
-    vehicle_type: "CRANE_EXCAVATOR",
-    type_label: "PWD Heavy Hydraulic Crane & Clearer",
-    driver_name: "Hemanta Bora",
-    driver_phone: "+91 98640 99001",
-    current_road_id: "RD-HAFLONG-BYPASS",
-    current_road_name: "Haflong-Umrangso Green Bypass",
-    cargo: "Disaster Road Clearance Gear & Earthmovers",
-    speed_kmh: 30,
-    lat: 25.220,
-    lng: 92.980,
-    threat_status: "SAFE",
-    danger_distance_km: 0,
-    hazard_ahead_description: "All-weather bypass clear and secure",
-    state: "Assam",
-    district: "Dima Hasao",
-  },
-  {
-    id: "VEH-AS-01-K-7712",
-    vehicle_number: "AS-01-K-7712",
-    vehicle_type: "RESCUE_CONVOY",
-    type_label: "SDRF Disaster Response Fleet Van",
-    driver_name: "Manoj Sharma",
-    driver_phone: "+91 94350 44556",
-    current_road_id: "RD-NH-27-EXPRESS",
-    current_road_name: "NH-27 East-West Expressway",
-    cargo: "Inflatable Rescue Boats & De-watering Pumps",
-    speed_kmh: 68,
-    lat: 26.160,
-    lng: 91.800,
-    threat_status: "SAFE",
-    danger_distance_km: 0,
-    hazard_ahead_description: "4-lane expressway clear high speed transit",
-    state: "Assam",
-    district: "Kamrup Metropolitan",
-  },
-  {
-    id: "VEH-TR-01-T-3321",
-    vehicle_number: "TR-01-T-3321",
-    vehicle_type: "HEAVY_TRUCK",
-    type_label: "Tripura State Lifeline Freight Truck",
-    driver_name: "Biplab Debbarma",
-    driver_phone: "+91 98630 11998",
-    current_road_id: "RD-NH-8-AGARTALA",
-    current_road_name: "NH-8 Southern Link Corridor",
-    cargo: "Essential Pharmaceutical Syrups & Tablets",
-    speed_kmh: 54,
-    lat: 23.860,
-    lng: 91.320,
-    threat_status: "SAFE",
-    danger_distance_km: 0,
-    hazard_ahead_description: "Bituminous highway clear with good visibility",
-    state: "Tripura",
-    district: "West Tripura",
-  },
-  {
-    id: "VEH-MN-01-I-6644",
-    vehicle_number: "MN-01-I-6644",
-    vehicle_type: "RATION_CARRIER",
-    type_label: "Hill Route Cargo Carrier",
-    driver_name: "Tomba Singh",
-    driver_phone: "+91 98560 33221",
-    current_road_id: "RD-NH-102B-CHURA",
-    current_road_name: "NH-102B Imphal-Churachandpur Road",
-    cargo: "Dry Rations & Water Purification Kits",
-    speed_kmh: 36,
-    lat: 24.550,
-    lng: 93.740,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 4.8,
-    hazard_ahead_description: "Tension cracks on road shoulder & water puddles",
-    state: "Manipur",
-    district: "Churachandpur",
-  },
-];
+const SAMPLE_DRIVERS: Record<string, { name: string; phone: string }[]> = {
+  "Arunachal Pradesh": [
+    { name: "Tashi Norbu", phone: "+91 94360 12001" },
+    { name: "Dorjee Khandu", phone: "+91 94360 45678" },
+    { name: "Wangdi Lama", phone: "+91 94360 99881" },
+  ],
+  "Assam": [
+    { name: "Biren Das", phone: "+91 98640 12345" },
+    { name: "Rajesh Kalita", phone: "+91 94350 78901" },
+    { name: "Hemanta Bora", phone: "+91 98640 99001" },
+  ],
+  "Manipur": [
+    { name: "Tomba Singh", phone: "+91 98560 33221" },
+    { name: "Ibomcha Meitei", phone: "+91 98560 44112" },
+    { name: "Haokip Thangboi", phone: "+91 98560 55889" },
+  ],
+  "Meghalaya": [
+    { name: "Kyrmenlang Dkhar", phone: "+91 98630 44551" },
+    { name: "Pynskhem Marak", phone: "+91 98630 77112" },
+    { name: "Banrap Lyngdoh", phone: "+91 98630 88223" },
+  ],
+  "Mizoram": [
+    { name: "Lalhmingthanga", phone: "+91 98620 54321" },
+    { name: "Zosangliana", phone: "+91 98620 99002" },
+    { name: "Vanlalrema", phone: "+91 98620 33441" },
+  ],
+  "Nagaland": [
+    { name: "Kevichusa Angami", phone: "+91 94360 11223" },
+    { name: "Imotemsu Ao", phone: "+91 94360 77889" },
+    { name: "Chubameren Jamir", phone: "+91 94360 99441" },
+  ],
+  "Sikkim": [
+    { name: "Pema Bhutia", phone: "+91 98320 88776" },
+    { name: "Sonam Lepcha", phone: "+91 98320 44112" },
+    { name: "Karma Tshering", phone: "+91 98320 55667" },
+  ],
+  "Tripura": [
+    { name: "Biplab Debbarma", phone: "+91 98630 11998" },
+    { name: "Subrata Roy", phone: "+91 98630 33445" },
+    { name: "Ratan Jamatia", phone: "+91 98630 55667" },
+  ],
+};
+
+// Helper: Generate dynamic Roads and Vehicles for any state/district
+export function generateScopeRoadsAndVehicles(stateName: string, districtName: string): { roads: HighwayRiskEntity[]; vehicles: HighwayVehicleEntity[] } {
+  const roads: HighwayRiskEntity[] = [];
+  const vehicles: HighwayVehicleEntity[] = [];
+
+  // Determine target districts
+  let targetDistricts: { name: string; state: string }[] = [];
+
+  if (districtName !== "ALL") {
+    // Single district selected
+    const st = stateName !== "ALL" ? stateName : Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(districtName)) || "Assam";
+    targetDistricts.push({ name: districtName, state: st });
+  } else if (stateName !== "ALL") {
+    // Whole state selected: include all its districts
+    const distList = (NER_DISTRICTS as any)[stateName] || [];
+    distList.forEach((d: string) => targetDistricts.push({ name: d, state: stateName }));
+  } else {
+    // All NER: pick 12 representative districts across all 8 states
+    const sample = ["East Jaintia Hills", "Kamrup Metropolitan", "Golaghat", "Tawang", "Gangtok", "Mangan", "Aizawl", "Kohima", "Churachandpur", "West Tripura", "Dima Hasao", "Papum Pare"];
+    sample.forEach((d) => {
+      const st = Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(d)) || "Assam";
+      targetDistricts.push({ name: d, state: st });
+    });
+  }
+
+  // Build roads and vehicles for each target district
+  targetDistricts.forEach((td, dIdx) => {
+    const meta = DISTRICT_CENTERS[td.name] || {
+      center: [26.15 + (dIdx % 4) * 0.4, 92.80 + (dIdx % 5) * 0.4] as [number, number],
+      zoom: 11,
+      weather: "Monsoon Rain • 24°C",
+      risk: (dIdx % 4 === 0 ? "CRITICAL" : dIdx % 4 === 1 ? "HIGH" : dIdx % 4 === 2 ? "MEDIUM" : "LOW") as any,
+      roadCode: "NH-" + (10 + (dIdx % 30)),
+    };
+
+    const [cLat, cLng] = meta.center;
+    const roadId = `RD-${td.name.toUpperCase().replace(/\s+/g, "-")}-MAIN`;
+    const roadCode = meta.roadCode;
+
+    // Build 2 roads per district:
+    // 1. Primary Arterial (North-South / Ridge Transit)
+    const riskScore = meta.risk === "CRITICAL" ? 88.5 : meta.risk === "HIGH" ? 68.0 : meta.risk === "MEDIUM" ? 45.0 : 18.0;
+    const precip = meta.risk === "CRITICAL" ? 92.0 : meta.risk === "HIGH" ? 65.0 : meta.risk === "MEDIUM" ? 38.0 : 14.0;
+    const slope = meta.risk === "CRITICAL" ? 38.5 : meta.risk === "HIGH" ? 31.0 : meta.risk === "MEDIUM" ? 18.0 : 6.5;
+    const soilSat = meta.risk === "CRITICAL" ? 96 : meta.risk === "HIGH" ? 88 : meta.risk === "MEDIUM" ? 64 : 32;
+
+    const disasterTitle =
+      meta.risk === "CRITICAL"
+        ? "Active Mountain Landslide & Highway Blockage"
+        : meta.risk === "HIGH"
+        ? "River Surge & Embankment Erosion Hazard"
+        : meta.risk === "MEDIUM"
+        ? "Torrential Monsoon Slush & Braking Caution"
+        : "Clear All-Weather High-Speed Transit";
+
+    const aiExp =
+      meta.risk === "CRITICAL"
+        ? `Sustained ${precip}mm rainfall combined with ${slope}° slope gradient has saturated soil to ${soilSat}%, triggering active slope displacement near the district mountain pass.`
+        : meta.risk === "HIGH"
+        ? `Elevated water table and continuous precipitation (${precip}mm) creating road shoulder slippage and localized waterlogging.`
+        : meta.risk === "MEDIUM"
+        ? `Moderate rainfall (${precip}mm) with surface runoff. Road foundation remains stable with 15% increased braking distances.`
+        : `Elevated 2/4-lane bituminous highway with active automated drainage and zero structural vulnerabilities.`;
+
+    const actionSOP =
+      meta.risk === "CRITICAL"
+        ? "Impose immediate emergency halt on heavy freight convoys; deploy SDRF and PWD clearing bulldozers."
+        : meta.risk === "HIGH"
+        ? "Restrict transit to single-lane single-file convoys; limit speeds to 30 km/h with 50m vehicle spacing."
+        : meta.risk === "MEDIUM"
+        ? "Maintain standard daytime transit speeds with headlights enabled; monitor water level gauges."
+        : "Standard operational transit approved for all civilian and commercial freight.";
+
+    // Coords for main road
+    const mainCoords: [number, number][] = [
+      [cLat - 0.09, cLng - 0.08],
+      [cLat - 0.04, cLng - 0.03],
+      [cLat, cLng],
+      [cLat + 0.05, cLng + 0.04],
+      [cLat + 0.10, cLng + 0.08],
+    ];
+
+    roads.push({
+      id: roadId,
+      road_number: roadCode,
+      name: `${roadCode} ${td.name} Lifeline Arterial Highway`,
+      state: td.state,
+      districts_traversed: [td.name],
+      risk_level: meta.risk,
+      risk_score: riskScore,
+      disaster_type: meta.risk === "CRITICAL" ? "LANDSLIDE_DEBRIS" : meta.risk === "HIGH" ? "FLASH_FLOOD_OVERFLOW" : meta.risk === "MEDIUM" ? "TORRENTIAL_RAINFALL" : "CLEAR_TRANSIT",
+      disaster_title: disasterTitle,
+      threat_time_window: meta.risk === "CRITICAL" ? "Next 2 to 6 Hours (Immediate Action)" : meta.risk === "HIGH" ? "Next 6 to 14 Hours" : "Safe Transit Window (48 Hours)",
+      precipitation_mm_24h: precip,
+      slope_gradient_deg: slope,
+      soil_saturation_pct: soilSat,
+      historical_failures_count: meta.risk === "CRITICAL" ? 7 : meta.risk === "HIGH" ? 4 : 1,
+      ai_explanation: aiExp,
+      recommended_action: actionSOP,
+      coordinates: mainCoords,
+    });
+
+    // 2. Secondary Cross-Connector Road (if district is focused or in state view)
+    if (districtName !== "ALL" || targetDistricts.length <= 8) {
+      const secRisk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" = meta.risk === "CRITICAL" ? "HIGH" : meta.risk === "HIGH" ? "MEDIUM" : "LOW";
+      const secCoords: [number, number][] = [
+        [cLat + 0.06, cLng - 0.09],
+        [cLat + 0.02, cLng - 0.04],
+        [cLat, cLng],
+        [cLat - 0.03, cLng + 0.05],
+        [cLat - 0.07, cLng + 0.09],
+      ];
+
+      roads.push({
+        id: `${roadId}-CROSS`,
+        road_number: `SH-${td.name.substring(0, 4).toUpperCase()}`,
+        name: `${td.name} Regional Green Bypass & Collector Corridor`,
+        state: td.state,
+        districts_traversed: [td.name],
+        risk_level: secRisk,
+        risk_score: secRisk === "HIGH" ? 58.0 : secRisk === "MEDIUM" ? 35.0 : 15.0,
+        disaster_type: secRisk === "HIGH" ? "FLASH_FLOOD_OVERFLOW" : "CLEAR_TRANSIT",
+        disaster_title: secRisk === "HIGH" ? "River Basin Drainage Inundation" : "Safe Detour Alternative Route",
+        threat_time_window: "Next 12 to 24 Hours",
+        precipitation_mm_24h: precip * 0.7,
+        slope_gradient_deg: Math.max(3, slope * 0.6),
+        soil_saturation_pct: Math.max(25, soilSat * 0.7),
+        historical_failures_count: 0,
+        ai_explanation: `Secondary feeder corridor with stable retaining walls providing alternative transit through ${td.name}.`,
+        recommended_action: "Recommended secondary bypass if primary arterial experiences bottlenecking.",
+        coordinates: secCoords,
+      });
+    }
+
+    // Generate Vehicles for this district
+    const platePrefix = STATE_PLATE_PREFIX[td.state] || "NER";
+    const drivers = SAMPLE_DRIVERS[td.state] || [
+      { name: "Rajesh Kumar", phone: "+91 94350 11223" },
+      { name: "Devendra Das", phone: "+91 98640 44556" },
+    ];
+    const driver1 = drivers[dIdx % drivers.length];
+    const driver2 = drivers[(dIdx + 1) % drivers.length];
+
+    // Vehicle 1: Freight / Tanker on main road
+    const isDanger1 = meta.risk === "CRITICAL";
+    const isWarning1 = meta.risk === "HIGH";
+    vehicles.push({
+      id: `VEH-${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-A-${1000 + dIdx * 37}`,
+      vehicle_number: `${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-A-${1000 + dIdx * 37}`,
+      vehicle_type: dIdx % 3 === 0 ? "FUEL_TANKER" : dIdx % 3 === 1 ? "HEAVY_TRUCK" : "RATION_CARRIER",
+      type_label: dIdx % 3 === 0 ? "20,000L Petroleum Fuel Tanker" : dIdx % 3 === 1 ? "14-Wheeler Essential Grain Carrier" : "High-Altitude Ration Convoy",
+      driver_name: driver1.name,
+      driver_phone: driver1.phone,
+      current_road_id: roadId,
+      current_road_name: `${roadCode} ${td.name} Lifeline Arterial`,
+      cargo: dIdx % 3 === 0 ? "20,000 Litres Diesel (IOCL Depot)" : "25 MT Food Grains (FCI Transit)",
+      speed_kmh: isDanger1 ? 32 : isWarning1 ? 44 : 58,
+      lat: cLat + (isDanger1 ? 0.02 : 0.04),
+      lng: cLng + (isDanger1 ? 0.015 : 0.035),
+      threat_status: isDanger1 ? "IN_DANGER" : isWarning1 ? "APPROACHING_HAZARD" : "SAFE",
+      danger_distance_km: isDanger1 ? 2.4 : isWarning1 ? 6.8 : 0,
+      hazard_ahead_description: isDanger1
+        ? `Active Landslide & Slope Mudflow (2.4 km ahead in ${td.name})`
+        : isWarning1
+        ? `River Surge Waterlogging & Soil Subsidence (6.8 km ahead)`
+        : "Route is stable and all-weather clear.",
+      state: td.state,
+      district: td.name,
+    });
+
+    // Vehicle 2: Emergency / SDRF / Patrol on secondary route
+    const isDanger2 = meta.risk === "CRITICAL";
+    vehicles.push({
+      id: `VEH-${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-E-${2000 + dIdx * 43}`,
+      vehicle_number: `${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-E-${2000 + dIdx * 43}`,
+      vehicle_type: dIdx % 2 === 0 ? "AMBULANCE" : "RESCUE_CONVOY",
+      type_label: dIdx % 2 === 0 ? "Advanced Life Support Ambulance" : "SDRF Disaster Quick-Response Fleet",
+      driver_name: driver2.name,
+      driver_phone: driver2.phone,
+      current_road_id: `${roadId}-CROSS`,
+      current_road_name: `${td.name} Green Collector Bypass`,
+      cargo: dIdx % 2 === 0 ? "Emergency Medical Transit & Oxygen" : "Disaster Relief Kits & Water Pumps",
+      speed_kmh: 52,
+      lat: cLat - 0.025,
+      lng: cLng + 0.03,
+      threat_status: isDanger2 ? "APPROACHING_HAZARD" : "SAFE",
+      danger_distance_km: isDanger2 ? 5.1 : 0,
+      hazard_ahead_description: isDanger2 ? "Approaching rain-affected junction" : "Clear Transit",
+      state: td.state,
+      district: td.name,
+    });
+  });
+
+  return { roads, vehicles };
+}
 
 export const CentralAdminRegionalRiskMap: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const polylinesRef = useRef<any[]>([]);
-  const markersRef = useRef<any[]>([]);
   const vehicleMarkersRef = useRef<any[]>([]);
 
   // State & District interactive filters
@@ -661,7 +501,22 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
   const [filterRisk, setFilterRisk] = useState<string>("ALL");
   const [mapStyle, setMapStyle] = useState<"LIGHT" | "TERRAIN" | "SATELLITE">("LIGHT");
 
-  const [selectedHighway, setSelectedHighway] = useState<HighwayRiskEntity | null>(REGIONAL_HIGHWAYS_DATA[0]);
+  // Dynamic roads & vehicles generation based on selected scope
+  const { roads: scopeRoads, vehicles: scopeVehicles } = useMemo(() => {
+    return generateScopeRoadsAndVehicles(selectedState, selectedDistrict);
+  }, [selectedState, selectedDistrict]);
+
+  // Filtered lists with danger severity filter
+  const filteredHighways = useMemo(() => {
+    if (filterRisk === "ALL") return scopeRoads;
+    return scopeRoads.filter((r) => r.risk_level === filterRisk);
+  }, [scopeRoads, filterRisk]);
+
+  const filteredVehicles = useMemo(() => {
+    return scopeVehicles;
+  }, [scopeVehicles]);
+
+  const [selectedHighway, setSelectedHighway] = useState<HighwayRiskEntity | null>(null);
   const [selectedVehicle, setSelectedVehicle] = useState<HighwayVehicleEntity | null>(null);
   const [voiceSpeaking, setVoiceSpeaking] = useState<boolean>(false);
 
@@ -672,7 +527,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
   const [dispatchSuccessMsg, setDispatchSuccessMsg] = useState<string | null>(null);
 
   // Available districts for chosen state
-  const availableDistricts = React.useMemo(() => {
+  const availableDistricts = useMemo(() => {
     if (selectedState === "ALL") {
       const all: string[] = [];
       Object.values(NER_DISTRICTS).forEach((distList) => {
@@ -685,45 +540,23 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     return (NER_DISTRICTS as any)[selectedState] || [];
   }, [selectedState]);
 
-  // Filter highways based on State, District, and Risk
-  const filteredHighways = React.useMemo(() => {
-    return REGIONAL_HIGHWAYS_DATA.filter((hw) => {
-      // State match
-      if (selectedState !== "ALL" && !hw.state.includes(selectedState)) {
-        const stateDistricts = (NER_DISTRICTS as any)[selectedState] || [];
-        const hasStateDistrict = hw.districts_traversed.some((d) => stateDistricts.includes(d));
-        if (!hasStateDistrict) return false;
-      }
-      // District match
-      if (selectedDistrict !== "ALL") {
-        const matchesDistrict = hw.districts_traversed.some((d) =>
-          d.toLowerCase().includes(selectedDistrict.toLowerCase())
-        );
-        if (!matchesDistrict) return false;
-      }
-      // Risk filter
-      if (filterRisk !== "ALL" && hw.risk_level !== filterRisk) return false;
-
-      return true;
-    });
-  }, [selectedState, selectedDistrict, filterRisk]);
-
-  // Filter vehicles based on State and District
-  const filteredVehicles = React.useMemo(() => {
-    return REGIONAL_ACTIVE_VEHICLES.filter((v) => {
-      if (selectedState !== "ALL" && !v.state.includes(selectedState)) return false;
-      if (selectedDistrict !== "ALL" && !v.district.toLowerCase().includes(selectedDistrict.toLowerCase())) return false;
-      return true;
-    });
-  }, [selectedState, selectedDistrict]);
-
   // Current District KPI & Context Metadata
-  const currentDistrictMeta = React.useMemo(() => {
+  const currentDistrictMeta = useMemo(() => {
     if (selectedDistrict !== "ALL" && DISTRICT_CENTERS[selectedDistrict]) {
       return DISTRICT_CENTERS[selectedDistrict];
     }
     return null;
   }, [selectedDistrict]);
+
+  // Auto-select primary highway when scope changes
+  useEffect(() => {
+    if (filteredHighways.length > 0) {
+      // Prefer a critical or high risk road, or first road
+      const prime = filteredHighways.find((r) => r.risk_level === "CRITICAL") || filteredHighways.find((r) => r.risk_level === "HIGH") || filteredHighways[0];
+      setSelectedHighway(prime);
+    }
+    setSelectedVehicle(null);
+  }, [selectedState, selectedDistrict, filterRisk]);
 
   // Handle State Change
   const handleStateChange = (stateName: string) => {
@@ -822,12 +655,11 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     const map = L.map(mapContainerRef.current, {
       center: [26.15, 92.80],
       zoom: 7,
-      minZoom: 6,
+      minZoom: 5,
       maxZoom: 18,
       zoomControl: false,
     });
 
-    // High quality reliable tile URLs with 0 watermarks
     const tileUrls = {
       LIGHT: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       TERRAIN: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
@@ -880,8 +712,6 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     // Clear previous polylines & markers
     polylinesRef.current.forEach((p) => map.removeLayer(p));
     polylinesRef.current = [];
-    markersRef.current.forEach((m) => map.removeLayer(m));
-    markersRef.current = [];
     vehicleMarkersRef.current.forEach((vm) => map.removeLayer(vm));
     vehicleMarkersRef.current = [];
 
@@ -896,7 +726,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
       else if (hw.risk_level === "MEDIUM") color = "#F59E0B"; // YELLOW - Rain Caution
 
       const weight = isSelected ? 8 : 5;
-      const opacity = isSelected ? 1.0 : 0.75;
+      const opacity = isSelected ? 1.0 : 0.85;
 
       const polyline = L.polyline(hw.coordinates, {
         color: color,
@@ -909,8 +739,8 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
       if (hw.risk_level === "CRITICAL") {
         const glowLine = L.polyline(hw.coordinates, {
           color: "#EF4444",
-          weight: 12,
-          opacity: 0.25,
+          weight: 14,
+          opacity: 0.3,
           lineJoin: "round",
         }).addTo(map);
         polylinesRef.current.push(glowLine);
@@ -919,7 +749,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
       polyline.bindTooltip(
         `<div style="font-family: sans-serif; font-size: 11px; padding: 2px;">
           <b style="color: #0F172A; font-size: 12px;">${hw.road_number}: ${hw.name}</b><br/>
-          <b>State/Districts:</b> ${hw.districts_traversed.join(", ")}<br/>
+          <b>State/Districts:</b> ${hw.districts_traversed.join(", ")} (${hw.state})<br/>
           <b>Risk Status:</b> <span style="color:${color}; font-weight:800;">${hw.risk_level} (${hw.risk_score}/100)</span><br/>
           <b>Hazard:</b> ${hw.disaster_title}<br/>
           <b>Threat Window:</b> ${hw.threat_time_window}<br/>
@@ -954,7 +784,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
               ${veh.vehicle_type === "FUEL_TANKER" ? "⛽" : veh.vehicle_type === "AMBULANCE" ? "🚑" : veh.vehicle_type === "CRANE_EXCAVATOR" ? "🚜" : veh.vehicle_type === "RESCUE_CONVOY" ? "🛡️" : "🚚"}
             </div>
             <div style="position: absolute; bottom: -9px; background-color: ${badgeBg}; color: white; font-size: 8px; font-weight: 800; font-family: monospace; padding: 1px 4px; border-radius: 4px; border: 1px solid white; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-              ${veh.vehicle_number.split("-")[1] || veh.vehicle_number}
+              ${veh.vehicle_number.split("-")[0] || "TRUCK"}-${veh.vehicle_number.split("-")[1] || "01"}
             </div>
           </div>
         `,
@@ -980,13 +810,13 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
 
       vehMarker.on("click", () => {
         setSelectedVehicle(veh);
-        const relatedHw = REGIONAL_HIGHWAYS_DATA.find((h) => h.id === veh.current_road_id);
+        const relatedHw = scopeRoads.find((h) => h.id === veh.current_road_id);
         if (relatedHw) setSelectedHighway(relatedHw);
       });
 
       vehicleMarkersRef.current.push(vehMarker);
     });
-  }, [filteredHighways, filteredVehicles, selectedHighway, selectedVehicle]);
+  }, [filteredHighways, filteredVehicles, selectedHighway, selectedVehicle, scopeRoads]);
 
   return (
     <div className="space-y-4 font-sans text-stone-900">
@@ -1001,7 +831,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-black text-stone-900 tracking-tight">
-                  NER Command GIS Map &amp; Spatial Risk Intelligence
+                  NER Central Command GIS Spatial Intelligence
                 </h2>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
                   Live Telemetry Active
@@ -1122,7 +952,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
           <div className="p-3 rounded-2xl bg-stone-900 text-white flex flex-wrap items-center justify-between gap-3 text-xs animate-in fade-in font-mono">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-bold">District Focus: {selectedDistrict} ({selectedState})</span>
+              <span className="font-bold">District Focus: {selectedDistrict} ({selectedState !== "ALL" ? selectedState : "NER"})</span>
               <span className="text-stone-400">|</span>
               <span className="text-stone-300">Weather: {currentDistrictMeta.weather}</span>
             </div>
@@ -1216,7 +1046,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
                 <span>🔴 Critical Landslide</span>
               </div>
               <div className="flex items-center gap-1.5 col-span-2 pt-1 border-t border-stone-200 text-stone-900 font-semibold">
-                <span className="text-sm">⛽🚚🚑</span>
+                <span className="text-sm">⛽🚚🚑🚜</span>
                 <span>Active Convoys (Click to Call/Halt)</span>
               </div>
             </div>
@@ -1344,7 +1174,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
                     {selectedHighway.name}
                   </h3>
                   <div className="text-[11px] text-stone-500 font-medium">
-                    State / Districts: <span className="text-stone-800 font-semibold">{selectedHighway.districts_traversed.join(", ")}</span>
+                    State / District: <span className="text-stone-800 font-semibold">{selectedHighway.districts_traversed.join(", ")}, {selectedHighway.state}</span>
                   </div>
                 </div>
 
