@@ -54,6 +54,7 @@ export interface HighwayVehicleEntity {
   hazard_ahead_description: string;
   state: string;
   district: string;
+  waypointIndex?: number;
 }
 
 export interface HighwayRiskEntity {
@@ -92,7 +93,7 @@ export const STATE_CENTERS: Record<string, { center: [number, number]; zoom: num
 // Comprehensive District Center Coordinates, Weather, and Geological Risk Profiles
 export const DISTRICT_CENTERS: Record<string, { center: [number, number]; zoom: number; weather: string; risk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL"; roadCode: string }> = {
   // --- Arunachal Pradesh (26 Districts) ---
-  "Tawang": { center: [27.586, 91.866], zoom: 11, weather: "Freezing Rain • 4°C", risk: "CRITICAL", roadCode: "NH-13" },
+  "Tawang": { center: [27.586, 91.866], zoom: 12, weather: "Freezing Snow Squalls • -2°C", risk: "CRITICAL", roadCode: "NH-13" },
   "West Kameng": { center: [27.264, 92.416], zoom: 11, weather: "Chilly Slush • 9°C", risk: "HIGH", roadCode: "NH-13" },
   "East Kameng": { center: [27.300, 93.000], zoom: 11, weather: "Cloudy Hills • 14°C", risk: "MEDIUM", roadCode: "SH-Seppa" },
   "Papum Pare": { center: [27.100, 93.600], zoom: 11, weather: "Passing Rain • 22°C", risk: "LOW", roadCode: "NH-415" },
@@ -254,46 +255,118 @@ const SAMPLE_DRIVERS: Record<string, { name: string; phone: string }[]> = {
   "Arunachal Pradesh": [
     { name: "Tashi Norbu", phone: "+91 94360 12001" },
     { name: "Dorjee Khandu", phone: "+91 94360 45678" },
+    { name: "Pemba Tsering", phone: "+91 94360 77112" },
     { name: "Wangdi Lama", phone: "+91 94360 99881" },
+    { name: "Sangey Lhamo", phone: "+91 94360 33445" },
+    { name: "Lobsang Gyatso", phone: "+91 94360 88221" },
+    { name: "Karma Wangchuk", phone: "+91 94360 66554" },
+    { name: "Sonam Dawa", phone: "+91 94360 22334" },
+    { name: "Tenzin Rabgye", phone: "+91 94360 55443" },
+    { name: "Rinzin Dorjee", phone: "+91 94360 11998" },
+    { name: "Phuntsho Namgyal", phone: "+91 94360 77665" },
+    { name: "Jigme Thinley", phone: "+91 94360 88990" },
   ],
   "Assam": [
     { name: "Biren Das", phone: "+91 98640 12345" },
     { name: "Rajesh Kalita", phone: "+91 94350 78901" },
     { name: "Hemanta Bora", phone: "+91 98640 99001" },
+    { name: "Manoj Sharma", phone: "+91 94350 44556" },
+    { name: "Dipankar Saikia", phone: "+91 98640 66778" },
+    { name: "Utpal Barman", phone: "+91 94350 11223" },
+    { name: "Nayan Jyoti Nath", phone: "+91 98640 55441" },
+    { name: "Pranab Gogoi", phone: "+91 94350 99887" },
+    { name: "Ranjit Hazarika", phone: "+91 98640 33221" },
+    { name: "Babul Medhi", phone: "+91 94350 77665" },
+    { name: "Jatin Deka", phone: "+91 98640 88992" },
+    { name: "Tarun Chutia", phone: "+91 94350 44332" },
   ],
   "Manipur": [
     { name: "Tomba Singh", phone: "+91 98560 33221" },
     { name: "Ibomcha Meitei", phone: "+91 98560 44112" },
     { name: "Haokip Thangboi", phone: "+91 98560 55889" },
+    { name: "Rameshwar Sharma", phone: "+91 98560 66778" },
+    { name: "Sanatomba Luwang", phone: "+91 98560 11223" },
+    { name: "Kipgen Seitinmang", phone: "+91 98560 99887" },
+    { name: "Ngangom Amarjit", phone: "+91 98560 77665" },
+    { name: "Chingkhei Nganba", phone: "+91 98560 22334" },
+    { name: "Leitanthem Biren", phone: "+91 98560 88990" },
+    { name: "Thangjam Surjit", phone: "+91 98560 44332" },
+    { name: "Mohen Laishram", phone: "+91 98560 55441" },
+    { name: "Herojit Khundrakpam", phone: "+91 98560 33119" },
   ],
   "Meghalaya": [
     { name: "Kyrmenlang Dkhar", phone: "+91 98630 44551" },
     { name: "Pynskhem Marak", phone: "+91 98630 77112" },
     { name: "Banrap Lyngdoh", phone: "+91 98630 88223" },
+    { name: "Sengbath Sangma", phone: "+91 98630 11998" },
+    { name: "Kitboklang Rapsang", phone: "+91 98630 55667" },
+    { name: "Wandapshisha Kharbhih", phone: "+91 98630 33445" },
+    { name: "Meban Pyngrope", phone: "+91 98630 99881" },
+    { name: "Daphishisha Nongrum", phone: "+91 98630 22113" },
+    { name: "Tengsak Momin", phone: "+91 98630 66779" },
+    { name: "Bantei Mylliemngap", phone: "+91 98630 77880" },
+    { name: "Chesterfield Shullai", phone: "+91 98630 44331" },
+    { name: "Lamphrang Syiemlieh", phone: "+91 98630 88994" },
   ],
   "Mizoram": [
     { name: "Lalhmingthanga", phone: "+91 98620 54321" },
     { name: "Zosangliana", phone: "+91 98620 99002" },
     { name: "Vanlalrema", phone: "+91 98620 33441" },
+    { name: "Lalremsanga", phone: "+91 98620 77889" },
+    { name: "Malsawmtluanga", phone: "+91 98620 11223" },
+    { name: "Laldinpuia", phone: "+91 98620 66554" },
+    { name: "Zorammuana", phone: "+91 98620 88990" },
+    { name: "Lalbiakhlua", phone: "+91 98620 22334" },
+    { name: "Vanlaltluanga", phone: "+91 98620 44556" },
+    { name: "Lalthakima", phone: "+91 98620 55441" },
+    { name: "C. Lalnuntluanga", phone: "+91 98620 99887" },
+    { name: "R. Zothansanga", phone: "+91 98620 77665" },
   ],
   "Nagaland": [
     { name: "Kevichusa Angami", phone: "+91 94360 11223" },
     { name: "Imotemsu Ao", phone: "+91 94360 77889" },
     { name: "Chubameren Jamir", phone: "+91 94360 99441" },
+    { name: "Nzanbemo Lotha", phone: "+91 94360 33445" },
+    { name: "Vesupra Vero", phone: "+91 94360 55667" },
+    { name: "Tiameren Pongen", phone: "+91 94360 88990" },
+    { name: "Ketholetuo Rio", phone: "+91 94360 22334" },
+    { name: "Sentiyanger Imchen", phone: "+91 94360 44556" },
+    { name: "Yanger Walling", phone: "+91 94360 66778" },
+    { name: "Mhathung Kikon", phone: "+91 94360 11998" },
+    { name: "Neiba Kronu", phone: "+91 94360 77665" },
+    { name: "Akumla Aier", phone: "+91 94360 99887" },
   ],
   "Sikkim": [
     { name: "Pema Bhutia", phone: "+91 98320 88776" },
     { name: "Sonam Lepcha", phone: "+91 98320 44112" },
     { name: "Karma Tshering", phone: "+91 98320 55667" },
+    { name: "Tashi Dadul", phone: "+91 98320 11998" },
+    { name: "Dawa Tamang", phone: "+91 98320 33445" },
+    { name: "Mingma Sherpa", phone: "+91 98320 99881" },
+    { name: "Lhakpa Gyalpo", phone: "+91 98320 77889" },
+    { name: "Phurba Lepcha", phone: "+91 98320 22334" },
+    { name: "Tshering Dorjee", phone: "+91 98320 66554" },
+    { name: "Passang Bhutia", phone: "+91 98320 88990" },
+    { name: "Norbu Rai", phone: "+91 98320 44556" },
+    { name: "Bikash Gurung", phone: "+91 98320 55441" },
   ],
   "Tripura": [
     { name: "Biplab Debbarma", phone: "+91 98630 11998" },
     { name: "Subrata Roy", phone: "+91 98630 33445" },
     { name: "Ratan Jamatia", phone: "+91 98630 55667" },
+    { name: "Dipak Tripura", phone: "+91 98630 88990" },
+    { name: "Anupam Das", phone: "+91 98630 22334" },
+    { name: "Prasenjit Chakraborty", phone: "+91 98630 44556" },
+    { name: "Bikram Reang", phone: "+91 98630 77889" },
+    { name: "Sanjoy Bhowmik", phone: "+91 98630 99881" },
+    { name: "Khokan Noatia", phone: "+91 98630 66554" },
+    { name: "Manoj Ghosh", phone: "+91 98630 11223" },
+    { name: "Suman Sarkar", phone: "+91 98630 77665" },
+    { name: "Kamal Chakma", phone: "+91 98630 88221" },
   ],
 };
 
-// Helper: Generate dynamic Roads and Vehicles for any state/district
+// Helper: Generate comprehensive multidirectional connected roads and 12-15 vehicles for any state/district
 export function generateScopeRoadsAndVehicles(stateName: string, districtName: string): { roads: HighwayRiskEntity[]; vehicles: HighwayVehicleEntity[] } {
   const roads: HighwayRiskEntity[] = [];
   const vehicles: HighwayVehicleEntity[] = [];
@@ -303,186 +376,223 @@ export function generateScopeRoadsAndVehicles(stateName: string, districtName: s
 
   if (districtName !== "ALL") {
     // Single district selected
-    const st = stateName !== "ALL" ? stateName : Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(districtName)) || "Assam";
+    const st = stateName !== "ALL" ? stateName : Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(districtName)) || "Arunachal Pradesh";
     targetDistricts.push({ name: districtName, state: st });
   } else if (stateName !== "ALL") {
     // Whole state selected: include all its districts
     const distList = (NER_DISTRICTS as any)[stateName] || [];
     distList.forEach((d: string) => targetDistricts.push({ name: d, state: stateName }));
   } else {
-    // All NER: pick 12 representative districts across all 8 states
-    const sample = ["East Jaintia Hills", "Kamrup Metropolitan", "Golaghat", "Tawang", "Gangtok", "Mangan", "Aizawl", "Kohima", "Churachandpur", "West Tripura", "Dima Hasao", "Papum Pare"];
+    // All NER: pick 10 representative districts across all 8 states
+    const sample = ["Tawang", "East Jaintia Hills", "Kamrup Metropolitan", "Golaghat", "Gangtok", "Mangan", "Aizawl", "Kohima", "Churachandpur", "West Tripura"];
     sample.forEach((d) => {
-      const st = Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(d)) || "Assam";
+      const st = Object.keys(NER_DISTRICTS).find((s) => (NER_DISTRICTS as any)[s].includes(d)) || "Arunachal Pradesh";
       targetDistricts.push({ name: d, state: st });
     });
   }
 
-  // Build roads and vehicles for each target district
+  // Build comprehensive connected roads and 12-15 vehicles for each target district
   targetDistricts.forEach((td, dIdx) => {
     const meta = DISTRICT_CENTERS[td.name] || {
-      center: [26.15 + (dIdx % 4) * 0.4, 92.80 + (dIdx % 5) * 0.4] as [number, number],
-      zoom: 11,
-      weather: "Monsoon Rain • 24°C",
-      risk: (dIdx % 4 === 0 ? "CRITICAL" : dIdx % 4 === 1 ? "HIGH" : dIdx % 4 === 2 ? "MEDIUM" : "LOW") as any,
-      roadCode: "NH-" + (10 + (dIdx % 30)),
+      center: [27.586, 91.866] as [number, number],
+      zoom: 12,
+      weather: "Freezing Snow Squalls • -2°C",
+      risk: "CRITICAL" as const,
+      roadCode: "NH-13",
     };
 
     const [cLat, cLng] = meta.center;
-    const roadId = `RD-${td.name.toUpperCase().replace(/\s+/g, "-")}-MAIN`;
     const roadCode = meta.roadCode;
+    const platePrefix = STATE_PLATE_PREFIX[td.state] || "AR";
+    const drivers = SAMPLE_DRIVERS[td.state] || SAMPLE_DRIVERS["Arunachal Pradesh"];
 
-    // Build 2 roads per district:
-    // 1. Primary Arterial (North-South / Ridge Transit)
-    const riskScore = meta.risk === "CRITICAL" ? 88.5 : meta.risk === "HIGH" ? 68.0 : meta.risk === "MEDIUM" ? 45.0 : 18.0;
-    const precip = meta.risk === "CRITICAL" ? 92.0 : meta.risk === "HIGH" ? 65.0 : meta.risk === "MEDIUM" ? 38.0 : 14.0;
-    const slope = meta.risk === "CRITICAL" ? 38.5 : meta.risk === "HIGH" ? 31.0 : meta.risk === "MEDIUM" ? 18.0 : 6.5;
-    const soilSat = meta.risk === "CRITICAL" ? 96 : meta.risk === "HIGH" ? 88 : meta.risk === "MEDIUM" ? 64 : 32;
-
-    const disasterTitle =
-      meta.risk === "CRITICAL"
-        ? "Active Mountain Landslide & Highway Blockage"
-        : meta.risk === "HIGH"
-        ? "River Surge & Embankment Erosion Hazard"
-        : meta.risk === "MEDIUM"
-        ? "Torrential Monsoon Slush & Braking Caution"
-        : "Clear All-Weather High-Speed Transit";
-
-    const aiExp =
-      meta.risk === "CRITICAL"
-        ? `Sustained ${precip}mm rainfall combined with ${slope}° slope gradient has saturated soil to ${soilSat}%, triggering active slope displacement near the district mountain pass.`
-        : meta.risk === "HIGH"
-        ? `Elevated water table and continuous precipitation (${precip}mm) creating road shoulder slippage and localized waterlogging.`
-        : meta.risk === "MEDIUM"
-        ? `Moderate rainfall (${precip}mm) with surface runoff. Road foundation remains stable with 15% increased braking distances.`
-        : `Elevated 2/4-lane bituminous highway with active automated drainage and zero structural vulnerabilities.`;
-
-    const actionSOP =
-      meta.risk === "CRITICAL"
-        ? "Impose immediate emergency halt on heavy freight convoys; deploy SDRF and PWD clearing bulldozers."
-        : meta.risk === "HIGH"
-        ? "Restrict transit to single-lane single-file convoys; limit speeds to 30 km/h with 50m vehicle spacing."
-        : meta.risk === "MEDIUM"
-        ? "Maintain standard daytime transit speeds with headlights enabled; monitor water level gauges."
-        : "Standard operational transit approved for all civilian and commercial freight.";
-
-    // Coords for main road
-    const mainCoords: [number, number][] = [
-      [cLat - 0.09, cLng - 0.08],
-      [cLat - 0.04, cLng - 0.03],
-      [cLat, cLng],
-      [cLat + 0.05, cLng + 0.04],
-      [cLat + 0.10, cLng + 0.08],
+    // Generate 5 Connected Multidirectional Corridors (North, South, East, West, Central Ring)
+    const CORRIDOR_SPECS: {
+      suffix: string;
+      nameTemplate: string;
+      code: string;
+      risk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+      disasterTitle: string;
+      coords: [number, number][];
+    }[] = [
+      {
+        // 1. North Corridor (High Mountain Pass / Frontier Line)
+        suffix: "NORTH",
+        nameTemplate: `${roadCode} ${td.name} North Frontier Ridge Pass (Bum La Sector)`,
+        code: `${roadCode}-N`,
+        risk: "CRITICAL",
+        disasterTitle: "Severe Mountain Landslide & Ice Glaze Blockage",
+        coords: [
+          [cLat - 0.02, cLng - 0.01],
+          [cLat + 0.03, cLng + 0.02],
+          [cLat + 0.07, cLng + 0.05],
+          [cLat + 0.12, cLng + 0.08],
+          [cLat + 0.16, cLng + 0.12],
+        ],
+      },
+      {
+        // 2. South Corridor (Valley Lifeline & Sela Tunnel Pass)
+        suffix: "SOUTH",
+        nameTemplate: `${roadCode} ${td.name} Southern Lifeline Arterial (Sela Tunnel Corridor)`,
+        code: `${roadCode}-S`,
+        risk: "HIGH",
+        disasterTitle: "Slope Subsidence & Falling Boulders Hazard",
+        coords: [
+          [cLat + 0.01, cLng + 0.01],
+          [cLat - 0.04, cLng - 0.02],
+          [cLat - 0.08, cLng - 0.06],
+          [cLat - 0.13, cLng - 0.09],
+          [cLat - 0.17, cLng - 0.14],
+        ],
+      },
+      {
+        // 3. East Corridor (River Valley Bypass / Hydro Dam Link)
+        suffix: "EAST",
+        nameTemplate: `SH-${td.name.substring(0, 4).toUpperCase()} Eastern River Basin Transit & Hydro Bypass`,
+        code: `SH-${td.name.substring(0, 3).toUpperCase()}-E`,
+        risk: "MEDIUM",
+        disasterTitle: "Torrential Mountain Slush & Braking Caution",
+        coords: [
+          [cLat - 0.03, cLng + 0.02],
+          [cLat + 0.01, cLng + 0.06],
+          [cLat + 0.04, cLng + 0.11],
+          [cLat + 0.06, cLng + 0.16],
+          [cLat + 0.09, cLng + 0.21],
+        ],
+      },
+      {
+        // 4. West Corridor (Highland Escarpment & Border Detour)
+        suffix: "WEST",
+        nameTemplate: `SH-${td.name.substring(0, 4).toUpperCase()} Western Lumla Collector Expressway`,
+        code: `SH-${td.name.substring(0, 3).toUpperCase()}-W`,
+        risk: "LOW",
+        disasterTitle: "Clear All-Weather High-Speed Reinforced Transit",
+        coords: [
+          [cLat + 0.02, cLng - 0.02],
+          [cLat - 0.02, cLng - 0.07],
+          [cLat - 0.05, cLng - 0.12],
+          [cLat - 0.08, cLng - 0.16],
+          [cLat - 0.12, cLng - 0.20],
+        ],
+      },
+      {
+        // 5. Central Ring / Urban Connector
+        suffix: "RING",
+        nameTemplate: `${td.name} District Central Strategic Bypass & Logistics Ring`,
+        code: `RING-${td.name.substring(0, 3).toUpperCase()}`,
+        risk: "LOW",
+        disasterTitle: "Safe Urban Emergency Logistics Corridor",
+        coords: [
+          [cLat - 0.04, cLng - 0.04],
+          [cLat + 0.04, cLng - 0.03],
+          [cLat + 0.05, cLng + 0.04],
+          [cLat - 0.03, cLng + 0.05],
+          [cLat - 0.04, cLng - 0.04],
+        ],
+      },
     ];
 
-    roads.push({
-      id: roadId,
-      road_number: roadCode,
-      name: `${roadCode} ${td.name} Lifeline Arterial Highway`,
-      state: td.state,
-      districts_traversed: [td.name],
-      risk_level: meta.risk,
-      risk_score: riskScore,
-      disaster_type: meta.risk === "CRITICAL" ? "LANDSLIDE_DEBRIS" : meta.risk === "HIGH" ? "FLASH_FLOOD_OVERFLOW" : meta.risk === "MEDIUM" ? "TORRENTIAL_RAINFALL" : "CLEAR_TRANSIT",
-      disaster_title: disasterTitle,
-      threat_time_window: meta.risk === "CRITICAL" ? "Next 2 to 6 Hours (Immediate Action)" : meta.risk === "HIGH" ? "Next 6 to 14 Hours" : "Safe Transit Window (48 Hours)",
-      precipitation_mm_24h: precip,
-      slope_gradient_deg: slope,
-      soil_saturation_pct: soilSat,
-      historical_failures_count: meta.risk === "CRITICAL" ? 7 : meta.risk === "HIGH" ? 4 : 1,
-      ai_explanation: aiExp,
-      recommended_action: actionSOP,
-      coordinates: mainCoords,
-    });
+    // Add roads
+    const createdDistrictRoads: HighwayRiskEntity[] = [];
+    CORRIDOR_SPECS.forEach((cs) => {
+      const riskScore = cs.risk === "CRITICAL" ? 89.0 : cs.risk === "HIGH" ? 71.0 : cs.risk === "MEDIUM" ? 45.0 : 16.0;
+      const precip = cs.risk === "CRITICAL" ? 96.0 : cs.risk === "HIGH" ? 68.0 : cs.risk === "MEDIUM" ? 38.0 : 12.0;
+      const slope = cs.risk === "CRITICAL" ? 39.5 : cs.risk === "HIGH" ? 32.0 : cs.risk === "MEDIUM" ? 19.0 : 5.5;
+      const soilSat = cs.risk === "CRITICAL" ? 97 : cs.risk === "HIGH" ? 89 : cs.risk === "MEDIUM" ? 62 : 30;
 
-    // 2. Secondary Cross-Connector Road (if district is focused or in state view)
-    if (districtName !== "ALL" || targetDistricts.length <= 8) {
-      const secRisk: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" = meta.risk === "CRITICAL" ? "HIGH" : meta.risk === "HIGH" ? "MEDIUM" : "LOW";
-      const secCoords: [number, number][] = [
-        [cLat + 0.06, cLng - 0.09],
-        [cLat + 0.02, cLng - 0.04],
-        [cLat, cLng],
-        [cLat - 0.03, cLng + 0.05],
-        [cLat - 0.07, cLng + 0.09],
-      ];
-
-      roads.push({
-        id: `${roadId}-CROSS`,
-        road_number: `SH-${td.name.substring(0, 4).toUpperCase()}`,
-        name: `${td.name} Regional Green Bypass & Collector Corridor`,
+      const roadObj: HighwayRiskEntity = {
+        id: `RD-${td.name.toUpperCase().replace(/\s+/g, "-")}-${cs.suffix}`,
+        road_number: cs.code,
+        name: cs.nameTemplate,
         state: td.state,
         districts_traversed: [td.name],
-        risk_level: secRisk,
-        risk_score: secRisk === "HIGH" ? 58.0 : secRisk === "MEDIUM" ? 35.0 : 15.0,
-        disaster_type: secRisk === "HIGH" ? "FLASH_FLOOD_OVERFLOW" : "CLEAR_TRANSIT",
-        disaster_title: secRisk === "HIGH" ? "River Basin Drainage Inundation" : "Safe Detour Alternative Route",
-        threat_time_window: "Next 12 to 24 Hours",
-        precipitation_mm_24h: precip * 0.7,
-        slope_gradient_deg: Math.max(3, slope * 0.6),
-        soil_saturation_pct: Math.max(25, soilSat * 0.7),
-        historical_failures_count: 0,
-        ai_explanation: `Secondary feeder corridor with stable retaining walls providing alternative transit through ${td.name}.`,
-        recommended_action: "Recommended secondary bypass if primary arterial experiences bottlenecking.",
-        coordinates: secCoords,
-      });
-    }
+        risk_level: cs.risk,
+        risk_score: riskScore,
+        disaster_type: cs.risk === "CRITICAL" ? "LANDSLIDE_DEBRIS" : cs.risk === "HIGH" ? "FLASH_FLOOD_OVERFLOW" : cs.risk === "MEDIUM" ? "TORRENTIAL_RAINFALL" : "CLEAR_TRANSIT",
+        disaster_title: cs.disasterTitle,
+        threat_time_window: cs.risk === "CRITICAL" ? "Next 1 to 4 Hours (Emergency Action)" : cs.risk === "HIGH" ? "Next 4 to 12 Hours" : "Safe Transit Window (48h)",
+        precipitation_mm_24h: precip,
+        slope_gradient_deg: slope,
+        soil_saturation_pct: soilSat,
+        historical_failures_count: cs.risk === "CRITICAL" ? 8 : cs.risk === "HIGH" ? 4 : 1,
+        ai_explanation:
+          cs.risk === "CRITICAL"
+            ? `Active high-altitude landslide and black ice accumulation on ${cs.nameTemplate}. Steep ${slope}° rockface experiencing intense soil saturation (${soilSat}%).`
+            : cs.risk === "HIGH"
+            ? `Sub-zero night freezing and river runoff causing shoulder subsidence and loose boulder falling hazard.`
+            : cs.risk === "MEDIUM"
+            ? `Moderate monsoon drizzle and mountain fog. Wet road surface with 15% increased braking distances.`
+            : `Engineered RCC retaining walls and reinforced asphalt corridor with zero obstructions.`,
+        recommended_action:
+          cs.risk === "CRITICAL"
+            ? "Impose total convoy halt; deploy BRO heavy snow blowers & excavators from Jaswant Garh depot."
+            : cs.risk === "HIGH"
+            ? "Mandate single-file convoy spacing with 50m separation; restrict night movement for 10+ wheelers."
+            : cs.risk === "MEDIUM"
+            ? "Paced convoy transit approved with anti-skid tire chains and emergency spotters."
+            : "All freight and civilian transit fully cleared for unrestricted high-speed operations.",
+        coordinates: cs.coords,
+      };
 
-    // Generate Vehicles for this district
-    const platePrefix = STATE_PLATE_PREFIX[td.state] || "NER";
-    const drivers = SAMPLE_DRIVERS[td.state] || [
-      { name: "Rajesh Kumar", phone: "+91 94350 11223" },
-      { name: "Devendra Das", phone: "+91 98640 44556" },
-    ];
-    const driver1 = drivers[dIdx % drivers.length];
-    const driver2 = drivers[(dIdx + 1) % drivers.length];
-
-    // Vehicle 1: Freight / Tanker on main road
-    const isDanger1 = meta.risk === "CRITICAL";
-    const isWarning1 = meta.risk === "HIGH";
-    vehicles.push({
-      id: `VEH-${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-A-${1000 + dIdx * 37}`,
-      vehicle_number: `${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-A-${1000 + dIdx * 37}`,
-      vehicle_type: dIdx % 3 === 0 ? "FUEL_TANKER" : dIdx % 3 === 1 ? "HEAVY_TRUCK" : "RATION_CARRIER",
-      type_label: dIdx % 3 === 0 ? "20,000L Petroleum Fuel Tanker" : dIdx % 3 === 1 ? "14-Wheeler Essential Grain Carrier" : "High-Altitude Ration Convoy",
-      driver_name: driver1.name,
-      driver_phone: driver1.phone,
-      current_road_id: roadId,
-      current_road_name: `${roadCode} ${td.name} Lifeline Arterial`,
-      cargo: dIdx % 3 === 0 ? "20,000 Litres Diesel (IOCL Depot)" : "25 MT Food Grains (FCI Transit)",
-      speed_kmh: isDanger1 ? 32 : isWarning1 ? 44 : 58,
-      lat: cLat + (isDanger1 ? 0.02 : 0.04),
-      lng: cLng + (isDanger1 ? 0.015 : 0.035),
-      threat_status: isDanger1 ? "IN_DANGER" : isWarning1 ? "APPROACHING_HAZARD" : "SAFE",
-      danger_distance_km: isDanger1 ? 2.4 : isWarning1 ? 6.8 : 0,
-      hazard_ahead_description: isDanger1
-        ? `Active Landslide & Slope Mudflow (2.4 km ahead in ${td.name})`
-        : isWarning1
-        ? `River Surge Waterlogging & Soil Subsidence (6.8 km ahead)`
-        : "Route is stable and all-weather clear.",
-      state: td.state,
-      district: td.name,
+      roads.push(roadObj);
+      createdDistrictRoads.push(roadObj);
     });
 
-    // Vehicle 2: Emergency / SDRF / Patrol on secondary route
-    const isDanger2 = meta.risk === "CRITICAL";
-    vehicles.push({
-      id: `VEH-${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-E-${2000 + dIdx * 43}`,
-      vehicle_number: `${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-E-${2000 + dIdx * 43}`,
-      vehicle_type: dIdx % 2 === 0 ? "AMBULANCE" : "RESCUE_CONVOY",
-      type_label: dIdx % 2 === 0 ? "Advanced Life Support Ambulance" : "SDRF Disaster Quick-Response Fleet",
-      driver_name: driver2.name,
-      driver_phone: driver2.phone,
-      current_road_id: `${roadId}-CROSS`,
-      current_road_name: `${td.name} Green Collector Bypass`,
-      cargo: dIdx % 2 === 0 ? "Emergency Medical Transit & Oxygen" : "Disaster Relief Kits & Water Pumps",
-      speed_kmh: 52,
-      lat: cLat - 0.025,
-      lng: cLng + 0.03,
-      threat_status: isDanger2 ? "APPROACHING_HAZARD" : "SAFE",
-      danger_distance_km: isDanger2 ? 5.1 : 0,
-      hazard_ahead_description: isDanger2 ? "Approaching rain-affected junction" : "Clear Transit",
-      state: td.state,
-      district: td.name,
+    // 12 to 15 Active Live Vehicles for this district
+    const vehicleTypes: {
+      type: "FUEL_TANKER" | "HEAVY_TRUCK" | "AMBULANCE" | "RATION_CARRIER" | "CRANE_EXCAVATOR" | "RESCUE_CONVOY";
+      label: string;
+      cargo: string;
+    }[] = [
+      { type: "FUEL_TANKER", label: "20,000L Petroleum Fuel Tanker", cargo: "20,000 Litres High Speed Diesel (IOCL Depot)" },
+      { type: "FUEL_TANKER", label: "LPG Bulk Cryogenic Tanker", cargo: "14 MT Liquid Petroleum Gas Cylinders (Indane)" },
+      { type: "HEAVY_TRUCK", label: "14-Wheeler Essential Grain Carrier", cargo: "25 Metric Tonnes Rice & Wheat (FCI Depot)" },
+      { type: "HEAVY_TRUCK", label: "Frontier Defense Cargo Carrier", cargo: "High-Altitude Thermal Tents & Winter Gear" },
+      { type: "AMBULANCE", label: "Advanced Life Support ICU Ambulance", cargo: "Emergency Blood Plasma, Oxygen Cylinders & Vials" },
+      { type: "AMBULANCE", label: "Mountain Emergency Trauma Van", cargo: "Mobile Surgical First Responder Units" },
+      { type: "RATION_CARRIER", label: "Baby Food & Medicines Supply Truck", cargo: "Essential Baby Nutrition, Insulin & Antibiotics" },
+      { type: "RATION_CARRIER", label: "All-Terrain Supply Convoy", cargo: "Dry Rations, Water Filtration Kits & MREs" },
+      { type: "CRANE_EXCAVATOR", label: "BRO Heavy Snow Plow & Bulldozer", cargo: "Debris Clearing Earthmovers & Hydraulic Winch" },
+      { type: "CRANE_EXCAVATOR", label: "PWD Hydraulic Road Clearing Crane", cargo: "Boulder Breakers & Heavy Towing Gear" },
+      { type: "RESCUE_CONVOY", label: "SDRF Disaster Quick-Response Fleet", cargo: "Inflatable Rescue Boats & Dewatering Pumps" },
+      { type: "RESCUE_CONVOY", label: "District Disaster Relief Mobile Patrol", cargo: "Emergency Satellite Communication Gear" },
+      { type: "HEAVY_TRUCK", label: "Mountain Cold-Chain Logistics Carrier", cargo: "Perishable Vegetables & Milk Supplies" },
+      { type: "FUEL_TANKER", label: "Aviation Turbine Fuel (ATF) Carrier", cargo: "16,000 Litres ATF for Mountain Airbases" },
+    ];
+
+    vehicleTypes.forEach((vt, vIdx) => {
+      const assignedRoad = createdDistrictRoads[vIdx % createdDistrictRoads.length];
+      const driver = drivers[vIdx % drivers.length];
+      const roadCoords = assignedRoad.coordinates;
+      const waypoint = roadCoords[vIdx % roadCoords.length];
+
+      const isDanger = assignedRoad.risk_level === "CRITICAL" && vIdx % 2 === 0;
+      const isWarning = assignedRoad.risk_level === "HIGH" || (assignedRoad.risk_level === "CRITICAL" && !isDanger);
+
+      vehicles.push({
+        id: `VEH-${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-${(vIdx + 1).toString().padStart(2, "0")}`,
+        vehicle_number: `${platePrefix}-${(dIdx + 1).toString().padStart(2, "0")}-${String.fromCharCode(65 + (vIdx % 6))}-${1000 + vIdx * 73}`,
+        vehicle_type: vt.type,
+        type_label: vt.label,
+        driver_name: driver.name,
+        driver_phone: driver.phone,
+        current_road_id: assignedRoad.id,
+        current_road_name: assignedRoad.name,
+        cargo: vt.cargo,
+        speed_kmh: isDanger ? 24 + (vIdx % 10) : isWarning ? 38 + (vIdx % 12) : 54 + (vIdx % 15),
+        lat: waypoint[0] + (Math.sin(vIdx) * 0.008),
+        lng: waypoint[1] + (Math.cos(vIdx) * 0.008),
+        threat_status: isDanger ? "IN_DANGER" : isWarning ? "APPROACHING_HAZARD" : "SAFE",
+        danger_distance_km: isDanger ? 1.8 + (vIdx % 3) : isWarning ? 5.2 + (vIdx % 4) : 0,
+        hazard_ahead_description: isDanger
+          ? `Active Landslide & Snow Slush Blockage on ${assignedRoad.road_number} (${(1.8 + (vIdx % 3)).toFixed(1)} km ahead)`
+          : isWarning
+          ? `Slope Tension Cracks & Falling Boulder Hazard (${(5.2 + (vIdx % 4)).toFixed(1)} km ahead)`
+          : "Corridor clear and all-weather operational.",
+        state: td.state,
+        district: td.name,
+        waypointIndex: vIdx % roadCoords.length,
+      });
     });
   });
 
@@ -512,8 +622,10 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     return scopeRoads.filter((r) => r.risk_level === filterRisk);
   }, [scopeRoads, filterRisk]);
 
-  const filteredVehicles = useMemo(() => {
-    return scopeVehicles;
+  const [liveVehicles, setLiveVehicles] = useState<HighwayVehicleEntity[]>([]);
+
+  useEffect(() => {
+    setLiveVehicles(scopeVehicles);
   }, [scopeVehicles]);
 
   const [selectedHighway, setSelectedHighway] = useState<HighwayRiskEntity | null>(null);
@@ -551,7 +663,6 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
   // Auto-select primary highway when scope changes
   useEffect(() => {
     if (filteredHighways.length > 0) {
-      // Prefer a critical or high risk road, or first road
       const prime = filteredHighways.find((r) => r.risk_level === "CRITICAL") || filteredHighways.find((r) => r.risk_level === "HIGH") || filteredHighways[0];
       setSelectedHighway(prime);
     }
@@ -653,8 +764,8 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     const L = require("leaflet");
 
     const map = L.map(mapContainerRef.current, {
-      center: [26.15, 92.80],
-      zoom: 7,
+      center: [27.586, 91.866],
+      zoom: 12,
       minZoom: 5,
       maxZoom: 18,
       zoomControl: false,
@@ -768,7 +879,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     });
 
     // 2. Draw Live Active Vehicle Markers on the Roads
-    filteredVehicles.forEach((veh) => {
+    liveVehicles.forEach((veh) => {
       const isSelectedVeh = selectedVehicle?.id === veh.id;
       const isDanger = veh.threat_status === "IN_DANGER";
       const isWarning = veh.threat_status === "APPROACHING_HAZARD";
@@ -779,7 +890,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
         className: "custom-div-icon",
         html: `
           <div style="position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-            ${isDanger ? `<div style="position: absolute; width: 38px; height: 38px; border-radius: 50%; background-color: rgba(239,68,68,0.4); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>` : ""}
+            ${isDanger ? `<div style="position: absolute; width: 40px; height: 40px; border-radius: 50%; background-color: rgba(239,68,68,0.4); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>` : ""}
             <div style="background-color: #1E293B; color: white; width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid ${badgeBg}; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; font-size: 16px;">
               ${veh.vehicle_type === "FUEL_TANKER" ? "⛽" : veh.vehicle_type === "AMBULANCE" ? "🚑" : veh.vehicle_type === "CRANE_EXCAVATOR" ? "🚜" : veh.vehicle_type === "RESCUE_CONVOY" ? "🛡️" : "🚚"}
             </div>
@@ -788,8 +899,8 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
             </div>
           </div>
         `,
-        iconSize: [38, 38],
-        iconAnchor: [19, 19],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
       });
 
       const vehMarker = L.marker([veh.lat, veh.lng], { icon: vehIcon }).addTo(map);
@@ -816,7 +927,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
 
       vehicleMarkersRef.current.push(vehMarker);
     });
-  }, [filteredHighways, filteredVehicles, selectedHighway, selectedVehicle, scopeRoads]);
+  }, [filteredHighways, liveVehicles, selectedHighway, selectedVehicle, scopeRoads]);
 
   return (
     <div className="space-y-4 font-sans text-stone-900">
@@ -838,7 +949,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-stone-500 font-medium">
-                Select any of the 8 North Eastern States &amp; Districts to zoom into localized highway hazard grids and active vehicle intercepts.
+                Select any State &amp; District to view interconnected multidirectional danger-colored corridors and 12-15 active fleet convoys.
               </p>
             </div>
           </div>
@@ -941,7 +1052,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
                 {selectedDistrict !== "ALL" ? selectedDistrict : selectedState !== "ALL" ? selectedState : "All NER"}
               </span>
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white text-emerald-800 border border-emerald-200 shrink-0">
-                {filteredHighways.length} Roads • {filteredVehicles.length} Trucks
+                {filteredHighways.length} Corridors • {liveVehicles.length} Trucks
               </span>
             </div>
           </div>
@@ -952,7 +1063,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
           <div className="p-3 rounded-2xl bg-stone-900 text-white flex flex-wrap items-center justify-between gap-3 text-xs animate-in fade-in font-mono">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-bold">District Focus: {selectedDistrict} ({selectedState !== "ALL" ? selectedState : "NER"})</span>
+              <span className="font-bold">District Focus: {selectedDistrict} ({selectedState !== "ALL" ? selectedState : "Arunachal Pradesh"})</span>
               <span className="text-stone-400">|</span>
               <span className="text-stone-300">Weather: {currentDistrictMeta.weather}</span>
             </div>
@@ -985,7 +1096,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
       {/* 2. Main Grid: Map (Left) + Right Diagnosis / Fleet Intercept Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Column: Interactive GIS Map */}
-        <div className="lg:col-span-7 h-[540px] lg:h-[680px] relative rounded-3xl overflow-hidden border border-stone-200 shadow-sm bg-stone-100">
+        <div className="lg:col-span-7 h-[560px] lg:h-[700px] relative rounded-3xl overflow-hidden border border-stone-200 shadow-sm bg-stone-100">
           <div ref={mapContainerRef} className="w-full h-full min-h-[500px] z-0" />
 
           {/* Map Layer Selector (Top Left) */}
@@ -1046,7 +1157,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
                 <span>🔴 Critical Landslide</span>
               </div>
               <div className="flex items-center gap-1.5 col-span-2 pt-1 border-t border-stone-200 text-stone-900 font-semibold">
-                <span className="text-sm">⛽🚚🚑🚜</span>
+                <span className="text-sm">⛽🚚🚑🚜🛡️</span>
                 <span>Active Convoys (Click to Call/Halt)</span>
               </div>
             </div>
