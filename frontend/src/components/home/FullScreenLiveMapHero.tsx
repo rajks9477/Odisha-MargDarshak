@@ -600,21 +600,13 @@ export const FullScreenLiveMapHero: React.FC = () => {
         </p>
 
         {/* Single Prominent Glowing Login or Signup Button */}
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+        <div className="pt-4 flex items-center justify-center">
           <Link
             href="/login"
             className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-black text-base bg-emerald-800 hover:bg-emerald-900 text-white shadow-2xl hover:scale-105 transition-all border-2 border-emerald-600 cursor-pointer"
           >
             <span>{t.ctaButton}</span>
             <ArrowRight className="w-5 h-5" />
-          </Link>
-
-          <Link
-            href="/citizen"
-            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm bg-white/90 hover:bg-white text-stone-800 shadow-xl hover:scale-105 transition-all border border-stone-200 cursor-pointer"
-          >
-            <Globe2 className="w-4 h-4 text-emerald-800" />
-            <span>Citizen Safety Map</span>
           </Link>
         </div>
       </div>
