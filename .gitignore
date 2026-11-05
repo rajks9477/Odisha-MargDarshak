@@ -18,6 +18,11 @@ backend/*/*/__pycache__/
 .pytest_cache/
 backend/.pytest_cache/
 
+# Databases & Uploads
+*.db
+backend/*.db
+backend/app/uploads/
+
 # Environment Variables & OS
 .env
 .env.local

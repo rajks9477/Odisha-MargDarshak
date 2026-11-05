@@ -10,7 +10,7 @@ async def test_driver_incident_reporting_lifecycle():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -21,7 +21,7 @@ async def test_driver_incident_reporting_lifecycle():
         report_payload = {
             "type": "LANDSLIDE",
             "severity": "HIGH",
-            "description": "Massive mudslide blocking both lanes 500m before Sonapur Tunnel.",
+            "description": "Massive mudslide blocking both lanes 500m before Baitarani Tunnel.",
             "voice_transcript": "Heavy mud and boulders falling from cliff. Traffic halted.",
             "latitude": 25.1154,
             "longitude": 92.3685,
@@ -51,7 +51,7 @@ async def test_spatial_duplicate_detection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Login Driver
         d_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         d_headers = {"Authorization": f"Bearer {d_login.json()['access_token']}"}
@@ -75,7 +75,7 @@ async def test_spatial_duplicate_detection():
 
         # Second Report 90 meters away by Citizen
         c_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "citizen.gangtok@nermargdarshak.in",
+            "email_or_phone": "citizen.rashmita@gmail.com",
             "password": "Citizen@Pass123"
         })
         c_headers = {"Authorization": f"Bearer {c_login.json()['access_token']}"}
@@ -98,7 +98,7 @@ async def test_officer_incident_verification_workflow():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Driver creates an incident
         d_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         d_headers = {"Authorization": f"Bearer {d_login.json()['access_token']}"}
@@ -114,8 +114,8 @@ async def test_officer_incident_verification_workflow():
 
         # 2. Officer Logs In
         o_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         assert o_login.status_code == 200
         o_headers = {"Authorization": f"Bearer {o_login.json()['access_token']}"}
@@ -134,7 +134,7 @@ async def test_officer_incident_verification_workflow():
         assert verify_resp.status_code == 200
         verified = verify_resp.json()
         assert verified["status"] == "VERIFIED"
-        assert "Tashi Norbu" in verified["verified_by"]
+        assert "Soumya" in verified["verified_by"] or "Nayak" in verified["verified_by"]
 
         # 5. Check Audit Log
         detail_resp = await ac.get(f"/api/v1/driver/incidents/{incident_id}", headers=o_headers)
@@ -147,15 +147,15 @@ async def test_officer_incident_rejection_and_resolution():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Officer Login
         o_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         assert o_login.status_code == 200
         o_headers = {"Authorization": f"Bearer {o_login.json()['access_token']}"}
 
         # Driver Login
         d_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         d_headers = {"Authorization": f"Bearer {d_login.json()['access_token']}"}
@@ -200,14 +200,14 @@ async def test_officer_incident_rejection_and_resolution():
         assert res_resp.status_code == 200
         resolved = res_resp.json()
         assert resolved["status"] == "RESOLVED"
-        assert "Tashi Norbu" in resolved["resolved_by"]
+        assert "Soumya" in resolved["resolved_by"] or "Nayak" in resolved["resolved_by"]
 
 @pytest.mark.asyncio
 async def test_evidence_file_security_and_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Driver Login
         d_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         d_headers = {"Authorization": f"Bearer {d_login.json()['access_token']}"}

@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_integration_summary_and_connectors():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -36,8 +36,8 @@ async def test_integration_summary_and_connectors():
 async def test_connector_sync_and_batch_logs():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}

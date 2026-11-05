@@ -8,7 +8,7 @@ async def test_ai_risk_prediction_pipeline_and_explainability():
         # 1. Login as Field Officer / Driver
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]
@@ -66,7 +66,7 @@ async def test_ai_model_registry():
         # Login as Admin to inspect model registry
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "admin@nermargdarshak.gov.in", "password": "Admin@NER2026"},
+            json={"email_or_phone": "admin@odishamargdarshak.gov.in", "password": "Admin@Odisha2026"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]

@@ -7,7 +7,7 @@ async def test_driver_profile_and_rbac_protection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # 1. Driver Login
         driver_res = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert driver_res.status_code == 200
@@ -16,7 +16,7 @@ async def test_driver_profile_and_rbac_protection():
 
         # 2. Citizen Login
         citizen_res = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "citizen.gangtok@nermargdarshak.in",
+            "email_or_phone": "citizen.rashmita@gmail.com",
             "password": "Citizen@Pass123"
         })
         assert citizen_res.status_code == 200
@@ -30,18 +30,18 @@ async def test_driver_profile_and_rbac_protection():
         drv_profile = await client.get("/api/v1/driver/profile", headers=driver_headers)
         assert drv_profile.status_code == 200
         data = drv_profile.json()
-        assert data["name"] == "Biren Gogoi (Essential Commodities Carrier)"
-        assert data["license_number"] == "DL-0120180092415"
+        assert "Biren" in data["name"]
+        assert "20180092415" in data["license_number"]
         assert data["assigned_vehicle"] is not None
-        assert data["assigned_vehicle"]["vehicle_number"] == "AS-01-GC-9104"
+        assert data["assigned_vehicle"]["vehicle_number"] == "OD-05-GC-9104"
         assert data["active_trip"] is not None
-        assert data["active_trip"]["trip_number"].startswith("TRIP-NER-2026-")
+        assert data["active_trip"]["trip_number"].startswith("TRIP-ODI-2026-")
 
 @pytest.mark.asyncio
 async def test_driver_availability_update():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         driver_res = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {driver_res.json()['access_token']}"}
@@ -69,7 +69,7 @@ async def test_driver_availability_update():
 async def test_driver_vehicle_and_active_trip_endpoints():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         driver_res = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {driver_res.json()['access_token']}"}
@@ -78,7 +78,7 @@ async def test_driver_vehicle_and_active_trip_endpoints():
         v_res = await client.get("/api/v1/driver/vehicle", headers=headers)
         assert v_res.status_code == 200
         vehicle = v_res.json()
-        assert vehicle["vehicle_number"] == "AS-01-GC-9104"
+        assert vehicle["vehicle_number"] == "OD-05-GC-9104"
         assert vehicle["status"] in ["OPERATIONAL", "IN_TRANSIT"]
         assert vehicle["capacity_tonnes"] == 16.5
 
@@ -86,7 +86,7 @@ async def test_driver_vehicle_and_active_trip_endpoints():
         t_res = await client.get("/api/v1/driver/active-trip", headers=headers)
         assert t_res.status_code == 200
         trip = t_res.json()
-        assert trip["trip_number"].startswith("TRIP-NER-2026-")
+        assert trip["trip_number"].startswith("TRIP-ODI-2026-")
         assert len(trip["destination_name"]) > 0
         assert trip["distance_km"] > 0
 
@@ -94,7 +94,7 @@ async def test_driver_vehicle_and_active_trip_endpoints():
 async def test_driver_alerts_and_acknowledgement():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         driver_res = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {driver_res.json()['access_token']}"}

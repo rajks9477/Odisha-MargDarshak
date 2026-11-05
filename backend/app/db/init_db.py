@@ -208,7 +208,7 @@ async def init_database():
             )
             citizen_user = User(
                 name="Rashmita Sahoo",
-                email="citizen.bhubaneswar@odishamargdarshak.in",
+                email="citizen.rashmita@gmail.com",
                 phone="9876543215",
                 password_hash=get_password_hash("Citizen@Pass123"),
                 role=UserRole.CITIZEN,
@@ -265,7 +265,9 @@ async def init_database():
         now = datetime.now(timezone.utc)
         t1_res = await session.execute(select(Trip).filter(Trip.trip_number == "TRIP-ODI-2026-0891"))
         trip1 = t1_res.scalars().first()
-        if not trip1:
+        if trip1:
+            trip1.status = TripStatus.STARTED
+        else:
             trip1 = Trip(
                 id="TRIP-ODI-2026-0891",
                 trip_number="TRIP-ODI-2026-0891",
@@ -295,7 +297,9 @@ async def init_database():
 
         t2_res = await session.execute(select(Trip).filter(Trip.trip_number == "TRIP-ODI-2026-0902"))
         trip2 = t2_res.scalars().first()
-        if not trip2:
+        if trip2:
+            trip2.status = TripStatus.ASSIGNED
+        else:
             trip2 = Trip(
                 id="TRIP-ODI-2026-0902",
                 trip_number="TRIP-ODI-2026-0902",
@@ -347,7 +351,7 @@ async def init_database():
             session.add(trip3)
 
         # 5. Check Driver Alerts
-        a_res = await session.execute(select(DriverAlert).filter(DriverAlert.title.like("%Baitarani%")))
+        a_res = await session.execute(select(DriverAlert).filter(DriverAlert.id == "ALT-ODI-CRIT-01"))
         if not a_res.scalars().first():
             alerts = [
                 DriverAlert(

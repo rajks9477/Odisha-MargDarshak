@@ -7,7 +7,7 @@ async def test_get_logistics_shipments_and_filtering():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -35,7 +35,7 @@ async def test_get_logistics_shipments_and_filtering():
 async def test_logistics_hubs_and_metrics():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -47,7 +47,7 @@ async def test_logistics_hubs_and_metrics():
         hubs = hubs_res.json()
         assert len(hubs) >= 4
         hub_ids = [h["id"] for h in hubs]
-        assert "WH-GUWAHATI-01" in hub_ids
+        assert "WH-BBSR-01" in hub_ids
 
         # 2. Fetch Metrics
         metrics_res = await ac.get("/api/v1/logistics/metrics", headers=headers)
@@ -61,8 +61,8 @@ async def test_shipment_creation_status_update_and_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Admin Login
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         token = login_resp.json()["access_token"]
         admin_headers = {"Authorization": f"Bearer {token}"}
@@ -71,11 +71,11 @@ async def test_shipment_creation_status_update_and_rbac():
         create_payload = {
             "title": "Pediatric ICU Oxygen Tanks & IV Fluids",
             "cargo_category": "MEDICINES_MEDICAL",
-            "cargo_description": "Urgent oxygen shipment for Agartala District Hospital.",
+            "cargo_description": "Urgent oxygen shipment for Sambalpur District Hospital.",
             "priority": "CRITICAL",
             "weight_kg": 2800.0,
-            "origin_name": "Guwahati Central Depot",
-            "destination_name": "Agartala Civil Hospital",
+            "origin_name": "Bhubaneswar Central Depot",
+            "destination_name": "Sambalpur Civil Hospital",
         }
 
         create_res = await ac.post("/api/v1/logistics/shipments", json=create_payload, headers=admin_headers)
@@ -97,7 +97,7 @@ async def test_shipment_creation_status_update_and_rbac():
 
         # 3. Driver Login -> Update Status to DELIVERED
         driver_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         driver_token = driver_resp.json()["access_token"]

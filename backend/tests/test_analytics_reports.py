@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_get_analytics_overview_and_trends():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -38,8 +38,8 @@ async def test_get_analytics_overview_and_trends():
 async def test_decision_support_and_report_generation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -58,12 +58,12 @@ async def test_decision_support_and_report_generation():
         gen_req = {
             "report_title": "Quarterly NE Transport Disruption & Resilience Audit",
             "report_type": "CORRIDOR_DISRUPTION_SUMMARY",
-            "state_filter": "Meghalaya",
+            "state_filter": "Odisha",
         }
         gen_res = await ac.post("/api/v1/analytics/reports/generate", json=gen_req, headers=headers)
         assert gen_res.status_code == 200
         rep_data = gen_res.json()
-        assert rep_data["state_filter"] == "Meghalaya"
+        assert rep_data["state_filter"] == "Odisha"
         assert "id" in rep_data
 
         # 3. Download CSV

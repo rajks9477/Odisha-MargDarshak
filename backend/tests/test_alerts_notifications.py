@@ -8,7 +8,7 @@ async def test_driver_alerts_listing_and_priority_sorting():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -37,7 +37,7 @@ async def test_driver_alerts_listing_and_priority_sorting():
 async def test_driver_alerts_filtering():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -61,7 +61,7 @@ async def test_driver_alerts_filtering():
 async def test_driver_alerts_unread_count_and_banner():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -87,7 +87,7 @@ async def test_driver_alerts_unread_count_and_banner():
 async def test_driver_alert_read_and_acknowledge_lifecycle():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -129,7 +129,7 @@ async def test_driver_alert_read_and_acknowledge_lifecycle():
 async def test_driver_notification_preferences():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -160,7 +160,7 @@ async def test_driver_offline_alert_sync_and_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -188,7 +188,7 @@ async def test_driver_offline_alert_sync_and_rbac():
 
         # 4. RBAC check: Citizen cannot access driver alerts
         citizen_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "citizen.gangtok@nermargdarshak.in",
+            "email_or_phone": "citizen.rashmita@gmail.com",
             "password": "Citizen@Pass123"
         })
         citizen_token = citizen_login.json()["access_token"]

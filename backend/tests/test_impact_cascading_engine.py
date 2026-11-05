@@ -7,7 +7,7 @@ async def test_corridor_cascading_impact_calculation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -38,7 +38,7 @@ async def test_corridor_cascading_impact_calculation():
 async def test_custom_what_if_impact_simulation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -65,7 +65,7 @@ async def test_custom_what_if_impact_simulation():
 async def test_active_disruptions_and_incident_linkage():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]

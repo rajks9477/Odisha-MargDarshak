@@ -9,7 +9,7 @@ async def test_driver_alerts_priority_and_lifecycle():
         # 1. Login as Driver
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]
@@ -87,7 +87,7 @@ async def test_alerts_rbac_isolation():
         # Login as Citizen (cannot access /driver/alerts)
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "citizen.gangtok@nermargdarshak.in", "password": "Citizen@Pass123"},
+            json={"email_or_phone": "citizen.rashmita@gmail.com", "password": "Citizen@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]

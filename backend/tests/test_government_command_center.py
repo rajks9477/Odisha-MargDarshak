@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_command_center_summary_and_corridors_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -23,9 +23,9 @@ async def test_command_center_summary_and_corridors_rbac():
         assert summary["critical_risk_corridors"] >= 0
         assert len(summary["regional_corridors"]) == 8
         state_names = [c["state"] for c in summary["regional_corridors"]]
-        assert "Assam" in state_names
-        assert "Meghalaya" in state_names
-        assert "Arunachal Pradesh" in state_names
+        assert any("Coastal" in s for s in state_names)
+        assert any("Western" in s for s in state_names)
+        assert any("Southern" in s for s in state_names)
 
         # 3. Get Corridors Status
         corr_res = await ac.get("/api/v1/command-center/corridors/status", headers=headers)
@@ -35,7 +35,7 @@ async def test_command_center_summary_and_corridors_rbac():
 
         # 4. RBAC Protection Check - Driver cannot access command summary
         driver_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         driver_token = driver_resp.json()["access_token"]
@@ -49,8 +49,8 @@ async def test_command_center_incident_verification_workflow():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Officer Login
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]

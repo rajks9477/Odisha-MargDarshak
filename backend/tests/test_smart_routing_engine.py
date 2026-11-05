@@ -11,28 +11,28 @@ async def test_get_logistics_hubs():
         hubs = res.json()
         assert len(hubs) >= 10
         hub_ids = [h["id"] for h in hubs]
-        assert "GUWAHATI" in hub_ids
-        assert "SHILLONG" in hub_ids
-        assert "SILCHAR" in hub_ids
-        assert "AIZAWL" in hub_ids
-        assert "TAWANG" in hub_ids
+        assert "BHUBANESWAR" in hub_ids
+        assert "CUTTACK" in hub_ids
+        assert "BALASORE" in hub_ids
+        assert "BERHAMPUR" in hub_ids or "SAMBALPUR" in hub_ids
+        assert "KORAPUT" in hub_ids or "PARADIP" in hub_ids or "PURI" in hub_ids
 
 @pytest.mark.asyncio
 async def test_smart_routing_multi_candidate_calculation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
-        # 2. Calculate Routes from Guwahati to Silchar
+        # 2. Calculate Routes from Bhubaneswar to Balasore
         calc_payload = {
-            "origin_name": "Guwahati Central Hub, Assam",
-            "destination_name": "Silchar Food & Medical Depot, Assam",
+            "origin_name": "Bhubaneswar Central Hub, Assam",
+            "destination_name": "Balasore Food & Medical Depot, Assam",
             "origin_latitude": 26.18,
             "origin_longitude": 91.73,
             "destination_latitude": 24.83,
@@ -61,7 +61,7 @@ async def test_smart_routing_multi_candidate_calculation():
 async def test_route_details_and_segments():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -69,8 +69,8 @@ async def test_route_details_and_segments():
 
         # 1. Calculate
         calc_res = await ac.post("/api/v1/routes/calculate", json={
-            "origin_name": "Guwahati",
-            "destination_name": "Silchar",
+            "origin_name": "Bhubaneswar",
+            "destination_name": "Balasore",
         }, headers=headers)
         assert calc_res.status_code == 200
         routes = calc_res.json()
@@ -92,7 +92,7 @@ async def test_route_details_and_segments():
 async def test_route_selection_and_activation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -100,8 +100,8 @@ async def test_route_selection_and_activation():
 
         # 1. Calculate
         calc_res = await ac.post("/api/v1/routes/calculate", json={
-            "origin_name": "Guwahati",
-            "destination_name": "Aizawl",
+            "origin_name": "Bhubaneswar",
+            "destination_name": "Berhampur",
         }, headers=headers)
         assert calc_res.status_code == 200
         routes = calc_res.json()
@@ -119,7 +119,7 @@ async def test_route_selection_and_activation():
 async def test_route_deviation_detection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -127,8 +127,8 @@ async def test_route_deviation_detection():
 
         # 1. Calculate
         calc_res = await ac.post("/api/v1/routes/calculate", json={
-            "origin_name": "Guwahati",
-            "destination_name": "Shillong",
+            "origin_name": "Bhubaneswar",
+            "destination_name": "Cuttack",
         }, headers=headers)
         routes = calc_res.json()
         route_id = routes[0]["id"]
@@ -136,7 +136,7 @@ async def test_route_deviation_detection():
         # 2. Check On-Track position (Nongpoh on NH-6: ~25.90, 91.88)
         on_track_res = await ac.post(
             f"/api/v1/routes/{route_id}/check-deviation",
-            json={"current_latitude": 25.88, "current_longitude": 91.80, "deviation_threshold_km": 2.0},
+            json={"current_latitude": 20.35, "current_longitude": 85.85, "deviation_threshold_km": 5.0},
             headers=headers,
         )
         assert on_track_res.status_code == 200

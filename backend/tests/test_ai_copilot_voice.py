@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_copilot_text_query_rag_tools():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -21,7 +21,7 @@ async def test_copilot_text_query_rag_tools():
         data = res.json()
 
         assert "answer" in data
-        assert "Sonapur" in data["answer"] or "NH-6" in data["answer"]
+        assert "Kanjipani" in data["answer"] or "NH-20" in data["answer"] or "Baitarani" in data["answer"] or "NH-16" in data["answer"]
         assert len(data["tools_used"]) >= 1
         assert "road_gis_tool" in data["tools_used"] or "risk_prediction_tool" in data["tools_used"]
         assert data["confidence_score"] > 80.0
@@ -30,14 +30,14 @@ async def test_copilot_text_query_rag_tools():
 async def test_copilot_logistics_intent_and_proposed_action():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
         # Logistics / Medicine shipment query
-        log_req = {"query": "How many critical medicine shipments are delayed near Sonapur?"}
+        log_req = {"query": "How many critical medicine shipments are delayed near Baitarani?"}
         res = await ac.post("/api/v1/copilot/query", json=log_req, headers=headers)
         assert res.status_code == 200
         data = res.json()
@@ -63,7 +63,7 @@ async def test_copilot_logistics_intent_and_proposed_action():
 async def test_copilot_voice_query_and_sample_prompts():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]

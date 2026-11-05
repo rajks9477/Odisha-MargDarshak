@@ -7,20 +7,20 @@ async def test_road_risk_prediction_and_explainability():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
-        # 2. Get Road Risk for Sonapur Tunnel (NH-6-SONAPUR-01)
-        res = await ac.get("/api/v1/risk/road/NH-6-SONAPUR-01", headers=headers)
+        # 2. Get Road Risk for Baitarani Tunnel (NH-16-COASTAL-01)
+        res = await ac.get("/api/v1/risk/road/NH-16-COASTAL-01", headers=headers)
         assert res.status_code == 200
         data = res.json()
 
         assert "prediction_id" in data
-        assert data["road_id"] == "NH-6-SONAPUR-01"
+        assert data["road_id"] == "NH-16-COASTAL-01"
         assert 0.0 <= data["risk_score"] <= 100.0
         assert data["risk_level"] in ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
         assert 0.0 <= data["confidence_pct"] <= 100.0
@@ -38,7 +38,7 @@ async def test_road_risk_prediction_and_explainability():
 async def test_custom_rainfall_override_simulation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -46,14 +46,14 @@ async def test_custom_rainfall_override_simulation():
 
         # Simulate dry weather vs extreme monsoon rain
         res_dry = await ac.post("/api/v1/risk/predict", json={
-            "road_id": "NH-6-SONAPUR-01",
+            "road_id": "NH-16-COASTAL-01",
             "custom_rainfall_override_mm": 5.0,
         }, headers=headers)
         assert res_dry.status_code == 200
         dry_data = res_dry.json()
 
         res_wet = await ac.post("/api/v1/risk/predict", json={
-            "road_id": "NH-6-SONAPUR-01",
+            "road_id": "NH-16-COASTAL-01",
             "custom_rainfall_override_mm": 200.0,
         }, headers=headers)
         assert res_wet.status_code == 200
@@ -66,7 +66,7 @@ async def test_custom_rainfall_override_simulation():
 async def test_composite_route_risk_prediction():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -74,8 +74,8 @@ async def test_composite_route_risk_prediction():
 
         # 1. Calculate a route first
         calc_res = await ac.post("/api/v1/routes/calculate", json={
-            "origin_name": "Guwahati",
-            "destination_name": "Silchar",
+            "origin_name": "Bhubaneswar",
+            "destination_name": "Balasore",
         }, headers=headers)
         assert calc_res.status_code == 200
         routes = calc_res.json()
@@ -97,8 +97,8 @@ async def test_corridor_risk_summary_and_model_registry():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Admin Login
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         assert login_resp.status_code == 200
         admin_token = login_resp.json()["access_token"]

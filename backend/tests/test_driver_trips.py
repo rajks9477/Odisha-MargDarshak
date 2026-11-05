@@ -10,7 +10,7 @@ async def test_trip_full_lifecycle_and_transitions():
         # 1. Login as Driver
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]
@@ -22,10 +22,17 @@ async def test_trip_full_lifecycle_and_transitions():
         trips = trips_res.json()
         assert len(trips) >= 1
 
-        # Find an assigned or active trip
-        assigned_trip = next((t for t in trips if t["status"] == "ASSIGNED"), None)
+        # Complete any existing active trip to prevent 409 concurrency lock
+        active_trip = next((t for t in trips if t["status"] in ["STARTED", "PAUSED"]), None)
+        if active_trip:
+            await client.post(f"/api/v1/driver/trips/{active_trip['id']}/complete", json={"notes": "Pre-test completion"}, headers=headers)
+
+        # Refresh and find an assigned trip
+        trips_res2 = await client.get("/api/v1/driver/trips", headers=headers)
+        trips2 = trips_res2.json()
+        assigned_trip = next((t for t in trips2 if t["status"] == "ASSIGNED"), None)
         if not assigned_trip:
-            assigned_trip = trips[0]
+            assigned_trip = trips2[0]
         assert assigned_trip is not None
         trip_id = assigned_trip["id"]
 
@@ -42,7 +49,7 @@ async def test_trip_full_lifecycle_and_transitions():
         if assigned_trip["status"] in ["ASSIGNED", "ACCEPTED", "READY"]:
             start_res = await client.post(
                 f"/api/v1/driver/trips/{trip_id}/start",
-                json={"start_latitude": 24.830, "start_longitude": 92.790, "notes": "Departing Silchar depot"},
+                json={"start_latitude": 24.830, "start_longitude": 92.790, "notes": "Departing Balasore depot"},
                 headers=headers,
             )
             assert start_res.status_code == 200
@@ -74,7 +81,7 @@ async def test_trip_full_lifecycle_and_transitions():
             json={
                 "end_latitude": 23.830,
                 "end_longitude": 91.280,
-                "final_notes": "Consignment safely delivered to Agartala Central Granary",
+                "final_notes": "Consignment safely delivered to Sambalpur Central Granary",
             },
             headers=headers,
         )
@@ -109,14 +116,14 @@ async def test_invalid_status_transition_rejection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
-        # Completed trip (TRIP-NER-2026-0744) cannot be accepted again
+        # Completed trip (TRIP-ODI-2026-0744) cannot be accepted again
         invalid_accept = await client.post(
-            "/api/v1/driver/trips/TRIP-NER-2026-0744/accept",
+            "/api/v1/driver/trips/TRIP-ODI-2026-0744/accept",
             json={},
             headers=headers,
         )
@@ -128,7 +135,7 @@ async def test_driver_trip_rbac_security():
         # Non-driver role (Citizen) cannot access driver trips -> 403
         cit_login = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "citizen.gangtok@nermargdarshak.in", "password": "Citizen@Pass123"},
+            json={"email_or_phone": "citizen.rashmita@gmail.com", "password": "Citizen@Pass123"},
         )
         assert cit_login.status_code == 200
         cit_token = cit_login.json()["access_token"]

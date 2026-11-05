@@ -8,8 +8,8 @@ async def test_master_data_summary_and_facility_crud():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Central Admin
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -25,13 +25,13 @@ async def test_master_data_summary_and_facility_crud():
         # 3. Create Facility
         u_suffix = uuid.uuid4().hex[:6]
         fac_payload = {
-            "name": f"Guwahati Disaster Relief Hub {u_suffix}",
+            "name": f"Bhubaneswar Disaster Relief Hub {u_suffix}",
             "facility_type": "RELIEF_CENTER",
-            "state": "Assam",
-            "district": "Kamrup",
+            "state": "Odisha",
+            "district": "Khordha",
             "address": "NH-27 Khanapara Junction",
-            "latitude": 26.123,
-            "longitude": 91.801,
+            "latitude": 20.296,
+            "longitude": 85.824,
             "capacity_metric": "10000 MT Emergency Rations",
             "contact_phone": "+913612889900",
             "nodal_officer": "Sri K. Barman",
@@ -64,8 +64,8 @@ async def test_master_data_summary_and_facility_crud():
 async def test_master_data_bulk_import():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -74,20 +74,20 @@ async def test_master_data_bulk_import():
         bulk_payload = {
             "items": [
                 {
-                    "name": f"Aizawl Civil Trauma Care {u_suffix}",
+                    "name": f"Berhampur Civil Trauma Care {u_suffix}",
                     "facility_type": "HOSPITAL",
-                    "state": "Mizoram",
-                    "district": "Aizawl",
-                    "latitude": 23.727,
-                    "longitude": 92.717,
+                    "state": "Odisha",
+                    "district": "Ganjam",
+                    "latitude": 19.315,
+                    "longitude": 84.794,
                     "capacity_metric": "200 ICU Beds",
                     "contact_phone": "+913892340011",
                 },
                 {
-                    "name": f"Tawang Mountain Helipad {u_suffix}",
+                    "name": f"Koraput Mountain Helipad {u_suffix}",
                     "facility_type": "EMERGENCY_HELIPAD",
-                    "state": "Arunachal Pradesh",
-                    "district": "Tawang",
+                    "state": "Odisha",
+                    "district": "Koraput",
                     "latitude": 27.586,
                     "longitude": 91.869,
                     "capacity_metric": "Twin Engine Mi-17 Capable",

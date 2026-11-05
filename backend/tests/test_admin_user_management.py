@@ -8,8 +8,8 @@ async def test_admin_user_provisioning_and_lifecycle():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Central Admin
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -19,14 +19,14 @@ async def test_admin_user_provisioning_and_lifecycle():
         u_suffix = uuid.uuid4().hex[:6]
         new_driver_data = {
             "name": "Arun Borah",
-            "email": f"arun.borah.{u_suffix}@nermargdarshak.in",
+            "email": f"arun.borah.{u_suffix}@odishamargdarshak.in",
             "phone": f"+91987{uuid.uuid4().int % 10000000:07d}",
             "password": "Driver@Pass123",
             "role": "DRIVER",
-            "state": "Assam",
-            "district": "Kamrup",
+            "state": "Odisha",
+            "district": "Khordha",
             "department": "Logistics & Transport",
-            "employee_id": f"AS-DRV-{u_suffix.upper()}",
+            "employee_id": f"OD-DRV-{u_suffix.upper()}",
         }
         create_res = await ac.post("/api/v1/admin/users/create", json=new_driver_data, headers=headers)
         assert create_res.status_code == 200
@@ -57,8 +57,8 @@ async def test_admin_user_provisioning_and_lifecycle():
 async def test_vehicle_assignment_and_audit_trail():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}

@@ -10,7 +10,7 @@ async def test_tracking_session_lifecycle_and_live_pings():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -21,7 +21,7 @@ async def test_tracking_session_lifecycle_and_live_pings():
         session_resp = await ac.post("/api/v1/tracking/sessions", json={
             "start_latitude": 25.570,
             "start_longitude": 91.880,
-            "notes": "Sonapur mountain transit corridor"
+            "notes": "Baitarani mountain transit corridor"
         }, headers=headers)
         assert session_resp.status_code in [200, 201]
         session = session_resp.json()
@@ -68,7 +68,7 @@ async def test_tracking_session_lifecycle_and_live_pings():
 async def test_gps_anomaly_speed_jump_detection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -110,7 +110,7 @@ async def test_gps_anomaly_speed_jump_detection():
 async def test_excessive_gps_dilution_rejection():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -137,8 +137,8 @@ async def test_officer_fleet_live_monitoring_and_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Officer Login
         o_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         o_headers = {"Authorization": f"Bearer {o_login.json()['access_token']}"}
 
@@ -151,7 +151,7 @@ async def test_officer_fleet_live_monitoring_and_rbac():
 
         # 3. Citizen Login
         c_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "citizen.gangtok@nermargdarshak.in",
+            "email_or_phone": "citizen.rashmita@gmail.com",
             "password": "Citizen@Pass123"
         })
         c_headers = {"Authorization": f"Bearer {c_login.json()['access_token']}"}
@@ -164,7 +164,7 @@ async def test_officer_fleet_live_monitoring_and_rbac():
 async def test_offline_tracking_batch_sync():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}

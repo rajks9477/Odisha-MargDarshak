@@ -9,7 +9,7 @@ async def test_get_map_incidents_json_and_geojson():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Login Driver
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -36,31 +36,31 @@ async def test_get_map_incidents_json_and_geojson():
 async def test_map_bbox_filtering():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
 
-        # Bbox covering Sonapur / Meghalaya sector (lon: 92.0 to 92.5, lat: 25.0 to 25.5)
-        bbox_resp = await ac.get("/api/v1/map/incidents?bbox=92.0,25.0,92.5,25.5", headers=headers)
+        # Bbox covering Baitarani / Meghalaya sector (lon: 92.0 to 92.5, lat: 25.0 to 25.5)
+        bbox_resp = await ac.get("/api/v1/map/incidents?bbox=84.0,20.0,87.0,22.0", headers=headers)
         assert bbox_resp.status_code == 200
         items = bbox_resp.json()
         assert len(items) >= 1
         for inc in items:
-            assert 25.0 <= inc["latitude"] <= 25.5
-            assert 92.0 <= inc["longitude"] <= 92.5
+            assert 20.0 <= inc["latitude"] <= 22.0
+            assert 84.0 <= inc["longitude"] <= 87.0
 
 @pytest.mark.asyncio
 async def test_nearby_spatial_query():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
 
-        # Query nearby entities within 40 km of Sonapur
-        nearby_resp = await ac.get("/api/v1/map/nearby?lat=25.105&lng=92.365&radius_km=40.0", headers=headers)
+        # Query nearby entities within 40 km of Baitarani
+        nearby_resp = await ac.get("/api/v1/map/nearby?lat=21.057&lng=86.495&radius_km=40.0", headers=headers)
         assert nearby_resp.status_code == 200
         data = nearby_resp.json()
         assert "incidents" in data
@@ -74,17 +74,17 @@ async def test_nearby_spatial_query():
 async def test_map_search_service():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
 
-        # 1. Search Guwahati
-        search_resp = await ac.get("/api/v1/map/search?q=Guwahati", headers=headers)
+        # 1. Search Bhubaneswar
+        search_resp = await ac.get("/api/v1/map/search?q=Bhubaneswar", headers=headers)
         assert search_resp.status_code == 200
         results = search_resp.json()
         assert len(results) >= 1
-        assert any("Guwahati" in r["name"] for r in results)
+        assert any("Bhubaneswar" in r["name"] for r in results)
 
         # 2. Search Hospital
         hosp_resp = await ac.get("/api/v1/map/search?q=Hospital", headers=headers)
@@ -97,15 +97,15 @@ async def test_map_search_service():
 async def test_road_and_district_matching():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
 
-        match_resp = await ac.get("/api/v1/map/road-match?lat=25.570&lng=91.880", headers=headers)
+        match_resp = await ac.get("/api/v1/map/road-match?lat=20.462&lng=85.882", headers=headers)
         assert match_resp.status_code == 200
         match_data = match_resp.json()
-        assert "NH-6" in match_data["matched_road_name"]
+        assert "NH-16" in match_data["matched_road_name"]
         assert match_data["distance_to_road_km"] < 10.0
         assert match_data["district_name"] is not None
 
@@ -114,8 +114,8 @@ async def test_government_fleet_layer_rbac_and_audit():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Field Officer access
         o_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         o_headers = {"Authorization": f"Bearer {o_login.json()['access_token']}"}
 
@@ -126,7 +126,7 @@ async def test_government_fleet_layer_rbac_and_audit():
 
         # 2. Citizen access denied
         c_login = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "citizen.gangtok@nermargdarshak.in",
+            "email_or_phone": "citizen.rashmita@gmail.com",
             "password": "Citizen@Pass123"
         })
         c_headers = {"Authorization": f"Bearer {c_login.json()['access_token']}"}
@@ -138,7 +138,7 @@ async def test_government_fleet_layer_rbac_and_audit():
 async def test_infrastructure_emergency_facilities():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}

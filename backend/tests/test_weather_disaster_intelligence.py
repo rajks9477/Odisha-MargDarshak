@@ -7,20 +7,20 @@ async def test_get_district_weather_telemetry():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
-        # 2. Fetch District Weather for Sonapur
-        res = await ac.get("/api/v1/weather/district?location=Sonapur", headers=headers)
+        # 2. Fetch District Weather for Baitarani
+        res = await ac.get("/api/v1/weather/district?location=Baitarani", headers=headers)
         assert res.status_code == 200
         data = res.json()
 
         assert "id" in data
-        assert "East Jaintia Hills" in data["district"] or "Sonapur" in data["location_name"]
+        assert "East Jaintia Hills" in data["district"] or "Baitarani" in data["location_name"]
         assert data["rainfall_24h_mm"] >= 0.0
         assert data["temperature_c"] > 0.0
         assert data["weather_warning_level"] in ["GREEN", "YELLOW", "ORANGE", "RED"]
@@ -30,7 +30,7 @@ async def test_get_district_weather_telemetry():
 async def test_regional_weather_summary_and_sources():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -42,22 +42,22 @@ async def test_regional_weather_summary_and_sources():
         summaries = res_summary.json()
         assert len(summaries) >= 4
         states = [s["state"] for s in summaries]
-        assert "Meghalaya" in states
-        assert "Assam" in states
-        assert "Mizoram" in states
+        assert "Odisha" in states
+        assert "Odisha" in states
+        assert "Odisha" in states
 
         # 2. Data Sources Registry
         res_sources = await ac.get("/api/v1/weather/sources", headers=headers)
         assert res_sources.status_code == 200
         sources = res_sources.json()
         assert len(sources) >= 2
-        assert "IMD-GUWAHATI-RMC" in [s["id"] for s in sources]
+        assert "IMD-BHUBANESWAR-MC" in [s["id"] for s in sources]
 
 @pytest.mark.asyncio
 async def test_active_disaster_alerts_and_detail():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -85,7 +85,7 @@ async def test_external_weather_feed_ingestion_and_rbac():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Driver Login (Driver cannot ingest feed - RBAC check)
         driver_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         driver_token = driver_resp.json()["access_token"]
@@ -96,7 +96,7 @@ async def test_external_weather_feed_ingestion_and_rbac():
             "feed_type": "DISASTER_ALERT",
             "location_name": "Haflong Hill Section",
             "district": "Dima Hasao",
-            "state": "Assam",
+            "state": "Odisha",
             "latitude": 25.18,
             "longitude": 93.02,
             "hazard_title": "Haflong Railway Track Landslide Risk",
@@ -111,8 +111,8 @@ async def test_external_weather_feed_ingestion_and_rbac():
 
         # Admin Login -> 200 OK Success
         admin_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         admin_token = admin_resp.json()["access_token"]
         admin_headers = {"Authorization": f"Bearer {admin_token}"}

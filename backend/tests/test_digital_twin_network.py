@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_get_digital_twin_network_state():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -27,8 +27,8 @@ async def test_get_digital_twin_network_state():
 async def test_trace_entity_dependency_chain():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -46,8 +46,8 @@ async def test_trace_entity_dependency_chain():
 async def test_create_and_list_digital_twin_snapshots():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}

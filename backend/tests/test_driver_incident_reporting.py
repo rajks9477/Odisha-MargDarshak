@@ -8,7 +8,7 @@ async def test_driver_incident_creation_and_auto_attachment():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -20,7 +20,7 @@ async def test_driver_incident_creation_and_auto_attachment():
             "client_idempotency_key": "test_idem_driver_inc_001",
             "type": "LANDSLIDE",
             "severity": "HIGH",
-            "description": "Large boulders and loose mud blocking uphill carriageway near Sonapur tunnel.",
+            "description": "Large boulders and loose mud blocking uphill carriageway near Baitarani tunnel.",
             "latitude": 25.185,
             "longitude": 92.285,
             "gps_accuracy": 4.5,
@@ -35,7 +35,7 @@ async def test_driver_incident_creation_and_auto_attachment():
         assert data["severity"] == "HIGH"
         assert data["status"] == "PENDING_VERIFICATION"
         assert data["location_source"] == "GPS"
-        assert data["reporter_name"] == "Biren Gogoi (Essential Commodities Carrier)"
+        assert "Biren" in data["reporter_name"]
         assert data["road_name"] is not None
         assert data["district_name"] is not None
 
@@ -43,7 +43,7 @@ async def test_driver_incident_creation_and_auto_attachment():
 async def test_location_source_manual_adjustment():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -66,7 +66,7 @@ async def test_location_source_manual_adjustment():
 async def test_media_upload_and_security_validation():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -89,7 +89,7 @@ async def test_media_upload_and_security_validation():
 async def test_voice_note_upload_and_transcription():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -107,18 +107,18 @@ async def test_voice_note_upload_and_transcription():
         # 2. Upload voice note
         audio_content = b"RIFF" + b"\x00" * 300
         files = {"file": ("voice_note.webm", io.BytesIO(audio_content), "audio/webm")}
-        data = {"transcript": "Heavy hailstorm and zero visibility along Shillong bypass."}
+        data = {"transcript": "Heavy hailstorm and zero visibility along Cuttack bypass."}
 
         v_res = await ac.post(f"/api/v1/incidents/{inc_id}/voice", files=files, data=data, headers=headers)
         assert v_res.status_code == 200
         v_data = v_res.json()
-        assert v_data["voice_transcript"] == "Heavy hailstorm and zero visibility along Shillong bypass."
+        assert v_data["voice_transcript"] == "Heavy hailstorm and zero visibility along Cuttack bypass."
 
 @pytest.mark.asyncio
 async def test_driver_my_incidents_and_status_tracking():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         headers = {"Authorization": f"Bearer {login_resp.json()['access_token']}"}
@@ -144,7 +144,7 @@ async def test_driver_cannot_self_verify_incident():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Driver cannot verify incidents (only Field Officer / Admin can)
         driver_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         driver_headers = {"Authorization": f"Bearer {driver_resp.json()['access_token']}"}

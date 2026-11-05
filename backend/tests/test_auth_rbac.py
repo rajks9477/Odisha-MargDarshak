@@ -9,7 +9,7 @@ async def test_root_endpoint():
         response = await client.get("/")
         assert response.status_code == 200
         data = response.json()
-        assert data["platform"] == "NER-MargDarshak"
+        assert "Odisha" in data["platform"] and "MargDarshak" in data["platform"]
         assert data["status"] == "OPERATIONAL"
 
 @pytest.mark.asyncio
@@ -23,8 +23,8 @@ async def test_citizen_registration_and_immediate_login():
             "password": "Password@123",
             "confirm_password": "Password@123",
             "role": "CITIZEN",
-            "state": "Assam",
-            "district": "Dibrugarh"
+            "state": "Odisha",
+            "district": "Kendujhar"
         }
         res = await client.post("/api/v1/auth/register", json=payload)
         assert res.status_code == 201
@@ -46,7 +46,7 @@ async def test_field_officer_registration_pending_approval():
             "confirm_password": "Officer@Tripura123",
             "role": "FIELD_OFFICER",
             "department": "Public Works Department (PWD)",
-            "state": "Tripura",
+            "state": "Odisha",
             "district": "West Tripura",
             "employee_id": f"TR-PWD-{uid}",
             "designation": "Assistant Engineer"
@@ -70,7 +70,7 @@ async def test_seeded_logins_and_rbac_enforcement():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # 1. Login as Driver
         driver_login = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert driver_login.status_code == 200
@@ -79,8 +79,8 @@ async def test_seeded_logins_and_rbac_enforcement():
 
         # 2. Login as Central Admin
         admin_login = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         assert admin_login.status_code == 200
         admin_token = admin_login.json()["access_token"]
@@ -101,7 +101,7 @@ async def test_seeded_logins_and_rbac_enforcement():
 @pytest.mark.asyncio
 async def test_admin_approval_and_activation_workflow():
     uid = uuid.uuid4().hex[:6]
-    officer_email = f"pending_officer_{uid}@nermargdarshak.gov.in"
+    officer_email = f"pending_officer_{uid}@odishamargdarshak.gov.in"
     officer_pass = "Officer@Pass2026"
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         # 1. Register a new pending officer
@@ -113,8 +113,8 @@ async def test_admin_approval_and_activation_workflow():
             "confirm_password": officer_pass,
             "role": "FIELD_OFFICER",
             "department": "State Disaster Response Force (SDRF)",
-            "state": "Mizoram",
-            "district": "Aizawl",
+            "state": "Odisha",
+            "district": "Berhampur",
             "employee_id": f"MZ-SDRF-{uid}",
             "designation": "Zonal Inspector"
         })
@@ -122,8 +122,8 @@ async def test_admin_approval_and_activation_workflow():
 
         # 2. Central Admin login
         admin_login = await client.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         admin_headers = {"Authorization": f"Bearer {admin_login.json()['access_token']}"}
 
@@ -198,7 +198,7 @@ async def test_duplicate_registration_validation():
         # Register user with same email as admin
         payload = {
             "name": "Imposter Admin",
-            "email": "admin@nermargdarshak.gov.in",
+            "email": "admin@odishamargdarshak.gov.in",
             "phone": "9864999999",
             "password": "Password@123",
             "confirm_password": "Password@123",

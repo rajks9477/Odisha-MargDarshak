@@ -11,6 +11,7 @@ class DisasterTypeEnum(str, enum.Enum):
     RIVER_OVERFLOW = "RIVER_OVERFLOW"
     EARTHQUAKE = "EARTHQUAKE"
     CYCLONE_WIND = "CYCLONE_WIND"
+    CYCLONE = "CYCLONE"
 
 class DisasterSeverityEnum(str, enum.Enum):
     LOW = "LOW"

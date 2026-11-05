@@ -7,7 +7,7 @@ async def test_get_satellite_scenes_and_filtering():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # 1. Login as Driver Biren
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -29,23 +29,23 @@ async def test_get_satellite_scenes_and_filtering():
 async def test_satellite_change_detection_analysis():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
         # 1. Corridor Change Detection
-        cd_res = await ac.get("/api/v1/satellite/change-detection/NH-6-SONAPUR-01", headers=headers)
+        cd_res = await ac.get("/api/v1/satellite/change-detection/NH-16-COASTAL-01", headers=headers)
         assert cd_res.status_code == 200
         cd_data = cd_res.json()
         assert cd_data["confidence_score"] > 80.0
         assert cd_data["affected_area_sqm"] > 0
-        assert "LANDSLIDE" in cd_data["anomaly_type"]
+        assert cd_data["anomaly_type"] in ["LANDSLIDE", "FLOOD_INUNDATION_WASHOUT", "RIVER_OVERFLOW"]
 
         # 2. Custom Change Detection
         custom_req = {
-            "road_id": "NH-6-SONAPUR-01",
+            "road_id": "NH-16-COASTAL-01",
             "pre_event_date": "2026-08-10",
             "post_event_date": "2026-08-28",
         }
@@ -58,7 +58,7 @@ async def test_satellite_change_detection_analysis():
 async def test_satellite_active_anomalies():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]

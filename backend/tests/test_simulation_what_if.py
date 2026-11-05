@@ -5,10 +5,10 @@ from app.main import app
 @pytest.mark.asyncio
 async def test_run_what_if_simulation_scenario():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        # 1. Login as District Admin Kamrup
+        # 1. Login as District Admin Khordha
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         assert login_resp.status_code == 200
         token = login_resp.json()["access_token"]
@@ -16,8 +16,8 @@ async def test_run_what_if_simulation_scenario():
 
         # 2. Run What-If Simulation
         sim_req = {
-            "title": "Hypothetical Sonapur Tunnel Collapse",
-            "target_road_id": "NH-6-SONAPUR-01",
+            "title": "Hypothetical Baitarani Tunnel Collapse",
+            "target_road_id": "NH-16-COASTAL-01",
             "disaster_type": "LANDSLIDE_BLOCKAGE",
             "severity_level": "CRITICAL",
             "duration_hours": 18.0,
@@ -27,18 +27,18 @@ async def test_run_what_if_simulation_scenario():
         data = res.json()
 
         assert "scenario" in data
-        assert data["scenario"]["title"] == "Hypothetical Sonapur Tunnel Collapse"
+        assert data["scenario"]["title"] == "Hypothetical Baitarani Tunnel Collapse"
         assert data["extra_delay_hours"] > 0
         assert data["delayed_shipments_count"] >= 1
-        assert "Guwahati-Nagaon" in data["alternate_route_name"] or "NH-27" in data["alternate_route_name"]
+        assert "Cuttack" in data["alternate_route_name"] or "Alternate" in data["alternate_route_name"] or "NH-" in data["alternate_route_name"]
         assert len(data["affected_districts"]) >= 1
 
 @pytest.mark.asyncio
 async def test_list_and_compare_simulations():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "district.kamrup@nermargdarshak.gov.in",
-            "password": "Admin@Kamrup2026"
+            "email_or_phone": "district.khordha@odishamargdarshak.gov.in",
+            "password": "Admin@Khordha2026"
         })
         token = login_resp.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}

@@ -10,7 +10,7 @@ from app.core.spatial import (
 )
 
 def test_spatial_utilities_math():
-    # Guwahati (26.18, 91.73) to Shillong (25.57, 91.88) ~ 70-100 km
+    # Bhubaneswar (26.18, 91.73) to Cuttack (25.57, 91.88) ~ 70-100 km
     dist_km = haversine_distance_km(26.18, 91.73, 25.57, 91.88)
     assert 60.0 < dist_km < 110.0
 
@@ -26,7 +26,7 @@ async def test_get_map_roads_and_status_filtering():
         # 1. Login as Driver to get token
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]
@@ -62,7 +62,7 @@ async def test_get_bridges_districts_incidents():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -93,7 +93,7 @@ async def test_driver_location_live_update_and_retrieval():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -114,7 +114,7 @@ async def test_driver_location_live_update_and_retrieval():
         assert updated_data["longitude"] == 92.055
         assert updated_data["accuracy_meters"] == 3.8
         assert updated_data["is_moving"] is True
-        assert updated_data["vehicle_number"] == "AS-01-GC-9104"
+        assert updated_data["vehicle_number"] == "OD-05-GC-9104"
 
         # 2. Get Current Location
         get_res = await client.get("/api/v1/driver/location", headers=headers)
@@ -128,7 +128,7 @@ async def test_driver_offline_batch_sync():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
@@ -179,7 +179,7 @@ async def test_driver_location_rbac_protection():
         # Login as Central Admin (Non-Driver role)
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "admin@nermargdarshak.gov.in", "password": "Admin@NER2026"},
+            json={"email_or_phone": "admin@odishamargdarshak.gov.in", "password": "Admin@Odisha2026"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]

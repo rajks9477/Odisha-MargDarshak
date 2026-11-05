@@ -14,7 +14,7 @@ async def test_e2e_field_to_command_workflow():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Step 1: Driver Login
         driver_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert driver_resp.status_code == 200
@@ -27,7 +27,7 @@ async def test_e2e_field_to_command_workflow():
         inc_payload = {
             "type": "LANDSLIDE",
             "severity": "CRITICAL",
-            "description": "Major rockfall blocking NH-6 corridor near Sonapur Tunnel",
+            "description": "Major rockfall blocking NH-6 corridor near Baitarani Tunnel",
             "latitude": u_lat,
             "longitude": u_lon,
             "gps_accuracy": 3.5,
@@ -41,8 +41,8 @@ async def test_e2e_field_to_command_workflow():
 
         # Step 3: Field Officer Logs in and Verifies Incident
         officer_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "officer.tawang@nermargdarshak.gov.in",
-            "password": "Officer@Tawang2026"
+            "email_or_phone": "officer.koraput@odishamargdarshak.gov.in",
+            "password": "Officer@Koraput2026"
         })
         assert officer_resp.status_code == 200
         officer_token = officer_resp.json()["access_token"]
@@ -98,8 +98,8 @@ async def test_e2e_government_decision_support_and_resilience():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Step 1: Central Admin Login
         admin_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "admin@nermargdarshak.gov.in",
-            "password": "Admin@NER2026"
+            "email_or_phone": "admin@odishamargdarshak.gov.in",
+            "password": "Admin@Odisha2026"
         })
         assert admin_resp.status_code == 200
         admin_token = admin_resp.json()["access_token"]
@@ -129,7 +129,7 @@ async def test_e2e_government_decision_support_and_resilience():
         report_payload = {
             "report_title": "Quarterly NE Transport Disruption & Resilience Audit",
             "report_type": "CORRIDOR_DISRUPTION_SUMMARY",
-            "state_filter": "Meghalaya",
+            "state_filter": "Odisha",
         }
         report_res = await ac.post("/api/v1/analytics/reports/generate", json=report_payload, headers=admin_headers)
         assert report_res.status_code == 200

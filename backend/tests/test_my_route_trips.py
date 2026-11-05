@@ -6,7 +6,7 @@ from app.main import app
 async def test_get_current_active_assigned_trip():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         assert login_resp.status_code == 200
@@ -27,7 +27,7 @@ async def test_get_current_active_assigned_trip():
 async def test_trip_full_lifecycle_and_gps_linkage():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         login_resp = await ac.post("/api/v1/auth/login", json={
-            "email_or_phone": "driver.biren@nermargdarshak.in",
+            "email_or_phone": "driver.biren@odishamargdarshak.in",
             "password": "Driver@Pass123"
         })
         token = login_resp.json()["access_token"]
@@ -39,8 +39,15 @@ async def test_trip_full_lifecycle_and_gps_linkage():
         trips = trips_res.json()
         assert len(trips) >= 1
 
-        # Pick an assigned trip, or if already started/paused, test from current state
-        target_trip = next((t for t in trips if t["status"] == "ASSIGNED"), trips[0])
+        # Complete any existing active trip to prevent concurrency lock
+        active_trip = next((t for t in trips if t["status"] in ["STARTED", "PAUSED"]), None)
+        if active_trip:
+            await ac.post(f"/api/v1/driver/trips/{active_trip['id']}/complete", json={"notes": "Pre-test completion"}, headers=headers)
+
+        # Refresh trips
+        trips_res2 = await ac.get("/api/v1/driver/trips", headers=headers)
+        trips2 = trips_res2.json()
+        target_trip = next((t for t in trips2 if t["status"] == "ASSIGNED"), trips2[0])
         trip_id = target_trip["id"]
 
         # 2. Accept if ASSIGNED
@@ -104,7 +111,7 @@ async def test_trip_full_lifecycle_and_gps_linkage():
         complete_res = await ac.post(f"/api/v1/driver/trips/{trip_id}/complete", json={
             "end_latitude": 25.105,
             "end_longitude": 92.365,
-            "notes": "Medical cargo delivered to Sonapur Base",
+            "notes": "Medical cargo delivered to Baitarani Base",
             "final_distance_km": 100.0,
         }, headers=headers)
         assert complete_res.status_code == 200

@@ -8,7 +8,7 @@ async def test_smart_routing_calculation_and_selection():
         # 1. Login as Driver
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "driver.biren@nermargdarshak.in", "password": "Driver@Pass123"},
+            json={"email_or_phone": "driver.biren@odishamargdarshak.in", "password": "Driver@Pass123"},
         )
         assert login_res.status_code == 200
         token = login_res.json()["access_token"]
@@ -23,10 +23,10 @@ async def test_smart_routing_calculation_and_selection():
         # 3. Calculate Smart Candidate Routes
         calc_payload = {
             "trip_id": trip_id,
-            "origin_latitude": 26.18,
-            "origin_longitude": 91.73,
-            "destination_latitude": 24.83,
-            "destination_longitude": 92.79,
+            "origin_latitude": 20.296,
+            "origin_longitude": 85.824,
+            "destination_latitude": 21.493,
+            "destination_longitude": 86.933,
             "mission_priority": "ESSENTIAL_SAFETY",
         }
         routes_res = await client.post("/api/v1/routes/calculate", json=calc_payload, headers=headers)
@@ -63,17 +63,17 @@ async def test_smart_routing_calculation_and_selection():
             assert trip_routes_res.status_code == 200
             assert len(trip_routes_res.json()) >= 1
 
-        # 7. Check Deviation Detector (On-route: Shillong GPS 25.57, 91.88)
+        # 7. Check Deviation Detector (On-route: Cuttack GPS 25.57, 91.88)
         on_route_res = await client.post(
             f"/api/v1/routes/{route_id}/check-deviation",
-            json={"current_latitude": 25.57, "current_longitude": 91.88, "deviation_threshold_km": 2.0},
+            json={"current_latitude": 20.462, "current_longitude": 85.882, "deviation_threshold_km": 2.0},
             headers=headers,
         )
         assert on_route_res.status_code == 200
         assert on_route_res.json()["is_deviated"] is False
         assert on_route_res.json()["status"] in ["ON_TRACK", "CAUTION"]
 
-        # Check Deviation Detector (Off-route: 50 km away in Imphal 24.81, 93.93)
+        # Check Deviation Detector (Off-route: 50 km away in Rourkela 24.81, 93.93)
         off_route_res = await client.post(
             f"/api/v1/routes/{route_id}/check-deviation",
             json={"current_latitude": 24.81, "current_longitude": 93.93, "deviation_threshold_km": 2.0},
@@ -89,16 +89,16 @@ async def test_smart_routing_rbac():
         # Login as Citizen (cannot calculate driver smart routes)
         login_res = await client.post(
             "/api/v1/auth/login",
-            json={"email_or_phone": "citizen.gangtok@nermargdarshak.in", "password": "Citizen@Pass123"},
+            json={"email_or_phone": "citizen.rashmita@gmail.com", "password": "Citizen@Pass123"},
         )
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
         calc_payload = {
-            "origin_latitude": 26.18,
-            "origin_longitude": 91.73,
-            "destination_latitude": 24.83,
-            "destination_longitude": 92.79,
+            "origin_latitude": 20.296,
+            "origin_longitude": 85.824,
+            "destination_latitude": 21.493,
+            "destination_longitude": 86.933,
         }
         res = await client.post("/api/v1/routes/calculate", json=calc_payload, headers=headers)
         assert res.status_code == 403
