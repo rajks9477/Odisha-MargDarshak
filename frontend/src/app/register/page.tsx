@@ -4,24 +4,24 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { 
-  ODISHA_STATES, 
-  ODISHA_DISTRICTS_MAP, 
-  GOV_DEPARTMENTS, 
-  ROLE_CONFIGS, 
-  UserRole, 
-  NERState 
+import {
+  ODISHA_STATES,
+  ODISHA_DISTRICTS_MAP,
+  GOV_DEPARTMENTS,
+  ROLE_CONFIGS,
+  UserRole,
+  NERState
 } from "@/lib/constants";
 import { RoleBadge } from "@/components/ui/RoleBadge";
-import { 
-  UserPlus, 
-  User as UserIcon, 
-  AlertCircle, 
-  CheckCircle2, 
-  ArrowRight, 
-  ArrowLeft, 
-  ShieldAlert, 
-  Clock, 
+import {
+  UserPlus,
+  User as UserIcon,
+  AlertCircle,
+  CheckCircle2,
+  ArrowRight,
+  ArrowLeft,
+  ShieldAlert,
+  Clock,
   Briefcase
 } from "lucide-react";
 
@@ -164,9 +164,8 @@ export default function RegisterPage() {
         <div className="flex items-center justify-between px-4 py-2.5 bg-white border border-[#E8E2D8] rounded-2xl shadow-xs">
           <div className="flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                step >= 1 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
-              }`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step >= 1 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
+                }`}
             >
               1
             </span>
@@ -177,9 +176,8 @@ export default function RegisterPage() {
 
           <div className="flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                step >= 2 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
-              }`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step >= 2 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
+                }`}
             >
               2
             </span>
@@ -190,9 +188,8 @@ export default function RegisterPage() {
 
           <div className="flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                step >= 3 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
-              }`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${step >= 3 ? "bg-emerald-700 text-white" : "bg-stone-200 text-stone-600"
+                }`}
             >
               3
             </span>
@@ -317,11 +314,10 @@ export default function RegisterPage() {
                     <div
                       key={r}
                       onClick={() => setRole(r)}
-                      className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${
-                        isSelected
+                      className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${isSelected
                           ? "bg-[#E9F5ED] border-emerald-700 ring-2 ring-emerald-700/20"
                           : "bg-[#FAF8F5] hover:bg-white border-[#E8E2D8]"
-                      }`}
+                        }`}
                     >
                       <input
                         type="radio"
