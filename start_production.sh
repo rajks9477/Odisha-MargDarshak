@@ -2,7 +2,7 @@
 set -e
 
 echo "======================================================="
-echo "   NER-MargDarshak Production Startup Script (Linux)   "
+echo "   Odisha MargDarshak Production Startup Script (Linux)   "
 echo "======================================================="
 
 # 1. Backend Setup
@@ -28,7 +28,7 @@ echo "Frontend started on port 3000 (PID: $!)."
 cd ..
 
 echo "======================================================="
-echo "   NER-MargDarshak Platform is LIVE!                  "
+echo "   Odisha MargDarshak Platform is LIVE!                  "
 echo "   Frontend : http://0.0.0.0:3000                     "
 echo "   Backend  : http://0.0.0.0:8000                     "
 echo "======================================================="

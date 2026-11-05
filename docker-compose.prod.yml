@@ -49,10 +49,10 @@ services:
       dockerfile: Dockerfile
     container_name: nermargdarshak_prod_backend
     environment:
-      PROJECT_NAME: "NER-MargDarshak Intelligence Platform"
+      PROJECT_NAME: "Odisha MargDarshak Intelligence Platform"
       DATABASE_URL: "postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-nermargdarshak}"
       REDIS_URL: "redis://redis:6379/0"
-      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-ner_margdarshak_super_secret_jwt_key_2026}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-odisha_margdarshak_super_secret_jwt_key_2026}
       BACKEND_CORS_ORIGINS: '["http://localhost:3000","https://nermargdarshak.gov.in"]'
     ports:
       - "8000:8000"

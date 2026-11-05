@@ -1,6 +1,6 @@
-# 🚀 NER-MargDarshak — Complete Deployment Guide
+# 🚀 Odisha MargDarshak — Complete Deployment Guide
 
-This guide covers all production deployment strategies for the **NER-MargDarshak Smart Logistics & Disaster AI Platform** (Next.js 16 + FastAPI + PostGIS/SQLite).
+This guide covers all production deployment strategies for the **Odisha MargDarshak Smart Logistics & Disaster AI Platform** (Next.js 16 + FastAPI + PostGIS/SQLite).
 
 ---
 
@@ -19,17 +19,17 @@ git push origin main
 1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New + > Web Service**.
 2. Connect your GitHub repository.
 3. Configure the service:
-   - **Name**: `ner-margdarshak-backend`
+   - **Name**: `odisha-margdarshak-backend`
    - **Root Directory**: `backend`
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 4. Add **Environment Variables**:
-   - `PROJECT_NAME` = `NER-MargDarshak Intelligence Platform`
+   - `PROJECT_NAME` = `Odisha MargDarshak Intelligence Platform`
    - `SECRET_KEY` = `generate-any-random-32-character-secret-key`
    - `BACKEND_CORS_ORIGINS` = `["*"]`
 5. Click **Create Web Service**.
-6. Copy your live backend URL (e.g., `https://ner-margdarshak-backend.onrender.com`).
+6. Copy your live backend URL (e.g., `https://odisha-margdarshak-backend.onrender.com`).
 
 ### Step 3: Deploy Frontend to Vercel (Free)
 1. Go to [Vercel Dashboard](https://vercel.com/new) and import your GitHub repository.
@@ -37,9 +37,9 @@ git push origin main
    - **Framework Preset**: `Next.js`
    - **Root Directory**: `frontend`
 3. Add **Environment Variables**:
-   - `NEXT_PUBLIC_API_URL` = `https://ner-margdarshak-backend.onrender.com/api/v1`
+   - `NEXT_PUBLIC_API_URL` = `https://odisha-margdarshak-backend.onrender.com/api/v1`
 4. Click **Deploy**.
-5. Your live app is now live with global CDN & SSL (e.g., `https://ner-margdarshak.vercel.app`)!
+5. Your live app is now live with global CDN & SSL (e.g., `https://odisha-margdarshak.vercel.app`)!
 
 ---
 
