@@ -100,7 +100,7 @@ export default function LoginPage() {
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 hover:text-emerald-800 hover:border-emerald-300 text-xs font-bold transition-all shadow-2xs group cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-stone-500 group-hover:text-emerald-800 group-hover:-translate-x-0.5 transition-transform" />
-            <span>⬅ Return to NER Interactive Live Map (Home Page)</span>
+            <span>⬅ Return to Odisha Interactive Live Map (Home Page)</span>
           </Link>
 
           <Link
@@ -119,7 +119,7 @@ export default function LoginPage() {
               <Compass className="w-5 h-5" />
             </div>
             <span className="font-extrabold text-xl tracking-tight text-stone-900">
-              NER–MargDarshak
+              Odisha MargDarshak
             </span>
           </Link>
           <h2 className="text-2xl font-black tracking-tight text-stone-900">
@@ -201,7 +201,7 @@ export default function LoginPage() {
                       <div>
                         <h3 className="text-sm font-bold text-stone-900">{demo.title}</h3>
                         <p className="text-xs text-stone-500 font-medium mt-0.5">
-                          {demo.name} • <span className="text-stone-700">{demo.district || demo.state || "All NER"}</span>
+                          {demo.name} • <span className="text-stone-700">{demo.district || demo.state || "All Odisha"}</span>
                         </p>
                       </div>
 

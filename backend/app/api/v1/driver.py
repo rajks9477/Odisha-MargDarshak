@@ -48,10 +48,10 @@ async def get_or_create_driver_profile(user: User, db: AsyncSession) -> DriverPr
         # Create a default driver profile for new drivers
         profile = DriverProfile(
             user_id=user.id,
-            license_number=f"DL-{user.phone[-6:]}-NER",
+            license_number=f"DL-{user.phone[-6:]}-ODI",
             experience_years=6,
             availability=DriverAvailability.AVAILABLE,
-            current_location_name=f"{user.district or 'Guwahati'}, {user.state or 'Assam'}",
+            current_location_name=f"{user.district or 'Bhubaneswar'}, {user.state or 'Odisha'}",
             emergency_contact="9876500000",
             blood_group="O+",
             last_active_at=datetime.now(timezone.utc),

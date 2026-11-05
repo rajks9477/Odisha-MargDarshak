@@ -20,36 +20,36 @@ async def query_satellite_scenes(
     now = datetime.now(timezone.utc)
     scenes = [
         SatelliteSceneResponse(
-            id="SAT-S2B-20260828-EJH",
+            id="SAT-S2B-20260828-BHD",
             satellite_source="COPERNICUS_SENTINEL_2B",
             sensor_type="MSI_MULTISPECTRAL",
             acquisition_date=now - timedelta(days=1),
             cloud_cover_pct=3.8,
             resolution_meters=10.0,
-            target_district="East Jaintia Hills",
-            state="Meghalaya",
+            target_district="Bhadrak",
+            state="Odisha",
             data_provenance="ESA Copernicus Sentinel Hub [Open Access Data]",
         ),
         SatelliteSceneResponse(
-            id="SAT-L9-20260825-CAC",
+            id="SAT-L9-20260825-BAL",
             satellite_source="USGS_LANDSAT_9",
             sensor_type="OLI_2_TIRS_2",
             acquisition_date=now - timedelta(days=4),
-            cloud_cover_pct=8.2,
+            cloud_cover_pct=7.5,
             resolution_meters=15.0,
-            target_district="Cachar",
-            state="Assam",
+            target_district="Balasore",
+            state="Odisha",
             data_provenance="USGS EarthExplorer Data Portal",
         ),
         SatelliteSceneResponse(
-            id="SAT-BHUVAN-20260822-TAW",
+            id="SAT-BHUVAN-20260822-KOR",
             satellite_source="ISRO_CARTOSAT_3",
             sensor_type="PAN_MULTISPECTRAL",
             acquisition_date=now - timedelta(days=7),
             cloud_cover_pct=2.1,
             resolution_meters=0.25,
-            target_district="Tawang",
-            state="Arunachal Pradesh",
+            target_district="Koraput",
+            state="Odisha",
             data_provenance="ISRO Bhuvan Geo-Spatial Data Hub",
         ),
     ]
@@ -69,28 +69,28 @@ async def analyze_corridor_satellite_change(
     r_stmt = select(Road).where(Road.id == road_id)
     r_res = await db.execute(r_stmt)
     road = r_res.scalar_one_or_none()
-    road_name = road.road_name if road else "NH-6 Sonapur Highway Section"
+    road_name = road.road_name if road else "NH-16 Baitarani River Bridge Approach"
 
     record = SatelliteChangeDetectionRecord(
         road_id=road_id,
         road_name=road_name,
         pre_event_date=now - timedelta(days=14),
         post_event_date=now - timedelta(days=1),
-        anomaly_type="LANDSLIDE_SCARP_MUDFLOW",
+        anomaly_type="FLOOD_INUNDATION_WASHOUT",
         affected_area_sqm=14500.0,
         confidence_score=91.4,
         verification_status="PENDING_OFFICER_VERIFICATION",
         detected_at=now,
-        model_version="NER-SATELLITE-CV-CHANGE-ENGINE-V2.1",
+        model_version="ODISHA-SATELLITE-CV-CHANGE-ENGINE-V2.1",
     )
     db.add(record)
     await db.commit()
     await db.refresh(record)
 
     summary = (
-        f"Multispectral Change Analysis (Sentinel-2B MSI) detected a **14,500 sq.m Landslide Scarp & Mud Accumulation Anomaly** "
-        f"across highway segment {road_name}. Pre-event NDVI vegetation index dropped from 0.74 to 0.12, "
-        f"confirming sudden slope failure and earth displacement. Confidence: 91.4%."
+        f"Multispectral Change Analysis (Sentinel-2B MSI) detected a **14,500 sq.m River Inundation & Sediment Washout Anomaly** "
+        f"across highway segment {road_name}. Pre-event NDWI moisture index rose significantly from 0.18 to 0.79, "
+        f"confirming sudden flood overtopping along the Baitarani basin corridor. Confidence: 91.4%."
     )
 
     return SatelliteChangeDetectionResponse(

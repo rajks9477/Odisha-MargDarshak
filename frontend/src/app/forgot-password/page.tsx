@@ -111,7 +111,7 @@ export default function ForgotPasswordPage() {
             Reset Password
           </h1>
           <p className="text-xs sm:text-sm text-slate-400">
-            Secure verification for NER–MargDarshak accounts
+            Secure verification for Odisha MargDarshak accounts
           </p>
         </div>
 

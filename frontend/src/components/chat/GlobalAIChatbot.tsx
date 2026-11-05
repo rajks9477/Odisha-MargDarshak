@@ -66,11 +66,11 @@ export const GlobalAIChatbot: React.FC = () => {
   }, [language, t.aiWelcome]);
 
   const QUICK_PROMPTS = [
-    { label: "🔴 NH-6 Sonapur Status", query: "What is the live landslide and traffic status of NH-6 Sonapur Tunnel?" },
-    { label: "🟢 Guwahati ➔ Silchar Route", query: "What is the safest all-weather route from Guwahati to Silchar?" },
+    { label: "🔴 NH-6 Baitarani Status", query: "What is the live landslide and traffic status of NH-6 Baitarani River Bridge?" },
+    { label: "🟢 Bhubaneswar ➔ Balasore Route", query: "What is the safest all-weather route from Bhubaneswar to Balasore?" },
     { label: "🚚 Live Fleet Telemetry", query: "Show me real-time locations of fuel tankers and supply trucks." },
     { label: "🌧️ Rainfall Alert Tawang", query: "What are the latest IMD heavy rainfall and landslide warnings for Tawang and Sela Pass?" },
-    { label: "🚑 Emergency Green Corridor", query: "How to activate an emergency medical corridor for ambulances in Mizoram and Assam?" },
+    { label: "🚑 Emergency Green Corridor", query: "How to activate an emergency medical corridor for ambulances across Odisha districts?" },
   ];
 
   // Initialize Speech Recognition for regional languages
@@ -85,17 +85,10 @@ export const GlobalAIChatbot: React.FC = () => {
 
         const langMap: Record<SupportedLanguage, string> = {
           en: "en-IN",
+          or: "or-IN",
           hi: "hi-IN",
-          as: "as-IN",
           bn: "bn-IN",
-          mni: "en-IN",
-          lus: "en-IN",
-          kha: "en-IN",
-          grt: "en-IN",
-          brx: "hi-IN",
-          nag: "en-IN",
-          ne: "ne-NP",
-          trp: "bn-IN",
+          te: "te-IN",
         };
 
         recognition.lang = langMap[language] || "en-IN";
@@ -156,17 +149,10 @@ export const GlobalAIChatbot: React.FC = () => {
     const utterance = new SpeechSynthesisUtterance(cleanText);
     const langMap: Record<SupportedLanguage, string> = {
       en: "en-IN",
+      or: "or-IN",
       hi: "hi-IN",
-      as: "as-IN",
       bn: "bn-IN",
-      mni: "en-IN",
-      lus: "en-IN",
-      kha: "en-IN",
-      grt: "en-IN",
-      brx: "hi-IN",
-      nag: "en-IN",
-      ne: "ne-NP",
-      trp: "bn-IN",
+      te: "te-IN",
     };
     utterance.lang = langMap[language] || "en-IN";
     utterance.rate = 1.05;
@@ -179,48 +165,48 @@ export const GlobalAIChatbot: React.FC = () => {
 
     if (lq.includes("sonapur") || (lq.includes("nh-6") || lq.includes("nh6")) || lq.includes("landslide")) {
       return {
-        text: "⚠️ **CRITICAL LANDSLIDE ALERT ON NH-6 (Sonapur Tunnel Pass)**\n\n• **Status:** RED BLOCKED (Chainage KM 141.2 near East Jaintia Hills).\n• **Debris Volume:** ~2,400 Metric Tonnes of wet muck & boulders.\n• **Machinery Deployed:** PWD Heavy Recovery Crane `AS-01-X-8800` & 2 Wheel Excavators.\n• **Estimated Clearance:** 4 to 6 Hours.\n• **Recommended Safe Detour:** Divert all heavy freight and civilian traffic via **Haflong-Umrangso Green All-Weather Bypass (NH-27)**.",
+        text: "⚠️ **CRITICAL LANDSLIDE ALERT ON NH-6 (Baitarani River Bridge Pass)**\n\n• **Status:** RED BLOCKED (Chainage KM 141.2 near East Jaintia Hills).\n• **Debris Volume:** ~2,400 Metric Tonnes of wet muck & boulders.\n• **Machinery Deployed:** Works Dept / ODRAF Heavy Recovery Crane `AS-01-X-8800` & 2 Wheel Excavators.\n• **Estimated Clearance:** 4 to 6 Hours.\n• **Recommended Safe Detour:** Divert all heavy freight and civilian traffic via **Haflong-Umrangso Green All-Weather Bypass (NH-27)**.",
         category: "ALERT",
       };
     }
 
     if (lq.includes("guwahati") && lq.includes("silchar") || lq.includes("safe route") || lq.includes("route")) {
       return {
-        text: "🟢 **RECOMMENDED SAFE CORRIDOR: Guwahati ➔ Silchar**\n\n• **Primary Route (SAFE):** NH-27 (4-Lane East-West Expressway) via Guwahati ➔ Doboka ➔ Lumding ➔ Haflong ➔ Silchar. Expected travel time: 8.5 Hours.\n• **Avoid Route:** NH-6 via Shillong-Sonapur is currently BLOCKED due to mountain mudflow.\n• **Active Escort:** Patrol Intercept `AS-01-P-2026` is regulating traffic along the Dima Hasao hill stretch.",
+        text: "🟢 **RECOMMENDED SAFE CORRIDOR: Bhubaneswar ➔ Balasore**\n\n• **Primary Route (SAFE):** NH-27 (4-Lane East-West Expressway) via Bhubaneswar ➔ Doboka ➔ Lumding ➔ Haflong ➔ Balasore. Expected travel time: 8.5 Hours.\n• **Avoid Route:** NH-6 via Cuttack-Baitarani is currently BLOCKED due to mountain mudflow.\n• **Active Escort:** Patrol Intercept `AS-01-P-2026` is regulating traffic along the Dima Hasao hill stretch.",
         category: "ROUTE",
       };
     }
 
     if (lq.includes("truck") || lq.includes("fleet") || lq.includes("vehicle") || lq.includes("tanker") || lq.includes("location")) {
       return {
-        text: "🚚 **LIVE NER FLEET TELEMETRY STATUS (8 Active Nodes)**\n\n1. ⛽ **Fuel Tanker AS-01-GB-4819:** Stopped at NH-6 Sonapur Entry (Holding safety zone).\n2. 🚚 **Freight Carrier AS-11-BC-3042:** In Transit on NH-37 Kaziranga (Speed 42 km/h).\n3. 🚑 **Life Support MZ-01-A-4422:** Active on NH-306 Aizawl Arterial (Clear green corridor).\n4. 🚛 **Border Convoy AR-01-M-9081:** Navigating NH-13 Sela Pass (Winter precautions).\n5. 🚜 **Heavy Crane AS-01-X-8800:** Operational on Haflong Bypass route.\n6. 🚙 **Patrol Intercept AS-01-P-2026:** Patrolling NH-27 East-West Corridor.\n7. 🚌 **Express Bus WB-73-E-1011:** Moving on NH-31 North Bengal highway.\n8. 🚚 **Border Supply TR-01-S-5566:** En route to Moreh Asian Highway border.",
+        text: "🚚 **LIVE ODISHA FLEET TELEMETRY STATUS (8 Active Nodes)**\n\n1. ⛽ **Fuel Tanker OD-05-GC-9104:** Stopped at NH-16 Baitarani Bridge Entry (Holding safety zone).\n2. 🚚 **Freight Carrier OD-02-AX-3042:** In Transit on NH-16 Cuttack Corridor (Speed 52 km/h).\n3. 🚑 **Life Support OD-02-AM-4422:** Active on NH-16 AIIMS Emergency Corridor (Clear green corridor).\n4. 🚛 **Iron Ore Tipper OD-09-TR-9081:** Navigating NH-20 Kanjipani Ghat (Rain precautions).\n5. 🚜 **Heavy Rescue Crane OD-04-RC-8800:** Operational on Bhadrak Relief Section.\n6. 🚙 **ODRAF Emergency Patrol OD-02-P-2026:** Patrolling Coastal Highway Sector.\n7. 🚌 **OSRTC Inter-District Express OD-10-E-1011:** Moving on NH-55 Cuttack-Sambalpur Corridor.\n8. 🚚 **Port Container Hauler OD-07-C-5566:** En route to Paradip Port Gate 2.",
         category: "TELEMETRY",
       };
     }
 
     if (lq.includes("tawang") || lq.includes("sela") || lq.includes("weather") || lq.includes("rain") || lq.includes("imd")) {
       return {
-        text: "🌧️ **IMD WEATHER & HIGHWAY HAZARD BULLETIN**\n\n• **Arunachal Pradesh (Tawang / Bomdila):** Heavy precipitation with fog and sub-zero temperatures at Sela Pass (Elevation 13,700 ft). NH-13 is under Orange Rockfall Caution.\n• **Meghalaya (Sohra / Jowai):** Torrential downpours (180mm / 24h). Flash slope saturation warning active.\n• **Assam (Kaziranga Plain):** Brahmaputra flood runoff causing NH-37 animal corridor speed restriction (40 km/h strictly enforced).",
+        text: "🌧️ **IMD BHUBANESWAR WEATHER & HIGHWAY HAZARD BULLETIN**\n\n• **Baitarani Basin (Bhadrak / Jajpur):** Heavy precipitation with rising river discharge at NH-16 Baitarani Bridge. Orange Alert Active.\n• **Eastern Ghats (Koraput / Rayagada):** Torrential downpours (140mm / 24h). Slope saturation caution along NH-26 / NH-326.\n• **Mahanadi Estuary (Paradip / Kendrapara):** Squally coastal gusts (50-60 km/h) due to Bay of Bengal depression; port transport regulated.",
         category: "ALERT",
       };
     }
 
     if (lq.includes("ambulance") || lq.includes("emergency") || lq.includes("hospital") || lq.includes("medical")) {
       return {
-        text: "🚨 **EMERGENCY GREEN CORRIDOR PROTOCOL**\n\n• **Priority Status:** LEVEL-1 PRIORITY OVERRIDE.\n• **Active Medical Node:** Life Support Ambulance `MZ-01-A-4422` connected to Silchar Medical College & Aizawl Civil Hospital.\n• **Traffic Control Action:** All state police checkpoints on NH-27 and NH-306 have granted automated green signal priority clearance for emergency convoys.",
+        text: "🚨 **EMERGENCY GREEN CORRIDOR PROTOCOL**\n\n• **Priority Status:** LEVEL-1 PRIORITY OVERRIDE.\n• **Active Medical Node:** Life Support Ambulance `OD-02-AM-4422` connected between AIIMS Bhubaneswar and SCB Medical College Cuttack.\n• **Traffic Control Action:** Odisha Highway Police checkpoints on NH-16 and NH-55 have granted automated green signal priority clearance for emergency convoys.",
         category: "ROUTE",
       };
     }
 
     if (lq.includes("login") || lq.includes("role") || lq.includes("account") || lq.includes("signup")) {
       return {
-        text: "🔐 **ROLE-BASED AUTHENTICATION ACCESS**\n\nNER-MargDarshak supports 5 official roles:\n1. 🏛️ **Central Admin (NER Command):** Macro supply coordination & strategic AI alerts.\n2. 🏢 **District Admin (e.g. Kamrup / Cachar):** District hazard overrides & logistics approvals.\n3. 👷 **Field Officer / Engineer (PWD):** Real-time incident verification & clearance dispatch.\n4. 🚚 **Commercial Driver:** AI Turn-by-turn hill navigation & danger avoid routing.\n5. 👥 **Citizen / Commuter:** Safe travel advisories & SOS reporting.\n\n👉 Click **'Login or Signup'** button on top/front page to access your role workspace.",
+        text: "🔐 **ROLE-BASED AUTHENTICATION ACCESS**\n\nOdisha MargDarshak supports 5 official roles:\n1. 🏛️ **Central Admin (Odisha Command):** Macro supply coordination & strategic AI alerts.\n2. 🏢 **District Admin (e.g. Khordha / Cuttack / Balasore):** District hazard overrides & logistics approvals.\n3. 👷 **Field Officer / Engineer (Works Dept / ODRAF):** Real-time incident verification & clearance dispatch.\n4. 🚚 **Commercial Driver:** AI Turn-by-turn hill navigation & danger avoid routing.\n5. 👥 **Citizen / Commuter:** Safe travel advisories & SOS reporting.\n\n👉 Click **'Login or Signup'** button on top/front page to access your role workspace.",
         category: "GENERAL",
       };
     }
 
     return {
-      text: `🤖 **NER–MargDarshak AI Intelligence Report**\n\nRegarding your query *"${q}"*:\n\n• **Regional Grid Status:** All 8 North Eastern States (Assam, Meghalaya, Arunachal Pradesh, Mizoram, Manipur, Nagaland, Tripura, Sikkim) are synced with 14 monitored highway corridors.\n• **Current High-Risk Spots:** NH-6 Sonapur Tunnel (Landslide), NH-10 Teesta Valley (River Overtopping), NH-53 Noney Hill (Mudflow).\n• **Safe Detours:** NH-27 4-Lane East-West Corridor & Haflong Bypass are 100% operational with green passability.\n\nYou can also ask me for specific routes, weather radar, or truck tracking details!`,
+      text: `🤖 **Odisha MargDarshak AI Intelligence Report**\n\nRegarding your query *"${q}"*:\n\n• **Regional Grid Status:** All 30 districts of Odisha (Bhubaneswar, Cuttack, Bhadrak, Balasore, Sambalpur, Puri, Ganjam, Koraput, Keonjhar, etc.) are synced with 14 monitored highway corridors.\n• **Current High-Risk Spots:** NH-6 Baitarani River Bridge (Landslide), NH-20 Kanjipani Ghat (Landslide Caution), NH-55 Cuttack-Sambalpur (Expressway Work).\n• **Safe Detours:** NH-53 Paradip Corridor & Biju Expressway are 100% operational with green passability.\n\nYou can also ask me for specific routes, weather radar, or truck tracking details!`,
       category: "GENERAL",
     };
   };
@@ -286,7 +272,7 @@ export const GlobalAIChatbot: React.FC = () => {
         {
           id: `err-${Date.now()}`,
           sender: "BOT",
-          text: "I am actively monitoring NER road telemetry. Please feel free to ask about any highway corridor, landslide alert, or safe route!",
+          text: "I am actively monitoring Odisha road telemetry. Please feel free to ask about any highway corridor, landslide alert, or safe route!",
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           category: "GENERAL",
         },

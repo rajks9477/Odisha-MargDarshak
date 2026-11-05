@@ -70,7 +70,7 @@ class DriverProfile(Base):
     assigned_vehicle_id = Column(String(36), ForeignKey("vehicles.id"), nullable=True)
     
     # Current telemetric location placeholder
-    current_location_name = Column(String(150), nullable=True) # e.g. Guwahati Central Logistics Yard
+    current_location_name = Column(String(150), nullable=True) # e.g. Bhubaneswar Central Logistics Yard
     current_latitude = Column(Float, nullable=True)
     current_longitude = Column(Float, nullable=True)
     emergency_contact = Column(String(20), nullable=True)
@@ -84,7 +84,7 @@ class Trip(Base):
     __tablename__ = "trips"
 
     id = Column(String(36), primary_key=True, default=lambda: f"TRIP-{uuid.uuid4().hex[:8].upper()}", index=True)
-    trip_number = Column(String(50), unique=True, index=True, nullable=False) # e.g. TRIP-NER-2026-0891
+    trip_number = Column(String(50), unique=True, index=True, nullable=False) # e.g. TRIP-ODI-2026-0891
     driver_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
     vehicle_id = Column(String(36), ForeignKey("vehicles.id"), nullable=False, index=True)
     shipment_id = Column(String(50), nullable=True, default=lambda: f"SHP-{uuid.uuid4().hex[:8].upper()}")

@@ -64,10 +64,11 @@ export const SatelliteDashboardView: React.FC = () => {
             onChange={(e) => setSelectedDistrict(e.target.value)}
             className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 font-mono outline-none"
           >
-            <option value="East Jaintia Hills">East Jaintia Hills (Meghalaya)</option>
-            <option value="Cachar">Cachar (Assam)</option>
-            <option value="Tawang">Tawang (Arunachal Pradesh)</option>
-            <option value="Aizawl">Aizawl (Mizoram)</option>
+            <option value="Bhadrak">Bhadrak (Baitarani Flood Basin)</option>
+            <option value="Balasore">Balasore (Subarnarekha Coastal Belt)</option>
+            <option value="Kendujhar">Kendujhar (Kanjipani Ghat Corridor)</option>
+            <option value="Koraput">Koraput (Eastern Ghats Mountain Pass)</option>
+            <option value="Cuttack">Cuttack (Mahanadi River Basin)</option>
           </select>
 
           <button

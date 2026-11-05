@@ -34,7 +34,7 @@ import {
   Info
 } from "lucide-react";
 
-// Preset regional hubs across the 8 North-Eastern states
+// Preset regional hubs across all 30 districts of Odisha
 interface LocationPreset {
   id: string;
   name: string;
@@ -72,348 +72,349 @@ interface SafeHaven {
   isOpen: boolean;
 }
 
-const NER_LOCATIONS: LocationPreset[] = [
+const ODISHA_LOCATIONS: LocationPreset[] = [
+
   {
-    id: "guwahati",
-    name: "Guwahati City Center (Paltan Bazaar)",
-    state: "Assam",
-    coords: [26.180, 91.750],
-    weather: "Overcast with Intermittent Drizzle",
-    temp: "27°C",
-    riskIndex: 32,
+    id: "bhubaneswar",
+    name: "Bhubaneswar Capital Center (Master Canteen / AG Square)",
+    state: "Odisha (Khordha)",
+    coords: [20.296, 85.824],
+    weather: "Partly Cloudy with Coastal Breeze",
+    temp: "31°C",
+    riskIndex: 18,
     surroundingRoads: [
       {
-        id: "GHY-N",
-        name: "North Bank Corridor (Saraighat Bridge ➔ Jalukbari)",
+        id: "BBSR-N",
+        name: "Twin City Expressway to Cuttack (NH-16 North)",
         direction: "NORTH",
-        directionLabel: "North (NH-27 / NH-15)",
+        directionLabel: "North (NH-16 to Cuttack)",
+        riskLevel: "SAFE",
+        riskScore: 0.12,
+        statusText: "Open & Safe - Smooth Flow",
+        hazardReason: "Paved 6-lane expressway with telemetry and high-capacity drainage.",
+        speedLimit: "80 km/h",
+        distanceKm: 26.0,
+        coords: [[20.296, 85.824], [20.380, 85.850], [20.463, 85.882]]
+      },
+      {
+        id: "BBSR-S",
+        name: "Khordha Bypass to Southern Corridor (NH-16 South)",
+        direction: "SOUTH",
+        directionLabel: "South (NH-16 to Berhampur)",
         riskLevel: "SAFE",
         riskScore: 0.15,
-        statusText: "Open & Safe — Smooth Flow",
-        hazardReason: "Paved 4-lane bridge with operational telemetry.",
-        speedLimit: "60 km/h",
-        distanceKm: 8.5,
-        coords: [[26.180, 91.750], [26.170, 91.680], [26.130, 91.600]]
-      },
-      {
-        id: "GHY-S",
-        name: "Khanapara - Meghalaya Gateway (NH-6 Hill Incline)",
-        direction: "SOUTH",
-        directionLabel: "South (NH-6 to Shillong)",
-        riskLevel: "CAUTION",
-        riskScore: 0.58,
-        statusText: "Caution — Waterlogging & Heavy Fog",
-        hazardReason: "Monsoon runoff near Jorabat junction. Slow uphill movement.",
-        speedLimit: "35 km/h",
-        distanceKm: 12.0,
-        coords: [[26.180, 91.750], [26.130, 91.800], [26.070, 91.870]]
-      },
-      {
-        id: "GHY-E",
-        name: "East Expressway (Beltola ➔ Sonapur ➔ Nagaon)",
-        direction: "EAST",
-        directionLabel: "East (NH-27 Expressway)",
-        riskLevel: "SAFE",
-        riskScore: 0.20,
-        statusText: "All-Weather Clear Highway",
-        hazardReason: "Four-lane elevated corridor. Dry pavement.",
-        speedLimit: "80 km/h",
-        distanceKm: 18.0,
-        coords: [[26.180, 91.750], [26.140, 91.820], [26.110, 91.950]]
-      },
-      {
-        id: "GHY-W",
-        name: "Deepor Beel - VIP Airport Road",
-        direction: "WEST",
-        directionLabel: "West (Airport Corridor)",
-        riskLevel: "DANGER",
-        riskScore: 0.88,
-        statusText: "BLOCKED — Flash Flood Submersion",
-        hazardReason: "Water overflow from Deepor lake catchment. Vehicles redirected.",
-        speedLimit: "0 km/h",
-        distanceKm: 9.2,
-        coords: [[26.180, 91.750], [26.130, 91.660], [26.115, 91.590]]
-      }
-    ],
-    safeHavens: [
-      {
-        id: "SH-1",
-        name: "Gauhati Medical College & Hospital (GMCH)",
-        type: "HOSPITAL",
-        distance: "3.4 km",
-        coords: [26.155, 91.770],
-        contact: "108 / 0361-2529457",
-        isOpen: true
-      },
-      {
-        id: "SH-2",
-        name: "Dispur Govt Relief & Cyclone Shelter",
-        type: "SHELTER",
-        distance: "4.8 km",
-        coords: [26.140, 91.790],
-        capacity: "450 Beds Available",
-        contact: "1077 (District Control)",
-        isOpen: true
-      },
-      {
-        id: "SH-3",
-        name: "Indian Oil 24x7 Emergency Fuel Point (Khanapara)",
-        type: "FUEL",
-        distance: "6.1 km",
-        coords: [26.120, 91.815],
-        contact: "0361-2284910",
-        isOpen: true
-      }
-    ]
-  },
-  {
-    id: "shillong",
-    name: "Shillong Police Bazar Ridge",
-    state: "Meghalaya",
-    coords: [25.578, 91.893],
-    weather: "Dense Mountain Fog & Heavy Mist",
-    temp: "17°C",
-    riskIndex: 68,
-    surroundingRoads: [
-      {
-        id: "SHL-N",
-        name: "Umiam Lake Highway (Shillong ➔ Guwahati)",
-        direction: "NORTH",
-        directionLabel: "North (NH-6 Umiam)",
-        riskLevel: "SAFE",
-        riskScore: 0.28,
-        statusText: "Open — Drive with Fog Lights",
-        hazardReason: "Asphalt intact. Visibility 150m in mountain turns.",
-        speedLimit: "45 km/h",
-        distanceKm: 14.0,
-        coords: [[25.578, 91.893], [25.640, 91.890], [25.680, 91.900]]
-      },
-      {
-        id: "SHL-S",
-        name: "Cherrapunji / Sohra Hill Road",
-        direction: "SOUTH",
-        directionLabel: "South (SH-5 to Sohra)",
-        riskLevel: "CAUTION",
-        riskScore: 0.62,
-        statusText: "Caution — Sinking Soil Patch at Mile 12",
-        hazardReason: "Continuous monsoon drizzle. Single-lane slow transit.",
-        speedLimit: "30 km/h",
-        distanceKm: 22.0,
-        coords: [[25.578, 91.893], [25.510, 91.870], [25.430, 91.750]]
-      },
-      {
-        id: "SHL-E",
-        name: "Jowai - Sonapur Tunnel Arterial",
-        direction: "EAST",
-        directionLabel: "East (NH-6 Sonapur Pass)",
-        riskLevel: "DANGER",
-        riskScore: 0.96,
-        statusText: "DANGER — Active Landslide Blockage",
-        hazardReason: "Major rockfall debris at Sonapur Tunnel mouth. Clearance underway.",
-        speedLimit: "0 km/h (Halt)",
-        distanceKm: 34.0,
-        coords: [[25.578, 91.893], [25.450, 92.200], [25.105, 92.361]]
-      },
-      {
-        id: "SHL-W",
-        name: "Elephant Falls - Nongstoin Bypass",
-        direction: "WEST",
-        directionLabel: "West (NH-106 Nongstoin)",
-        riskLevel: "SAFE",
-        riskScore: 0.22,
-        statusText: "Open All-Weather Ridge Route",
-        hazardReason: "Newly reinforced retaining walls and drainage channels.",
-        speedLimit: "50 km/h",
-        distanceKm: 16.5,
-        coords: [[25.578, 91.893], [25.560, 91.820], [25.520, 91.700]]
-      }
-    ],
-    safeHavens: [
-      {
-        id: "SHL-H1",
-        name: "NEIGRIHMS Super Specialty Hospital",
-        type: "HOSPITAL",
-        distance: "5.2 km",
-        coords: [25.590, 91.930],
-        contact: "0364-2538011",
-        isOpen: true
-      },
-      {
-        id: "SHL-S1",
-        name: "State Disaster Emergency Camp (Polo Ground)",
-        type: "SHELTER",
-        distance: "1.8 km",
-        coords: [25.585, 91.895],
-        capacity: "300 Persons Capacity",
-        contact: "1070 (SDMA)",
-        isOpen: true
-      }
-    ]
-  },
-  {
-    id: "gangtok",
-    name: "Gangtok MG Marg Ridge",
-    state: "Sikkim",
-    coords: [27.338, 88.606],
-    weather: "Monsoon Downpour & Cloud Cover",
-    temp: "15°C",
-    riskIndex: 75,
-    surroundingRoads: [
-      {
-        id: "GTK-N",
-        name: "North Sikkim Highway (Mangan ➔ Chungthang)",
-        direction: "NORTH",
-        directionLabel: "North (NH-310A North Pass)",
-        riskLevel: "DANGER",
-        riskScore: 0.92,
-        statusText: "CLOSED — Mudslide Cutoff at Dikchu",
-        hazardReason: "Heavy boulder deposition across both lanes. BRO team deployed.",
-        speedLimit: "0 km/h",
+        statusText: "Open & All-Weather Clear",
+        hazardReason: "Four-lane elevated corridor with clear runoff channels.",
+        speedLimit: "70 km/h",
         distanceKm: 28.0,
-        coords: [[27.338, 88.606], [27.390, 88.580], [27.460, 88.530]]
+        coords: [[20.296, 85.824], [20.240, 85.760], [20.180, 85.700]]
       },
       {
-        id: "GTK-S",
-        name: "NH-10 Teesta Valley Lifeline (to Siliguri)",
-        direction: "SOUTH",
-        directionLabel: "South (NH-10 Teesta Corridor)",
-        riskLevel: "DANGER",
-        riskScore: 0.94,
-        statusText: "CRITICAL — Teesta River Scouring at 29th Mile",
-        hazardReason: "River water touching road level. Divert via Lava-Algarah.",
-        speedLimit: "0 km/h",
-        distanceKm: 32.0,
-        coords: [[27.338, 88.606], [27.240, 88.540], [27.170, 88.530]]
-      },
-      {
-        id: "GTK-E",
-        name: "Nathula Pass Border Road",
+        id: "BBSR-E",
+        name: "Jagannath Dham Highway (NH-316 to Puri)",
         direction: "EAST",
-        directionLabel: "East (Jawaharlal Nehru Road)",
-        riskLevel: "CAUTION",
-        riskScore: 0.65,
-        statusText: "Caution — Ice Flakes & Rock Slips",
-        hazardReason: "Snow accumulation above 12,000 ft. 4x4 vehicles permitted.",
-        speedLimit: "25 km/h",
-        distanceKm: 19.0,
-        coords: [[27.338, 88.606], [27.370, 88.690], [27.390, 88.780]]
-      },
-      {
-        id: "GTK-W",
-        name: "Rumtek - Singtam Green Detour Route",
-        direction: "WEST",
-        directionLabel: "West (Singtam Bypass)",
-        riskLevel: "SAFE",
-        riskScore: 0.30,
-        statusText: "OPEN — Safe High-Altitude Alternative",
-        hazardReason: "Reinforced ridge line road. Fully operational for light traffic.",
-        speedLimit: "40 km/h",
-        distanceKm: 18.0,
-        coords: [[27.338, 88.606], [27.290, 88.580], [27.230, 88.490]]
-      }
-    ],
-    safeHavens: [
-      {
-        id: "GTK-H1",
-        name: "STNM Multispeciality Hospital (Sochaygang)",
-        type: "HOSPITAL",
-        distance: "4.1 km",
-        coords: [27.315, 88.600],
-        contact: "03592-202944",
-        isOpen: true
-      },
-      {
-        id: "GTK-S1",
-        name: "District Community Relief Center (Tadong)",
-        type: "SHELTER",
-        distance: "3.2 km",
-        coords: [27.310, 88.605],
-        capacity: "250 Emergency Beds",
-        contact: "1077 (Gangtok Disaster Cell)",
-        isOpen: true
-      }
-    ]
-  },
-  {
-    id: "imphal",
-    name: "Imphal Kangla Fort Center",
-    state: "Manipur",
-    coords: [24.817, 93.936],
-    weather: "Partly Cloudy with Humid Breeze",
-    temp: "29°C",
-    riskIndex: 45,
-    surroundingRoads: [
-      {
-        id: "IMP-N",
-        name: "NH-2 Hills Highway (Imphal ➔ Kangpokpi ➔ Kohima)",
-        direction: "NORTH",
-        directionLabel: "North (NH-2 to Nagaland)",
-        riskLevel: "CAUTION",
-        riskScore: 0.60,
-        statusText: "Caution — Sinking Slope at Taphou",
-        hazardReason: "Single-lane restricted movement due to minor hill slumping.",
-        speedLimit: "35 km/h",
-        distanceKm: 25.0,
-        coords: [[24.817, 93.936], [24.930, 93.950], [25.100, 93.980]]
-      },
-      {
-        id: "IMP-S",
-        name: "NH-102 Asian Highway (to Thoubal & Moreh)",
-        direction: "SOUTH",
-        directionLabel: "South (Asian Highway 1)",
+        directionLabel: "East (NH-316 to Puri / Coastal)",
         riskLevel: "SAFE",
         riskScore: 0.18,
-        statusText: "SAFE — Paved 2-Way International Corridor",
-        hazardReason: "Optimal road conditions with round-the-clock patrol.",
-        speedLimit: "70 km/h",
-        distanceKm: 22.0,
-        coords: [[24.817, 93.936], [24.630, 93.990], [24.400, 94.100]]
+        statusText: "Open - Pilgrim & Freight Transit Clear",
+        hazardReason: "Four-lane national corridor in excellent condition.",
+        speedLimit: "65 km/h",
+        distanceKm: 58.0,
+        coords: [[20.296, 85.824], [20.150, 85.840], [19.813, 85.831]]
       },
       {
-        id: "IMP-E",
-        name: "Ukhrul Hill Ridge Highway",
-        direction: "EAST",
-        directionLabel: "East (SH-3 to Ukhrul)",
-        riskLevel: "SAFE",
-        riskScore: 0.25,
-        statusText: "Open — Scenic Mountain Drive",
-        hazardReason: "Clear asphalt without blockages.",
-        speedLimit: "45 km/h",
-        distanceKm: 20.0,
-        coords: [[24.817, 93.936], [24.890, 94.120], [25.050, 94.350]]
-      },
-      {
-        id: "IMP-W",
-        name: "NH-53 Jiribam - Silchar Lifeline",
+        id: "BBSR-W",
+        name: "Chandaka - Pitapalli Inland Link (SH-65)",
         direction: "WEST",
-        directionLabel: "West (NH-53 Noney Hill)",
-        riskLevel: "DANGER",
-        riskScore: 0.95,
-        statusText: "BLOCKED — Mudflow at Noney Bridge Approach",
-        hazardReason: "Substantial mud and debris accumulation on hill slope.",
-        speedLimit: "0 km/h",
-        distanceKm: 38.0,
-        coords: [[24.817, 93.936], [24.780, 93.600], [24.800, 93.120]]
+        directionLabel: "West (Chandaka Forest Route)",
+        riskLevel: "CAUTION",
+        riskScore: 0.45,
+        statusText: "Caution - Moderate Water Runoff",
+        hazardReason: "Localized rainwater accumulation in low-lying forest dip stretches.",
+        speedLimit: "45 km/h",
+        distanceKm: 22.0,
+        coords: [[20.296, 85.824], [20.320, 85.750], [20.350, 85.680]]
       }
     ],
     safeHavens: [
       {
-        id: "IMP-H1",
-        name: "Regional Institute of Medical Sciences (RIMS)",
+        id: "SH-BBSR-1",
+        name: "AIIMS Bhubaneswar Apex Medical Institute",
         type: "HOSPITAL",
-        distance: "2.6 km",
-        coords: [24.825, 93.920],
-        contact: "0385-2414629",
+        distance: "4.2 km",
+        coords: [20.231, 85.776],
+        contact: "108 / 0674-2476789",
         isOpen: true
       },
       {
-        id: "IMP-S1",
-        name: "Kangla Relief & Civil Defense Transit Center",
+        id: "SH-BBSR-2",
+        name: "OSDMA State Emergency Operations Centre (SEOC)",
         type: "SHELTER",
-        distance: "1.2 km",
-        coords: [24.815, 93.940],
+        distance: "2.1 km",
+        coords: [20.300, 85.835],
+        capacity: "State Central Disaster Command",
+        contact: "1070 (Toll Free) / 0674-2395398",
+        isOpen: true
+      },
+      {
+        id: "SH-BBSR-3",
+        name: "IOCL 24x7 Highway Fuel & EV Terminal (Patia)",
+        type: "FUEL",
+        distance: "5.6 km",
+        coords: [20.355, 85.818],
+        contact: "0674-2741122",
+        isOpen: true
+      }
+    ]
+  },
+  {
+    id: "cuttack",
+    name: "Cuttack Millennium City (Malgodown / Badambadi)",
+    state: "Odisha (Cuttack)",
+    coords: [20.463, 85.882],
+    weather: "Overcast with Mahanadi River Mist",
+    temp: "29°C",
+    riskIndex: 35,
+    surroundingRoads: [
+      {
+        id: "CTC-N",
+        name: "Mahanadi River Bridge to Panikoili (NH-16)",
+        direction: "NORTH",
+        directionLabel: "North (NH-16 to Bhadrak)",
+        riskLevel: "SAFE",
+        riskScore: 0.22,
+        statusText: "Open - Heavy Commercial Traffic",
+        hazardReason: "River water levels stable (+14.2m). Deck monitored 24/7.",
+        speedLimit: "60 km/h",
+        distanceKm: 38.0,
+        coords: [[20.463, 85.882], [20.550, 85.950], [20.650, 86.020]]
+      },
+      {
+        id: "CTC-S",
+        name: "Kathajodi River Bridge to Bhubaneswar (NH-16)",
+        direction: "SOUTH",
+        directionLabel: "South (Twin City Expressway)",
+        riskLevel: "SAFE",
+        riskScore: 0.15,
+        statusText: "Open All-Weather High-Speed Flow",
+        hazardReason: "Multi-lane reinforced concrete span with full lighting.",
+        speedLimit: "80 km/h",
+        distanceKm: 24.0,
+        coords: [[20.463, 85.882], [20.410, 85.860], [20.296, 85.824]]
+      },
+      {
+        id: "CTC-E",
+        name: "Mahanadi Embankment Route to Paradip (SH-12)",
+        direction: "EAST",
+        directionLabel: "East (SH-12 Port Road)",
+        riskLevel: "CAUTION",
+        riskScore: 0.52,
+        statusText: "Caution - Embankment Water Splash",
+        hazardReason: "High river tide causing road edge spray near Kandarpur.",
+        speedLimit: "45 km/h",
+        distanceKm: 42.0,
+        coords: [[20.463, 85.882], [20.420, 86.100], [20.264, 86.671]]
+      },
+      {
+        id: "CTC-W",
+        name: "Choudwar - Dhenkanal Industrial Link (NH-55)",
+        direction: "WEST",
+        directionLabel: "West (NH-55 to Angul)",
+        riskLevel: "SAFE",
+        riskScore: 0.18,
+        statusText: "Open & Clear Industrial Freight",
+        hazardReason: "Widened 4-lane section with active ODRAF patrol.",
+        speedLimit: "65 km/h",
+        distanceKm: 45.0,
+        coords: [[20.463, 85.882], [20.520, 85.820], [20.662, 85.596]]
+      }
+    ],
+    safeHavens: [
+      {
+        id: "SH-CTC-1",
+        name: "SCB Medical College & Hospital (Cuttack)",
+        type: "HOSPITAL",
+        distance: "2.4 km",
+        coords: [20.474, 85.892],
+        contact: "108 / 0671-2414080",
+        isOpen: true
+      },
+      {
+        id: "SH-CTC-2",
+        name: "Ravenshaw Multi-Purpose Flood & Relief Shelter",
+        type: "SHELTER",
+        distance: "1.9 km",
+        coords: [20.465, 85.895],
+        capacity: "600 Person Capacity",
+        contact: "1077 (DDMA Cuttack)",
+        isOpen: true
+      }
+    ]
+  },
+  {
+    id: "bhadrak",
+    name: "Bhadrak Baitarani Flood Control Hub",
+    state: "Odisha (Bhadrak)",
+    coords: [21.054, 86.495],
+    weather: "Continuous Heavy Monsoonal Downpour",
+    temp: "26°C",
+    riskIndex: 84,
+    surroundingRoads: [
+      {
+        id: "BHD-N",
+        name: "Coastal Highway to Balasore (NH-16 North)",
+        direction: "NORTH",
+        directionLabel: "North (NH-16 to Balasore)",
+        riskLevel: "CAUTION",
+        riskScore: 0.60,
+        statusText: "Caution - Waterlogged Road Shoulders",
+        hazardReason: "Continuous 95mm precipitation. Maintain 40 km/h safe convoy distance.",
+        speedLimit: "40 km/h",
+        distanceKm: 52.0,
+        coords: [[21.054, 86.495], [21.250, 86.700], [21.494, 86.932]]
+      },
+      {
+        id: "BHD-S",
+        name: "NH-16 Baitarani River Bridge Sector",
+        direction: "SOUTH",
+        directionLabel: "South (Baitarani Flood Zone)",
+        riskLevel: "DANGER",
+        riskScore: 0.95,
+        statusText: "DANGER - River Flood Water Overtopping",
+        hazardReason: "Baitarani river at 18.25m (+0.42m above danger mark). Heavy vehicles halted.",
+        speedLimit: "0 km/h (Halt)",
+        distanceKm: 18.0,
+        coords: [[21.054, 86.495], [20.950, 86.350], [20.898, 86.295]]
+      },
+      {
+        id: "BHD-E",
+        name: "Dhamra Port Evacuation Highway",
+        direction: "EAST",
+        directionLabel: "East (Dhamra Port Road)",
+        riskLevel: "CAUTION",
+        riskScore: 0.58,
+        statusText: "Caution - Strong Coastal Winds & Rain",
+        hazardReason: "Coastal cyclone depression creating gusts up to 65 km/h.",
+        speedLimit: "35 km/h",
+        distanceKm: 62.0,
+        coords: [[21.054, 86.495], [20.920, 86.750], [20.803, 86.974]]
+      },
+      {
+        id: "BHD-W",
+        name: "Anandapur - Keonjhar High Ground Bypass (NH-53/20)",
+        direction: "WEST",
+        directionLabel: "West (Safe Detour Bypass)",
+        riskLevel: "SAFE",
+        riskScore: 0.20,
+        statusText: "Recommended Safe Detour - Flow Open",
+        hazardReason: "Inland elevated corridor free of river flooding.",
+        speedLimit: "60 km/h",
+        distanceKm: 48.0,
+        coords: [[21.054, 86.495], [21.120, 86.200], [21.217, 85.983]]
+      }
+    ],
+    safeHavens: [
+      {
+        id: "SH-BHD-1",
+        name: "Bhadrak District Headquarters Hospital (DHH)",
+        type: "HOSPITAL",
+        distance: "1.8 km",
+        coords: [21.060, 86.505],
+        contact: "06784-251211",
+        isOpen: true
+      },
+      {
+        id: "SH-BHD-2",
+        name: "OSDMA Regional Flood & Cyclone Shelter (Bhadrak)",
+        type: "SHELTER",
+        distance: "2.3 km",
+        coords: [21.050, 86.520],
+        capacity: "850 Person Capacity",
+        contact: "1077 (DDMA Bhadrak)",
+        isOpen: true
+      }
+    ]
+  },
+  {
+    id: "balasore",
+    name: "Balasore Coastal & Defense Logistics Hub",
+    state: "Odisha (Balasore)",
+    coords: [21.494, 86.932],
+    weather: "Squally Winds & Intermittent Rain",
+    temp: "27°C",
+    riskIndex: 46,
+    surroundingRoads: [
+      {
+        id: "BAL-N",
+        name: "Jaleswar - West Bengal Border Highway (NH-16)",
+        direction: "NORTH",
+        directionLabel: "North (NH-16 to Bengal)",
+        riskLevel: "SAFE",
+        riskScore: 0.24,
+        statusText: "Open - Border Checkpoint Operational",
+        hazardReason: "High-grade 6-lane interstate pavement.",
+        speedLimit: "80 km/h",
+        distanceKm: 44.0,
+        coords: [[21.494, 86.932], [21.680, 87.050], [21.820, 87.200]]
+      },
+      {
+        id: "BAL-S",
+        name: "Soro - Bhadrak Corridor (NH-16 South)",
+        direction: "SOUTH",
+        directionLabel: "South (NH-16 to Bhadrak)",
+        riskLevel: "CAUTION",
+        riskScore: 0.62,
+        statusText: "Caution - Approaching Baitarani Danger Zone",
+        hazardReason: "Traffic slow-moving due to downstream water overtopping.",
+        speedLimit: "45 km/h",
+        distanceKm: 50.0,
+        coords: [[21.494, 86.932], [21.280, 86.720], [21.054, 86.495]]
+      },
+      {
+        id: "BAL-E",
+        name: "Chandipur Sea Beach Road",
+        direction: "EAST",
+        directionLabel: "East (Chandipur Defense Node)",
+        riskLevel: "SAFE",
+        riskScore: 0.18,
+        statusText: "Open - Coastal Defense Access Clear",
+        hazardReason: "Well-maintained defense access corridor.",
+        speedLimit: "50 km/h",
+        distanceKm: 16.0,
+        coords: [[21.494, 86.932], [21.480, 87.000], [21.465, 87.030]]
+      },
+      {
+        id: "BAL-W",
+        name: "Nilagiri - Mayurbhanj Link Road (SH-19)",
+        direction: "WEST",
+        directionLabel: "West (to Mayurbhanj Hills)",
+        riskLevel: "SAFE",
+        riskScore: 0.28,
+        statusText: "Open - Rolling Foothill Route",
+        hazardReason: "Clear drainage with zero boulder obstruction.",
+        speedLimit: "55 km/h",
+        distanceKm: 32.0,
+        coords: [[21.494, 86.932], [21.460, 86.820], [21.450, 86.700]]
+      }
+    ],
+    safeHavens: [
+      {
+        id: "SH-BAL-1",
+        name: "Fakir Mohan Medical College & Hospital (Balasore)",
+        type: "HOSPITAL",
+        distance: "3.1 km",
+        coords: [21.488, 86.920],
+        contact: "108 / 06782-262024",
+        isOpen: true
+      },
+      {
+        id: "SH-BAL-2",
+        name: "Balasore Town Hall Central Disaster Camp",
+        type: "SHELTER",
+        distance: "1.5 km",
+        coords: [21.498, 86.935],
         capacity: "500 Person Capacity",
-        contact: "1070 (Manipur DDMA)",
+        contact: "1077 (DDMA Balasore)",
         isOpen: true
       }
     ]
@@ -430,7 +431,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
 
   // Selected hub & live coordinates
   const [selectedLocationId, setSelectedLocationId] = useState<string>("guwahati");
-  const currentLocation = NER_LOCATIONS.find((l) => l.id === selectedLocationId) || NER_LOCATIONS[0];
+  const currentLocation = ODISHA_LOCATIONS.find((l) => l.id === selectedLocationId) || ODISHA_LOCATIONS[0];
   const [userCoords, setUserCoords] = useState<[number, number]>(currentLocation.coords);
 
   // Map Tile Style
@@ -698,7 +699,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
   const handleCalculateRoute = (targetDest?: string) => {
     const dest = targetDest || destinationInput;
     if (!dest.trim()) {
-      setDestinationInput("Nearest Safe Relief Shelter (Dispur)");
+      setDestinationInput("Nearest Safe Flood & Cyclone Shelter (Bhubaneswar OSDMA)");
     }
 
     const destinationName = dest.trim() || "Nearest Safe Relief Shelter";
@@ -714,7 +715,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
         { text: "Start navigation from your current location", distance: "0 m" },
         { text: "Head East on Paved All-Weather Beltola Corridor (NH-27)", distance: "4.2 km" },
         { text: "Merge onto elevated 4-lane East Expressway (Green Safe Zone)", distance: "9.8 km" },
-        { text: "Take Exit 14 towards Dispur Gov Relief Campus", distance: "3.2 km", isHazardAvoidance: true },
+        { text: "Take Exit 14 towards Bhubaneswar OSDMA Shelter Campus", distance: "3.2 km", isHazardAvoidance: true },
         { text: `Arrive safely at ${destinationName}`, distance: "1.2 km" }
       ]
     };
@@ -754,7 +755,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
   // Trigger Emergency SOS
   const handleTriggerSos = () => {
     setIsSosActive(true);
-    const code = "SOS-NER-" + Math.floor(100000 + Math.random() * 900000);
+    const code = "SOS-OD-" + Math.floor(100000 + Math.random() * 900000);
     setSosTicketId(code);
     setSosSent(true);
 
@@ -812,7 +813,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
               onChange={(e) => setSelectedLocationId(e.target.value)}
               className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 outline-none focus:border-emerald-700 cursor-pointer"
             >
-              {NER_LOCATIONS.map((loc) => (
+              {ODISHA_LOCATIONS.map((loc) => (
                 <option key={loc.id} value={loc.id}>
                   {loc.name} ({loc.state})
                 </option>
@@ -1200,7 +1201,7 @@ export const CitizenLiveMapPortal: React.FC = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-stone-400">Nearby Rescue Desk:</span>
-                <span className="font-bold text-emerald-800">Assam / NER SDMA (1070)</span>
+                <span className="font-bold text-emerald-800">Odisha State Disaster Management Authority / OSDMA (1070 / 112)</span>
               </div>
             </div>
 

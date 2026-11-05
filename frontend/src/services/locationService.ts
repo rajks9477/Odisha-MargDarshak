@@ -22,16 +22,14 @@ export interface LocationErrorState {
   message: string;
 }
 
-// Simulated GPS path along NH-6 South NER Spine for lab/desktop testing
+// Simulated GPS path along NH-16 Coastal Odisha Highway Corridor for lab/desktop testing
 export const SIMULATED_CORRIDOR_WAYPOINTS: GpsTelemetry[] = [
-  { latitude: 26.180, longitude: 91.730, accuracy: 3.5, speed: 45.0, heading: 135, timestamp: Date.now(), isSimulated: true },
-  { latitude: 25.900, longitude: 91.880, accuracy: 4.0, speed: 40.0, heading: 140, timestamp: Date.now(), isSimulated: true },
-  { latitude: 25.570, longitude: 91.880, accuracy: 4.8, speed: 42.0, heading: 145, timestamp: Date.now(), isSimulated: true },
-  { latitude: 25.450, longitude: 92.200, accuracy: 5.2, speed: 38.0, heading: 130, timestamp: Date.now(), isSimulated: true },
-  { latitude: 25.105, longitude: 92.365, accuracy: 6.0, speed: 25.0, heading: 120, timestamp: Date.now(), isSimulated: true }, // Sonapur
-  { latitude: 24.830, longitude: 92.790, accuracy: 4.2, speed: 50.0, heading: 165, timestamp: Date.now(), isSimulated: true }, // Silchar
-  { latitude: 24.500, longitude: 92.750, accuracy: 3.8, speed: 48.0, heading: 175, timestamp: Date.now(), isSimulated: true }, // Vairengte
-  { latitude: 23.730, longitude: 92.710, accuracy: 3.2, speed: 30.0, heading: 180, timestamp: Date.now(), isSimulated: true }, // Aizawl
+  { latitude: 20.296, longitude: 85.824, accuracy: 3.5, speed: 45.0, heading: 45, timestamp: Date.now(), isSimulated: true }, // Bhubaneswar
+  { latitude: 20.462, longitude: 85.882, accuracy: 4.0, speed: 42.0, heading: 45, timestamp: Date.now(), isSimulated: true }, // Cuttack
+  { latitude: 20.850, longitude: 86.150, accuracy: 4.8, speed: 50.0, heading: 40, timestamp: Date.now(), isSimulated: true }, // Jajpur
+  { latitude: 21.054, longitude: 86.501, accuracy: 5.2, speed: 48.0, heading: 35, timestamp: Date.now(), isSimulated: true }, // Bhadrak / Baitarani Bridge
+  { latitude: 21.300, longitude: 86.750, accuracy: 4.2, speed: 52.0, heading: 30, timestamp: Date.now(), isSimulated: true }, // Soro
+  { latitude: 21.493, longitude: 86.933, accuracy: 3.2, speed: 35.0, heading: 25, timestamp: Date.now(), isSimulated: true }, // Balasore Industrial Depot
 ];
 
 export class LocationService {

@@ -27,10 +27,10 @@ const STORAGE_KEY = "ner_field_incidents_broadcast_v3";
 // Initial realistic default field incidents with real-world mountain disaster photos
 const DEFAULT_INCIDENTS: GeoTaggedIncident[] = [
   {
-    id: "INC-NER-FIELD-01",
+    id: "INC-OD-FIELD-01",
     road_id: "NH-6-SONAPUR-01",
     road_name: "NH-6 Sonapur Tunnel Mountain Pass",
-    corridor_name: "NH-6 Guwahati-Shillong-Silchar Mountain Corridor",
+    corridor_name: "NH-16 Bhubaneswar-Cuttack-Balasore Corridor (Baitarani Section)",
     type: "LANDSLIDE",
     severity: "CRITICAL",
     description: "Major slope failure & 200m mudflow debris completely blocking both lanes near Sonapur Tunnel mouth KM-142.",
@@ -48,7 +48,7 @@ const DEFAULT_INCIDENTS: GeoTaggedIncident[] = [
     status: "VERIFIED",
   },
   {
-    id: "INC-NER-FIELD-02",
+    id: "INC-OD-FIELD-02",
     road_id: "NH-10-SEVOKE-01",
     road_name: "NH-10 Teesta Valley Lifeline (Siliguri - Gangtok)",
     corridor_name: "NH-10 Sikkim Mountain Corridor",

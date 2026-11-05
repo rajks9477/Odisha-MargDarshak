@@ -24,10 +24,10 @@ export class RoadMatchingService {
       return {
         latitude: lat,
         longitude: lng,
-        matched_road_name: "NH-6 National Highway (NER Mountain Corridor)",
+        matched_road_name: "NH-16 National Highway (Odisha Coastal Spine)",
         distance_to_road_km: 0.1,
         district_name: "East Jaintia Hills",
-        state: "Meghalaya",
+        state: "Odisha",
       };
     }
   }

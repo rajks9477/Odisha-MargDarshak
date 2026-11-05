@@ -4,8 +4,8 @@ from pydantic import BaseModel, ConfigDict
 
 class CreateSimulationRequest(BaseModel):
     title: Optional[str] = "What-If Highway Failure Scenario"
-    target_road_id: str = "NH-6-SONAPUR-01"
-    disaster_type: str = "LANDSLIDE_BLOCKAGE"
+    target_road_id: str = "NH-16-BAITARANI-01"
+    disaster_type: str = "FLOOD_INUNDATION"
     severity_level: str = "CRITICAL"
     duration_hours: float = 12.0
 

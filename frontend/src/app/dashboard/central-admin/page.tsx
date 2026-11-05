@@ -106,13 +106,13 @@ export default function CentralAdminDashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E2D8]">
         <div>
           <div className="flex items-center gap-2 text-rose-800 text-xs font-bold uppercase tracking-wider mb-1">
-            <Globe2 className="w-4 h-4 text-rose-700" /> NER Central Command & Ministry Directorate
+            <Globe2 className="w-4 h-4 text-rose-700" /> Odisha State Command & OSDMA Directorate
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-stone-900">
-            NER–MargDarshak Central Administration Console
+            Odisha MargDarshak State Command Console
           </h2>
           <p className="text-xs sm:text-sm text-stone-600 mt-1">
-            Regional cross-state oversight, user lifecycle verification, and cryptographic audit monitoring.
+            State-wide cross-district oversight, user lifecycle verification, and cryptographic audit monitoring.
           </p>
         </div>
 
@@ -177,9 +177,9 @@ export default function CentralAdminDashboard() {
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-[#E8E2D8] shadow-xs space-y-1">
-          <div className="text-[11px] text-stone-500 font-bold">NER States Integrated</div>
-          <div className="text-2xl font-black text-blue-800">8 / 8</div>
-          <div className="text-[10px] text-stone-400">Complete regional coverage</div>
+          <div className="text-[11px] text-stone-500 font-bold">Odisha Districts Integrated</div>
+          <div className="text-2xl font-black text-emerald-800">30 / 30</div>
+          <div className="text-[10px] text-stone-400">Complete state-wide coverage</div>
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-[#E8E2D8] shadow-xs space-y-1">
@@ -273,7 +273,7 @@ export default function CentralAdminDashboard() {
           <div className="p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-stone-900">NER Regional Verification Queue</h3>
+                <h3 className="text-sm font-bold text-stone-900">Odisha Regional Verification Queue</h3>
                 <p className="text-[11px] text-stone-500">
                   Government accounts awaiting official activation across all 8 North Eastern states
                 </p>

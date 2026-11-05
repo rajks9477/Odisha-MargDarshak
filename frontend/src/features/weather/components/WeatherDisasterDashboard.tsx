@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 
 export const WeatherDisasterDashboard: React.FC = () => {
-  const [selectedLocation, setSelectedLocation] = useState<string>("Sonapur (East Jaintia Hills, Meghalaya)");
+  const [selectedLocation, setSelectedLocation] = useState<string>("Bhubaneswar (Khordha District)");
   const [currentWeather, setCurrentWeather] = useState<WeatherObservation | null>(null);
   const [disasters, setDisasters] = useState<DisasterAlert[]>([]);
   const [regionalSummaries, setRegionalSummaries] = useState<RegionalWeatherSummary[]>([]);

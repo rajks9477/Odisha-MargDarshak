@@ -46,7 +46,7 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
         {/* Road Corridor Edges */}
         {layers.showRoads && (
           <g>
-            {/* Edge 1: Guwahati to Sonapur */}
+            {/* Edge 1: Bhubaneswar to Baitarani Bridge */}
             <line
               x1="20%"
               y1="40%"
@@ -56,9 +56,9 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
               strokeWidth="4"
               strokeDasharray="6,4"
               className="cursor-pointer hover:stroke-cyan-400 transition-colors"
-              onClick={() => onSelectEntity("NH-6-SONAPUR-01")}
+              onClick={() => onSelectEntity("NH-16-BAITARANI-01")}
             />
-            {/* Edge 2: Guwahati to Tawang */}
+            {/* Edge 2: Bhubaneswar to Sambalpur Corridor */}
             <line
               x1="20%"
               y1="40%"
@@ -67,9 +67,9 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
               stroke="#10b981"
               strokeWidth="3"
               className="cursor-pointer hover:stroke-cyan-400 transition-colors"
-              onClick={() => onSelectEntity("NH-13-TAW-BOM-01")}
+              onClick={() => onSelectEntity("NH-55-ANGUL-SAM-01")}
             />
-            {/* Edge 3: Sonapur to Silchar */}
+            {/* Edge 3: Baitarani Bridge to Balasore */}
             <line
               x1="50%"
               y1="55%"
@@ -78,7 +78,7 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
               stroke="#f59e0b"
               strokeWidth="3.5"
               className="cursor-pointer hover:stroke-cyan-400 transition-colors"
-              onClick={() => onSelectEntity("NH-6-SONAPUR-01")}
+              onClick={() => onSelectEntity("NH-16-BAITARANI-01")}
             />
           </g>
         )}
@@ -86,15 +86,15 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
         {/* Critical Hub Nodes */}
         {layers.showNodes && (
           <g>
-            {/* Guwahati Warehouse Node */}
+            {/* Bhubaneswar Warehouse Node */}
             <g
               transform="translate(140, 120)"
               className="cursor-pointer group"
-              onClick={() => onSelectEntity("NODE-WH-GHY-01")}
+              onClick={() => onSelectEntity("NODE-WH-BBI-01")}
             >
               <circle r="14" fill="#020617" stroke="#38bdf8" strokeWidth="2.5" />
               <text x="20" y="4" fill="#e2e8f0" fontSize="11" fontWeight="bold" fontFamily="monospace">
-                Guwahati Hub
+                Bhubaneswar Hub
               </text>
             </g>
 
@@ -102,23 +102,23 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
             <g
               transform="translate(360, 185)"
               className="cursor-pointer group"
-              onClick={() => onSelectEntity("NODE-BRG-SON-01")}
+              onClick={() => onSelectEntity("NODE-BRG-BAI-01")}
             >
               <circle r="14" fill="#020617" stroke="#ef4444" strokeWidth="3" className="animate-pulse" />
               <text x="20" y="4" fill="#fca5a5" fontSize="11" fontWeight="bold" fontFamily="monospace">
-                Sonapur Tunnel (BLOCKED)
+                Baitarani River Bridge (FLOOD ALERT)
               </text>
             </g>
 
-            {/* Silchar Hospital Node */}
+            {/* Balasore MCH Node */}
             <g
               transform="translate(560, 240)"
               className="cursor-pointer group"
-              onClick={() => onSelectEntity("NODE-HOSP-SIL-01")}
+              onClick={() => onSelectEntity("NODE-HOSP-BAL-01")}
             >
               <circle r="14" fill="#020617" stroke="#a855f7" strokeWidth="2.5" />
               <text x="20" y="4" fill="#e2e8f0" fontSize="11" fontWeight="bold" fontFamily="monospace">
-                Silchar Hospital
+                Balasore MCH
               </text>
             </g>
           </g>
@@ -128,7 +128,7 @@ export const DigitalTwinMap: React.FC<Props> = ({ state, layers, onSelectEntity 
       {/* Footer Instructions */}
       <div className="z-10 flex items-center justify-between text-[10px] font-mono text-slate-400">
         <span>Click any node or highway corridor to inspect connected dependency chain</span>
-        <span className="text-cyan-400 font-bold">8 NE States Active</span>
+        <span className="text-cyan-400 font-bold">30 Odisha Districts Active</span>
       </div>
     </div>
   );

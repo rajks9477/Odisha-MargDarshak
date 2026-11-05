@@ -224,7 +224,7 @@ async def login_user(
     elif user.status == UserStatus.SUSPENDED:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Your account has been suspended by an administrator. Please contact NER-MargDarshak support.",
+            detail="Your account has been suspended by an administrator. Please contact Odisha MargDarshak support.",
         )
     elif user.status == UserStatus.REJECTED:
         raise HTTPException(

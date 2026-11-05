@@ -13,7 +13,7 @@ interface Props {
 const REGIONAL_LANGUAGES = [
   { code: "en-IN", name: "English (Indian)" },
   { code: "hi-IN", name: "हिन्दी (Hindi)" },
-  { code: "as-IN", name: "অসমীয়া (Assamese)" },
+  { code: "or-IN", name: "ଓଡ଼ିଆ (Odia)" },
   { code: "bn-IN", name: "বাংলা (Bengali)" },
 ];
 

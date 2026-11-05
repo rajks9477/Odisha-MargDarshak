@@ -62,10 +62,10 @@ async def resolve_spatial_context(db: AsyncSession, lat: float, lon: float):
                 nearest_road = r
 
     road_id = nearest_road.id if nearest_road and min_road_dist <= 25.0 else None
-    road_name = nearest_road.road_name if nearest_road and min_road_dist <= 25.0 else "North Eastern Regional Highway Corridor"
-    district_id = nearest_road.district_id if nearest_road else "DIST-MEGH-EJH"
-    district_name = nearest_road.district_name if nearest_road else "East Jaintia Hills"
-    state = nearest_road.state if nearest_road else "Meghalaya"
+    road_name = nearest_road.road_name if nearest_road and min_road_dist <= 25.0 else "Odisha Highway Corridor"
+    district_id = nearest_road.district_id if nearest_road else "DIST-ODI-KHO"
+    district_name = nearest_road.district_name if nearest_road else "Khordha"
+    state = nearest_road.state if nearest_road else "Odisha"
 
     return road_id, road_name, district_id, district_name, state
 

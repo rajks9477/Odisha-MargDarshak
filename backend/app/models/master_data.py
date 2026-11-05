@@ -23,7 +23,7 @@ class MasterFacilityRecord(Base):
     facility_type = Column(String(50), nullable=False, default="HOSPITAL", index=True) # HOSPITAL, RELIEF_CENTER, WAREHOUSE, FUEL_STATION, EMERGENCY_HELIPAD
 
     state = Column(String(100), nullable=False, default="Assam")
-    district = Column(String(100), nullable=False, default="Kamrup", index=True)
+    district = Column(String(100), nullable=False, default="Khordha", index=True)
     address = Column(String(255), nullable=True)
 
     latitude = Column(Float, nullable=False)
@@ -34,7 +34,7 @@ class MasterFacilityRecord(Base):
     nodal_officer = Column(String(100), nullable=True)
 
     status = Column(String(30), nullable=False, default="ACTIVE", index=True) # ACTIVE, ARCHIVED, UNDER_MAINTENANCE
-    data_provenance = Column(String(150), default="NER-MargDarshak MDM Engine [DEMO / SIMULATED MASTER DATA]", nullable=False)
+    data_provenance = Column(String(150), default="Odisha MargDarshak MDM Engine [DEMO / SIMULATED MASTER DATA]", nullable=False)
     version = Column(Integer, default=1, nullable=False)
 
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)

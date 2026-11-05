@@ -52,9 +52,9 @@ export const LiveGisMap: React.FC<LiveGisMapProps> = ({
     // Dynamic import to prevent SSR issues
     const L = require("leaflet");
 
-    // Center on North East (Shillong / Guwahati region)
+    // Center on Odisha (Bhubaneswar centroid)
     const map = L.map(mapContainerRef.current, {
-      center: [25.57, 91.88],
+      center: [20.50, 84.80],
       zoom: 8,
       minZoom: 6,
       maxZoom: 16,

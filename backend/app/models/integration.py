@@ -13,7 +13,7 @@ class ExternalConnectorRecord(Base):
     auth_type = Column(String(50), default="BEARER_TOKEN", nullable=False)
     refresh_interval_minutes = Column(Integer, default=30, nullable=False)
 
-    geographic_coverage = Column(String(150), default="NER 8 States (Assam, Meghalaya, AP, Mizoram, Nagaland, Manipur, Tripura, Sikkim)", nullable=False)
+    geographic_coverage = Column(String(150), default="Odisha 30 Districts (State Disaster Management / IMD / CWC Network)", nullable=False)
     license_type = Column(String(100), default="Open Government Data (OGD) India / Commercial API", nullable=False)
 
     status = Column(String(30), default="HEALTHY", nullable=False) # HEALTHY, DEGRADED, SYNCING, INACTIVE
@@ -24,7 +24,7 @@ class ExternalConnectorRecord(Base):
     error_count = Column(Integer, default=0, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
 
-    data_provenance = Column(String(150), default="NER-MargDarshak Integration Hub [DEMO / SIMULATED ADAPTER]", nullable=False)
+    data_provenance = Column(String(150), default="Odisha MargDarshak Integration Hub [OSDMA / IMD / CWC ADAPTER]", nullable=False)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 

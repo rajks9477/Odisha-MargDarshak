@@ -7,7 +7,7 @@ from app.services.routing.cost_evaluator import evaluate_edge_cost
 
 def find_closest_junction(lat: float, lon: float) -> str:
     """Finds the nearest named junction key to given coordinates."""
-    best_key = "GUWAHATI"
+    best_key = "BHUBANESWAR"
     min_dist = float("inf")
     for key, data in JUNCTIONS.items():
         d = haversine_distance_km(lat, lon, data["lat"], data["lon"])
@@ -129,12 +129,12 @@ def calculate_candidate_routes(
 
     if start_node == target_node:
         # Fallback if both within same city
-        if start_node == "SILCHAR":
-            target_node = "AIZAWL"
-        elif start_node == "GUWAHATI":
-            target_node = "SHILLONG"
+        if start_node == "BHUBANESWAR":
+            target_node = "CUTTACK"
+        elif start_node == "CUTTACK":
+            target_node = "PURI"
         else:
-            target_node = "SILCHAR"
+            target_node = "BHUBANESWAR"
 
     results = []
 

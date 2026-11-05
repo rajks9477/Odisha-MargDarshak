@@ -15,8 +15,8 @@ const SAMPLE_TEMPLATE = `[
   {
     "name": "Barak Valley Trauma Center",
     "facility_type": "HOSPITAL",
-    "state": "Assam",
-    "district": "Cachar",
+    "state": "Odisha",
+    "district": "Khordha",
     "latitude": 24.833,
     "longitude": 92.778,
     "capacity_metric": "300 ICU Beds",
@@ -25,7 +25,7 @@ const SAMPLE_TEMPLATE = `[
   {
     "name": "Jowai Strategic Relief Depot",
     "facility_type": "RELIEF_CENTER",
-    "state": "Meghalaya",
+    "state": "Odisha",
     "district": "West Jaintia Hills",
     "latitude": 25.450,
     "longitude": 92.200,

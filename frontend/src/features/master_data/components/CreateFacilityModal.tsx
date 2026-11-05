@@ -20,7 +20,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
 }) => {
   const [name, setName] = useState("");
   const [facilityType, setFacilityType] = useState("HOSPITAL");
-  const [state, setState] = useState("Assam");
+  const [state, setState] = useState("Odisha");
   const [district, setDistrict] = useState("Kamrup");
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("26.144");
@@ -46,7 +46,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
     } else {
       setName("");
       setFacilityType("HOSPITAL");
-      setState("Assam");
+      setState("Odisha");
       setDistrict("Kamrup");
       setAddress("");
       setLatitude("26.144");
@@ -126,7 +126,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Silchar Civil Hospital"
+                placeholder="e.g. Balasore District Headquarter Hospital"
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 outline-none focus:border-cyan-500"
               />
             </div>
@@ -154,14 +154,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
                 onChange={(e) => setState(e.target.value)}
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 outline-none focus:border-cyan-500"
               >
-                <option value="Assam">Assam</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Sikkim">Sikkim</option>
+                <option value="Odisha">Odisha</option>
               </select>
             </div>
             <div>

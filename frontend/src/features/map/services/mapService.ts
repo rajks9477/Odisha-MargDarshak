@@ -18,13 +18,13 @@ export interface IMapProvider {
 }
 
 export const OPENSTREETMAP_PROVIDER: IMapProvider = {
-  name: "OpenStreetMap Carto NER",
-  defaultCenter: [25.570, 91.880], // Sonapur / Shillong corridor hub
+  name: "OpenStreetMap Carto Odisha",
+  defaultCenter: [20.500, 84.800], // Odisha central highway hub
   defaultZoom: 10,
   minZoom: 6,
   maxZoom: 18,
   tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors • NER-MargDarshak GIS',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors • Odisha-MargDarshak GIS',
 };
 
 export const SATELLITE_HYBRID_PROVIDER: IMapProvider = {

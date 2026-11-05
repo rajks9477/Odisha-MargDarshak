@@ -15,14 +15,14 @@ class MasterEntitySummary(BaseModel):
 class MasterFacilityCreateRequest(BaseModel):
     name: str = Field(..., min_length=2, max_length=150)
     facility_type: str = "HOSPITAL" # HOSPITAL, RELIEF_CENTER, WAREHOUSE, FUEL_STATION, EMERGENCY_HELIPAD
-    state: str = "Assam"
-    district: str = "Kamrup"
+    state: str = "Odisha"
+    district: str = "Khordha"
     address: Optional[str] = None
-    latitude: float = Field(..., ge=20.0, le=32.0)
-    longitude: float = Field(..., ge=88.0, le=98.0)
+    latitude: float = Field(..., ge=17.0, le=23.0)
+    longitude: float = Field(..., ge=81.0, le=88.5)
     capacity_metric: Optional[str] = "500 Beds"
-    contact_phone: Optional[str] = "+91361200100"
-    nodal_officer: Optional[str] = "Dr. B. K. Sarma"
+    contact_phone: Optional[str] = "+91674200100"
+    nodal_officer: Optional[str] = "Dr. B. K. Mohanty"
 
 class MasterFacilityUpdateRequest(BaseModel):
     name: Optional[str] = None
@@ -60,8 +60,8 @@ class MasterFacilityResponse(BaseModel):
 class BulkImportItem(BaseModel):
     name: str
     facility_type: str = "HOSPITAL"
-    state: str = "Assam"
-    district: str = "Kamrup"
+    state: str = "Odisha"
+    district: str = "Khordha"
     latitude: float
     longitude: float
     capacity_metric: Optional[str] = None

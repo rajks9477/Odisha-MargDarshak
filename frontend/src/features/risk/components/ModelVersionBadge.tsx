@@ -19,7 +19,7 @@ export const ModelVersionBadge: React.FC<Props> = ({
           <Brain className="w-3.5 h-3.5" />
         </div>
         <div>
-          <span className="font-bold text-slate-200">NER Gradient Boosting Risk Engine</span>
+          <span className="font-bold text-slate-200">Odisha Gradient Boosting Risk Engine</span>
           <span className="text-[10px] text-slate-400 font-mono ml-1.5">({modelVersion})</span>
         </div>
       </div>

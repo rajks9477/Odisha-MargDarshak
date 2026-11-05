@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="AI-Powered Smart Logistics & Accessibility Intelligence Platform for the North Eastern Region of India (NER)",
+    description="AI-Powered Smart Logistics & Accessibility Intelligence Platform for Odisha (Odisha Margdarshak)",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
@@ -60,11 +60,11 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 @app.get("/", tags=["Health & Status"])
 async def root_health_check():
     return {
-        "platform": "NER-MargDarshak",
+        "platform": "Odisha-MargDarshak",
         "service": "Authentication & RBAC Core Engine",
         "version": "1.0.0",
         "status": "OPERATIONAL",
         "documentation": "/docs",
         "supported_roles": ["CITIZEN", "DRIVER", "FIELD_OFFICER", "DISTRICT_ADMIN", "CENTRAL_ADMIN"],
-        "region_coverage": "8 North Eastern States of India (Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura)"
+        "region_coverage": "30 Districts of Odisha, India"
     }

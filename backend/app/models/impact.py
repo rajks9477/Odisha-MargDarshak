@@ -22,4 +22,4 @@ class ImpactAnalysisRecord(Base):
     impact_graph_json = Column(Text, nullable=False) # Serialized JSON of nodes and edges
 
     calculated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
-    model_version = Column(String(50), default="NER-CASCADING-GRAPH-ENGINE-V1", nullable=False)
+    model_version = Column(String(50), default="ODISHA-CASCADING-GRAPH-ENGINE-V1", nullable=False)

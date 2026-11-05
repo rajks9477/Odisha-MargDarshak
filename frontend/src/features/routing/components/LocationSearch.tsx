@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { LogisticsHub } from "../types/routingTypes";
 import { routingApi } from "../api/routingApi";
-import { searchNERLocations, NERLocation, NER_LOCATIONS_DATABASE } from "../services/nerLocations";
+import { searchOdishaLocations, OdishaLocation, ODISHA_LOCATIONS_DATABASE } from "../services/nerLocations";
 import {
   MapPin,
   Navigation,
@@ -41,8 +41,8 @@ export const LocationSearch: React.FC<Props> = ({
   priority,
   onPriorityChange,
 }) => {
-  const [originSuggestions, setOriginSuggestions] = useState<NERLocation[]>([]);
-  const [destSuggestions, setDestSuggestions] = useState<NERLocation[]>([]);
+  const [originSuggestions, setOriginSuggestions] = useState<OdishaLocation[]>([]);
+  const [destSuggestions, setDestSuggestions] = useState<OdishaLocation[]>([]);
   const [showOriginDropdown, setShowOriginDropdown] = useState(false);
   const [showDestDropdown, setShowDestDropdown] = useState(false);
 
@@ -52,7 +52,7 @@ export const LocationSearch: React.FC<Props> = ({
   const handleOriginType = (text: string) => {
     onOriginChange(text);
     if (text.length > 0) {
-      setOriginSuggestions(searchNERLocations(text));
+      setOriginSuggestions(searchOdishaLocations(text));
       setShowOriginDropdown(true);
     } else {
       setShowOriginDropdown(false);
@@ -62,14 +62,14 @@ export const LocationSearch: React.FC<Props> = ({
   const handleDestType = (text: string) => {
     onDestinationChange(text);
     if (text.length > 0) {
-      setDestSuggestions(searchNERLocations(text));
+      setDestSuggestions(searchOdishaLocations(text));
       setShowDestDropdown(true);
     } else {
       setShowDestDropdown(false);
     }
   };
 
-  const selectOriginLoc = (loc: NERLocation) => {
+  const selectOriginLoc = (loc: OdishaLocation) => {
     onOriginChange(`${loc.name}, ${loc.state}`, {
       id: loc.id,
       name: loc.name,
@@ -80,7 +80,7 @@ export const LocationSearch: React.FC<Props> = ({
     setShowOriginDropdown(false);
   };
 
-  const selectDestLoc = (loc: NERLocation) => {
+  const selectDestLoc = (loc: OdishaLocation) => {
     onDestinationChange(`${loc.name}, ${loc.state}`, {
       id: loc.id,
       name: loc.name,
@@ -98,8 +98,8 @@ export const LocationSearch: React.FC<Props> = ({
   };
 
   const handlePreset = (origName: string, destName: string) => {
-    const origLoc = NER_LOCATIONS_DATABASE.find((l) => l.name.toLowerCase().includes(origName.toLowerCase()) || l.district.toLowerCase().includes(origName.toLowerCase()));
-    const destLoc = NER_LOCATIONS_DATABASE.find((l) => l.name.toLowerCase().includes(destName.toLowerCase()) || l.district.toLowerCase().includes(destName.toLowerCase()));
+    const origLoc = ODISHA_LOCATIONS_DATABASE.find((l) => l.name.toLowerCase().includes(origName.toLowerCase()) || l.district.toLowerCase().includes(origName.toLowerCase()));
+    const destLoc = ODISHA_LOCATIONS_DATABASE.find((l) => l.name.toLowerCase().includes(destName.toLowerCase()) || l.district.toLowerCase().includes(destName.toLowerCase()));
 
     if (origLoc) {
       onOriginChange(`${origLoc.name}, ${origLoc.state}`, {
@@ -136,7 +136,7 @@ export const LocationSearch: React.FC<Props> = ({
           </div>
           <div>
             <h2 className="text-sm font-bold text-stone-900">Google Maps-Style Route Navigator</h2>
-            <p className="text-[11px] text-stone-500">Search any district, city or border pass across 8 NER states</p>
+            <p className="text-[11px] text-stone-500">Search any district, city, highway corridor or port across all 30 Odisha districts</p>
           </div>
         </div>
 
@@ -164,8 +164,8 @@ export const LocationSearch: React.FC<Props> = ({
             value={origin}
             onChange={(e) => handleOriginType(e.target.value)}
             onFocus={() => {
-              if (origin.length > 0) setOriginSuggestions(searchNERLocations(origin));
-              else setOriginSuggestions(NER_LOCATIONS_DATABASE.slice(0, 6));
+              if (origin.length > 0) setOriginSuggestions(searchOdishaLocations(origin));
+              else setOriginSuggestions(ODISHA_LOCATIONS_DATABASE.slice(0, 6));
               setShowOriginDropdown(true);
             }}
             className="w-full pl-9 pr-3.5 py-2.5 bg-stone-50/70 border border-stone-200 focus:bg-white focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 rounded-xl text-xs sm:text-sm text-stone-900 placeholder-stone-400 outline-none transition-all"
@@ -222,8 +222,8 @@ export const LocationSearch: React.FC<Props> = ({
             value={destination}
             onChange={(e) => handleDestType(e.target.value)}
             onFocus={() => {
-              if (destination.length > 0) setDestSuggestions(searchNERLocations(destination));
-              else setDestSuggestions(NER_LOCATIONS_DATABASE.slice(0, 6));
+              if (destination.length > 0) setDestSuggestions(searchOdishaLocations(destination));
+              else setDestSuggestions(ODISHA_LOCATIONS_DATABASE.slice(0, 6));
               setShowDestDropdown(true);
             }}
             className="w-full pl-9 pr-3.5 py-2.5 bg-stone-50/70 border border-stone-200 focus:bg-white focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 rounded-xl text-xs sm:text-sm text-stone-900 placeholder-stone-400 outline-none transition-all"
@@ -297,17 +297,17 @@ export const LocationSearch: React.FC<Props> = ({
         <span className="text-[10px] text-stone-500 font-bold whitespace-nowrap">Fast Corridors:</span>
         <button
           type="button"
-          onClick={() => handlePreset("Guwahati", "Silchar")}
+          onClick={() => handlePreset("Bhubaneswar", "Balasore")}
           className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-[10px] font-semibold text-stone-700 whitespace-nowrap border border-stone-200 cursor-pointer"
         >
-          Guwahati ➔ Silchar (NH-6)
+          Bhubaneswar ➔ Balasore (NH-6)
         </button>
         <button
           type="button"
-          onClick={() => handlePreset("Silchar", "Aizawl")}
+          onClick={() => handlePreset("Bhubaneswar", "Paradip")}
           className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-[10px] font-semibold text-stone-700 whitespace-nowrap border border-stone-200 cursor-pointer"
         >
-          Silchar ➔ Aizawl (NH-306)
+          Bhubaneswar ➔ Sambalpur (NH-306)
         </button>
         <button
           type="button"
@@ -318,10 +318,10 @@ export const LocationSearch: React.FC<Props> = ({
         </button>
         <button
           type="button"
-          onClick={() => handlePreset("Imphal", "Kohima")}
+          onClick={() => handlePreset("Bhubaneswar", "Berhampur")}
           className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-[10px] font-semibold text-stone-700 whitespace-nowrap border border-stone-200 cursor-pointer"
         >
-          Imphal ➔ Kohima (NH-2)
+          Bhubaneswar ➔ Berhampur (NH-2)
         </button>
       </div>
 

@@ -105,14 +105,14 @@ async def calculate_routes(
             start_lon = driver_loc.longitude
             origin_name = driver_loc.location_name or "Driver Live Location"
         else:
-            start_lat = 26.18
-            start_lon = 91.73
-            origin_name = "Guwahati Central Hub, Assam"
+            start_lat = 20.29
+            start_lon = 85.82
+            origin_name = "Bhubaneswar Central Logistics Hub, Odisha"
 
     if dest_lat is None or dest_lon is None:
-        dest_lat = 24.83
-        dest_lon = 92.79
-        dest_name = "Silchar Food & Medical Depot, Assam"
+        dest_lat = 21.50
+        dest_lon = 86.92
+        dest_name = "Balasore Port & Relief Depot, Odisha"
 
     # 3. Load Active Roads & Incidents from Database
     r_stmt = select(Road)

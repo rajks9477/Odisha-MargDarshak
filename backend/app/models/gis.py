@@ -28,20 +28,20 @@ class IncidentSeverity(str, enum.Enum):
 class Road(Base):
     __tablename__ = "roads"
 
-    id = Column(String(50), primary_key=True, index=True) # e.g. "NH-6-SONAPUR-01"
-    road_name = Column(String(150), nullable=False, index=True) # e.g. "NH-6 National Highway (Shillong - Silchar)"
-    road_number = Column(String(30), nullable=False, index=True) # e.g. "NH-6"
+    id = Column(String(50), primary_key=True, index=True) # e.g. "NH-16-BAITARANI-01"
+    road_name = Column(String(150), nullable=False, index=True) # e.g. "NH-16 Coastal Trunk Corridor (Bhubaneswar - Balasore)"
+    road_number = Column(String(30), nullable=False, index=True) # e.g. "NH-16"
     road_type = Column(String(50), nullable=False, default="National Highway") # e.g. National Highway, State Highway, Border Road
     
     # Stored as GeoJSON LineString string format: [[lon, lat], [lon, lat], ...]
     geometry_json = Column(Text, nullable=False)
     
     district_id = Column(String(50), nullable=True, index=True)
-    district_name = Column(String(100), nullable=False, index=True) # e.g. "East Jaintia Hills"
-    state = Column(String(100), nullable=False, index=True) # e.g. "Meghalaya"
+    district_name = Column(String(100), nullable=False, index=True) # e.g. "Bhadrak"
+    state = Column(String(100), nullable=False, index=True) # e.g. "Odisha"
     
     status = Column(Enum(RoadStatus), nullable=False, default=RoadStatus.GREEN, index=True)
-    status_reason = Column(String(255), nullable=True) # e.g. "Single-lane traffic near Sonapur tunnel"
+    status_reason = Column(String(255), nullable=True) # e.g. "Single-lane traffic near Baitarani bridge"
     average_speed_kmh = Column(Float, nullable=False, default=40.0)
     is_bridge_section = Column(Boolean, default=False)
     
@@ -56,8 +56,8 @@ class Road(Base):
 class Bridge(Base):
     __tablename__ = "bridges"
 
-    id = Column(String(50), primary_key=True, index=True) # e.g. "BRG-SONAPUR-01"
-    bridge_name = Column(String(150), nullable=False) # e.g. "Sonapur River Bridge"
+    id = Column(String(50), primary_key=True, index=True) # e.g. "BRG-BAITARANI-01"
+    bridge_name = Column(String(150), nullable=False) # e.g. "Baitarani River Bridge"
     road_id = Column(String(50), ForeignKey("roads.id"), nullable=True, index=True)
     
     # GeoJSON Point [lon, lat]
@@ -75,7 +75,7 @@ class Bridge(Base):
 class District(Base):
     __tablename__ = "districts"
 
-    id = Column(String(50), primary_key=True, index=True) # e.g. "DIST-AS-KAMRUP-METRO"
+    id = Column(String(50), primary_key=True, index=True) # e.g. "DIST-ODI-KHO"
     district_name = Column(String(100), nullable=False, index=True)
     state = Column(String(100), nullable=False, index=True)
     headquarters = Column(String(100), nullable=False)

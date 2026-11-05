@@ -12,7 +12,7 @@ class ResilienceAssetRecord(Base):
     road_id = Column(String(50), ForeignKey("roads.id"), nullable=False, index=True)
 
     district = Column(String(100), nullable=False, default="East Jaintia Hills")
-    state = Column(String(100), nullable=False, default="Meghalaya")
+    state = Column(String(100), nullable=False, default="Odisha")
 
     resilience_score = Column(Float, nullable=False, default=32.5) # 0 to 100% (lower = more vulnerable)
     criticality_level = Column(String(50), nullable=False, default="CRITICAL_SINGLE_POINT") # CRITICAL_SINGLE_POINT, HIGH_DEPENDENCY, MODERATE_REDUNDANCY, RESILIENT
@@ -23,4 +23,4 @@ class ResilienceAssetRecord(Base):
 
     planning_recommendation = Column(Text, nullable=False, default="High Priority for Slope Stabilization, Retaining Wall & Tunneling")
     last_evaluated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
-    data_provenance = Column(String(150), default="NER-MargDarshak Resilience Engine V2.0 [ANALYTICAL RECOMMENDATION]", nullable=False)
+    data_provenance = Column(String(150), default="Odisha MargDarshak Resilience Engine V2.0 [ANALYTICAL RECOMMENDATION]", nullable=False)

@@ -51,15 +51,15 @@ export const FullScreen3DMapHero: React.FC = () => {
   const HIGHWAYS = [
     {
       id: "NH-6",
-      name: "NH-6 Sonapur Tunnel Mountain Pass",
+      name: "NH-16 Baitarani River Bridge Sector",
       color: "#EF4444", // RED - Landslide
       risk: "CRITICAL RISK (84/100)",
       coords: [
-        [25.578, 91.893], // Shillong
+        [20.463, 85.882], // Cuttack
         [25.446, 92.203], // Jowai
-        [25.105, 92.361], // Sonapur Tunnel (Landslide Hazard)
+        [20.898, 86.295], // Sonapur Tunnel (Landslide Hazard)
         [24.950, 92.650], // Lumshnong
-        [24.833, 92.779], // Silchar
+        [24.833, 92.779], // Balasore
       ] as [number, number][],
     },
     {
@@ -68,7 +68,7 @@ export const FullScreen3DMapHero: React.FC = () => {
       color: "#10B981", // GREEN - Safe
       risk: "CLEAR TRANSIT (18/100)",
       coords: [
-        [26.185, 91.745], // Guwahati
+        [20.296, 85.824], // Bhubaneswar
         [26.250, 92.340], // Morigaon
         [26.000, 92.850], // Doboka
         [25.750, 93.180], // Lumding
@@ -76,20 +76,20 @@ export const FullScreen3DMapHero: React.FC = () => {
     },
     {
       id: "NH-37",
-      name: "NH-37 Kaziranga Brahmaputra Highway",
+      name: "NH-16 Coastal Highway Spine",
       color: "#EA580C", // ORANGE - Flood
       risk: "HIGH FLOOD HAZARD (68/100)",
       coords: [
-        [26.185, 91.745], // Guwahati
+        [20.296, 85.824], // Bhubaneswar
         [26.345, 92.684], // Nagaon
         [26.580, 93.170], // Kaziranga
-        [26.750, 94.216], // Jorhat
-        [27.472, 94.912], // Dibrugarh
+        [20.462, 85.882], // Cuttack
+        [21.493, 86.933], // Balasore
       ] as [number, number][],
     },
     {
       id: "NH-13",
-      name: "NH-13 Trans-Arunachal & Sela Pass",
+      name: "NH-55 Cuttack-Angul-Sambalpur Expressway",
       color: "#EA580C", // ORANGE - Ice/Rockfall
       risk: "HIGH ROCKFALL RISK (72/100)",
       coords: [
@@ -105,10 +105,10 @@ export const FullScreen3DMapHero: React.FC = () => {
       color: "#F59E0B", // YELLOW - Rain caution
       risk: "CAUTION (48/100)",
       coords: [
-        [24.833, 92.779], // Silchar
+        [24.833, 92.779], // Balasore
         [24.505, 92.756], // Vairengte
         [24.225, 92.678], // Kolasib
-        [23.730, 92.717], // Aizawl
+        [18.813, 82.713], // Koraput
       ] as [number, number][],
     },
     {
@@ -119,7 +119,7 @@ export const FullScreen3DMapHero: React.FC = () => {
       coords: [
         [25.510, 92.740], // Umrangso
         [25.176, 93.018], // Haflong
-        [24.833, 92.779], // Silchar
+        [24.833, 92.779], // Balasore
       ] as [number, number][],
     }
   ];
@@ -132,16 +132,16 @@ export const FullScreen3DMapHero: React.FC = () => {
       type: "FUEL",
       icon: "⛽",
       routeCoords: [
-        [25.578, 91.893],
+        [20.463, 85.882],
         [25.446, 92.203],
-        [25.105, 92.361],
+        [20.898, 86.295],
         [24.950, 92.650],
         [24.833, 92.779],
       ],
       currentIdx: 0,
       speed: 0.04,
       color: "#EF4444",
-      roadName: "NH-6 Sonapur Pass (In Danger)",
+      roadName: "NH-16 Baitarani River Bridge (Flood Alert)",
     },
     {
       id: "V2",
@@ -149,7 +149,7 @@ export const FullScreen3DMapHero: React.FC = () => {
       type: "CARGO",
       icon: "🚚",
       routeCoords: [
-        [26.185, 91.745],
+        [20.296, 85.824],
         [26.345, 92.684],
         [26.580, 93.170],
         [26.750, 94.216],
@@ -174,7 +174,7 @@ export const FullScreen3DMapHero: React.FC = () => {
       currentIdx: 0,
       speed: 0.06,
       color: "#10B981",
-      roadName: "NH-306 Aizawl Lifeline",
+      roadName: "NH-20 Kanjipani Ghat Lifeline",
     },
     {
       id: "V4",
@@ -213,7 +213,7 @@ export const FullScreen3DMapHero: React.FC = () => {
     const L = require("leaflet");
 
     const map = L.map(mapContainerRef.current, {
-      center: [25.90, 92.85], // Centered on Assam & NER
+      center: [20.50, 84.80], // Centered on Odisha
       zoom: 8,
       minZoom: 6,
       maxZoom: 18,
@@ -264,9 +264,9 @@ export const FullScreen3DMapHero: React.FC = () => {
       iconSize: [28, 28],
       iconAnchor: [14, 14],
     });
-    L.marker([25.105, 92.361], { icon: hazardIcon })
+    L.marker([20.898, 86.295], { icon: hazardIcon })
       .addTo(map)
-      .bindTooltip("<b>🔴 NH-6 Sonapur Tunnel: Active Landslide Blockage</b>", { sticky: true });
+      .bindTooltip("<b>🔴 NH-6 Baitarani River Bridge: Active Flood Overtopping</b>", { sticky: true });
 
     return () => {
       map.remove();
@@ -371,14 +371,14 @@ export const FullScreen3DMapHero: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-sm text-stone-900 tracking-tight">
-                NER–MargDarshak
+                Odisha MargDarshak
               </span>
               <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">
                 Gov Logistics AI
               </span>
             </div>
             <p className="text-[10px] text-stone-500 font-medium">
-              North Eastern Regional Logistics &amp; Accessibility Grid
+              Odishaal Logistics &amp; Accessibility Grid
             </p>
           </div>
         </div>
@@ -423,7 +423,7 @@ export const FullScreen3DMapHero: React.FC = () => {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-              <span>8 North Eastern States Connected in Real-Time</span>
+              <span>30 Districts of Odisha Connected in Real-Time</span>
             </div>
 
             <h1 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight leading-snug">

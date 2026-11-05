@@ -97,7 +97,7 @@ export default function DriverProfilePage() {
 
                 <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
                   <div className="text-[10px] text-slate-500 uppercase font-bold">Experience (Mountain Routes)</div>
-                  <div className="text-xs sm:text-sm font-bold text-white">{profile.experience_years} Years (NER Verified)</div>
+                  <div className="text-xs sm:text-sm font-bold text-white">{profile.experience_years} Years (Odisha Verified)</div>
                 </div>
 
                 <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
@@ -121,7 +121,7 @@ export default function DriverProfilePage() {
                     <Phone className="w-3.5 h-3.5 text-emerald-400" /> Emergency Helpline / Dispatcher
                   </div>
                   <div className="text-xs font-bold text-white font-mono">
-                    {profile.emergency_contact || "+91 9435012345 (Assam Transport Control)"}
+                    {profile.emergency_contact || "+91 674 2534177 (Odisha Transport Control / 112)"}
                   </div>
                 </div>
 

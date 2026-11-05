@@ -325,8 +325,8 @@ async def get_trip_route_geometry(
             "risk_score": 18.5,
             "risk_level": "LOW",
             "segments": [
-                {"road_name": "NH-27 Guwahati East-West Corridor", "distance_km": 28.0, "status": "GREEN"},
-                {"road_name": "NH-6 Sonapur Mountain Spine", "distance_km": 72.0, "status": "YELLOW"},
+                {"road_name": "NH-16 Bhubaneswar - Cuttack Trunk Corridor", "distance_km": 28.0, "status": "GREEN"},
+                {"road_name": "NH-16 Baitarani River Bridge Corridor", "distance_km": 72.0, "status": "YELLOW"},
             ],
         }
 
@@ -761,7 +761,7 @@ async def get_trip_progress(
         distance_remaining_km=remaining_km,
         progress_percentage=progress_pct,
         estimated_remaining_minutes=round((remaining_km / 40.0) * 60.0, 0),
-        current_road_name=road_name or "NH-6 Sonapur Highway Spine",
+        current_road_name=road_name or "NH-16 Baitarani River Bridge Corridor",
         is_deviated=is_deviated,
         deviation_distance_km=round(min_dist_to_route, 2),
     )

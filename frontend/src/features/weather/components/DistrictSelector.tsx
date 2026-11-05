@@ -9,12 +9,26 @@ interface Props {
 }
 
 const DISTRICT_LOCATIONS = [
-  "Sonapur (East Jaintia Hills, Meghalaya)",
-  "Shillong (East Khasi Hills, Meghalaya)",
-  "Guwahati (Kamrup Metropolitan, Assam)",
-  "Silchar (Cachar, Assam)",
-  "Aizawl (Aizawl District, Mizoram)",
-  "Tawang (Tawang District, Arunachal Pradesh)",
+  "Bhubaneswar (Khordha District)",
+  "Cuttack (Cuttack District - Mahanadi Basin)",
+  "Bhadrak (Bhadrak District - Baitarani Basin)",
+  "Balasore (Balasore Coastal District)",
+  "Puri (Puri Coastal District)",
+  "Sambalpur (Sambalpur District - Hirakud Basin)",
+  "Kendujhar (Keonjhar Ghats Corridor)",
+  "Berhampur (Ganjam Coastal District)",
+  "Koraput (Koraput Hilly Corridor)",
+  "Rourkela (Sundargarh Industrial Corridor)",
+  "Baripada (Mayurbhanj District)",
+  "Angul (Angul Industrial Corridor)",
+  "Rayagada (Rayagada Ghats Corridor)",
+  "Paradip (Jagatsinghpur Port Corridor)",
+  "Jharsuguda (Jharsuguda District)",
+  "Kalahandi (Bhawanipatna)",
+  "Kandhamal (Phulbani - Kalinga Ghat)",
+  "Malkangiri (Malkangiri Tribal Belt)",
+  "Bargarh (Bargarh Agricultural Belt)",
+  "Balangir (Balangir Western Belt)"
 ];
 
 export const DistrictSelector: React.FC<Props> = ({

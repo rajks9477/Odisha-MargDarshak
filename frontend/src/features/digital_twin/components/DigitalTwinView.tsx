@@ -80,7 +80,7 @@ export const DigitalTwinView: React.FC = () => {
             <Activity className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-100">Digital Twin of NER Network</h2>
+            <h2 className="text-base font-bold text-slate-100">Digital Twin of Odisha Network</h2>
             <p className="text-xs text-slate-400">
               Live unified graph model connecting Roads, Bridges, Vehicles, Relief Consignments & District Services
             </p>

@@ -85,7 +85,7 @@ export const UserTable: React.FC<Props> = ({
               </td>
               <td className="p-3.5">{getRoleBadge(u.role)}</td>
               <td className="p-3.5">
-                <span className="text-slate-200">{u.district || "—"}, {u.state || "NER"}</span>
+                <span className="text-slate-200">{u.district || "—"}, {u.state || "Odisha"}</span>
               </td>
               <td className="p-3.5">{getStatusBadge(u.status)}</td>
               <td className="p-3.5 text-[11px] text-slate-400">

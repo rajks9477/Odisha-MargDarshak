@@ -33,8 +33,8 @@ import {
 } from "lucide-react";
 
 export const RoutePlanningScreen: React.FC = () => {
-  const [origin, setOrigin] = useState<string>("Guwahati Central Logistic Terminal, Assam");
-  const [destination, setDestination] = useState<string>("Silchar Food & Medical Depot, Assam");
+  const [origin, setOrigin] = useState<string>("Bhubaneswar Central Logistics Terminal, Khordha");
+  const [destination, setDestination] = useState<string>("Balasore Civil Supplies & Medical Depot, Balasore");
   const [originHub, setOriginHub] = useState<LogisticsHub | undefined>(undefined);
   const [destinationHub, setDestinationHub] = useState<LogisticsHub | undefined>(undefined);
   const [priority, setPriority] = useState<"ESSENTIAL_SAFETY" | "BALANCED_LOGISTICS" | "FASTEST_TRANSIT">("ESSENTIAL_SAFETY");
@@ -99,7 +99,7 @@ export const RoutePlanningScreen: React.FC = () => {
           });
         },
         () => {
-          setOrigin("Guwahati Central Logistic Terminal, Assam");
+          setOrigin("Bhubaneswar Central Logistics Terminal, Khordha");
         }
       );
     }
@@ -114,7 +114,7 @@ export const RoutePlanningScreen: React.FC = () => {
   };
 
   const handleMapClickLocation = (lat: number, lng: number) => {
-    if (!destination || destination.includes("Silchar")) {
+    if (!destination || destination.includes("Balasore")) {
       setDestination(`Selected Map Destination (${lat.toFixed(3)}, ${lng.toFixed(3)})`);
       setDestinationHub({
         id: "CUSTOM_DEST",

@@ -36,8 +36,8 @@ async def get_incident_impact(
     res = await db.execute(stmt)
     inc = res.scalar_one_or_none()
 
-    road_id = inc.road_id if inc and inc.road_id else "NH-6-SONAPUR-01"
-    hazard_type = inc.incident_type if inc else "LANDSLIDE_DEBRIS"
+    road_id = inc.road_id if inc and inc.road_id else "NH-16-BAITARANI-01"
+    hazard_type = inc.incident_type if inc else "RIVER_FLOOD_OVERTOPPING"
     severity = inc.severity if inc else "HIGH"
 
     return await calculate_cascading_impact(
@@ -64,7 +64,7 @@ async def get_active_disruptions(
     current_user: User = Depends(require_roles([UserRole.DRIVER, UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER, UserRole.CITIZEN])),
     db: AsyncSession = Depends(get_db),
 ) -> Any:
-    """Returns active regional cascading impact analyses across key North Eastern arterial corridors."""
-    res1 = await calculate_cascading_impact(db, road_id="NH-6-SONAPUR-01", hazard_type="LANDSLIDE_MUDFLOW", severity="CRITICAL", blockage_hours=6.0)
-    res2 = await calculate_cascading_impact(db, road_id="NH-306-VAIREGNTE-01", hazard_type="FLASH_FLOOD", severity="HIGH", blockage_hours=3.5)
+    """Returns active regional cascading impact analyses across key Odisha arterial corridors."""
+    res1 = await calculate_cascading_impact(db, road_id="NH-16-BAITARANI-01", hazard_type="RIVER_FLOOD_OVERTOPPING", severity="CRITICAL", blockage_hours=6.0)
+    res2 = await calculate_cascading_impact(db, road_id="NH-20-KANJIPANI-01", hazard_type="LANDSLIDE_DEBRIS", severity="HIGH", blockage_hours=3.5)
     return [res1, res2]

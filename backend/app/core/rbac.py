@@ -118,7 +118,7 @@ async def get_current_active_user(
     elif current_user.status == UserStatus.SUSPENDED:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Your account has been suspended. Please contact the NER-MargDarshak administrative desk.",
+            detail="Your account has been suspended. Please contact the Odisha MargDarshak administrative desk.",
         )
     elif current_user.status == UserStatus.REJECTED:
         raise HTTPException(

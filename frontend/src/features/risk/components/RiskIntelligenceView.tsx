@@ -80,7 +80,7 @@ export const RiskIntelligenceView: React.FC = () => {
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
           <input
             type="text"
-            placeholder="Search corridor by name (e.g. NH-6, Sonapur, Shillong)..."
+            placeholder="Search corridor by name (e.g. NH-16, Baitarani, Kanjipani)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"

@@ -38,7 +38,7 @@ async def get_system_production_status(
     ml_metrics = get_production_metrics()
 
     return {
-        "platform": "NER-MargDarshak",
+        "platform": "Odisha MargDarshak",
         "release": "v1.0.0-PROD-NER",
         "environment": "PRODUCTION_READY",
         "timestamp": start_time.isoformat(),
@@ -89,5 +89,5 @@ async def get_system_production_status(
             "Resilience & Infrastructure Planning",
             "Analytics, Audit Reports & Decision Support"
         ],
-        "data_provenance": "NER-MargDarshak Unified Production System [GROUND PLATFORM]"
+        "data_provenance": "Odisha MargDarshak Unified Production System [GROUND PLATFORM]"
     }

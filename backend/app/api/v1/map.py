@@ -543,7 +543,7 @@ async def search_map_entities(
     r_res = await db.execute(r_stmt)
     for r in r_res.scalars().all():
         coords = r.get_coordinates()
-        center_pt = coords[len(coords) // 2] if coords else [91.75, 26.18]
+        center_pt = coords[len(coords) // 2] if coords else [85.82, 20.29]
         results.append(
             MapSearchItem(
                 id=r.id,
@@ -619,12 +619,12 @@ async def match_road_and_district(
         latitude=lat,
         longitude=lng,
         matched_road_id=best_road.id if best_road else None,
-        matched_road_name=road_name or "NER Highway Spine",
+        matched_road_name=road_name or "Odisha Highway Spine",
         road_type=best_road.road_type if best_road else "National Highway",
         road_status=best_road.status if best_road else RoadStatus.GREEN,
         distance_to_road_km=dist_km,
-        district_name=matched_district_name or (best_road.district_name if best_road else "Kamrup Metropolitan"),
-        state=matched_state or (best_road.state if best_road else "Assam"),
+        district_name=matched_district_name or (best_road.district_name if best_road else "Khordha"),
+        state=matched_state or (best_road.state if best_road else "Odisha"),
     )
 
 # Legacy aliases for bridges & districts

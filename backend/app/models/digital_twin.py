@@ -33,4 +33,4 @@ class DigitalTwinSnapshotRecord(Base):
 
     state_payload_json = Column(Text, nullable=False, default="{}")
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
-    data_provenance = Column(String(150), default="NER-MargDarshak Digital Twin Engine V1.6 [DEMO STATE]", nullable=False)
+    data_provenance = Column(String(150), default="Odisha MargDarshak Digital Twin Engine V1.6 [DEMO STATE]", nullable=False)

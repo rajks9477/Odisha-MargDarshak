@@ -8,13 +8,7 @@ import {
   ArrowRight,
   Sparkles,
   Globe2,
-  Layers,
   Radio,
-  Activity,
-  ShieldCheck,
-  Zap,
-  Mountain,
-  Truck
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LanguageSelector } from "@/components/common/LanguageSelector";
@@ -32,329 +26,277 @@ interface MovingVehicle {
 }
 
 export const FullScreenLiveMapHero: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const vehicleMarkersRef = useRef<{ [id: string]: any }>({});
   const [mapStyle, setMapStyle] = useState<"LIGHT" | "TERRAIN" | "SATELLITE">("LIGHT");
 
-  // Comprehensive NER Highway Grid covering Every Visible Road across all 8 States
+  // Comprehensive Odisha Highway Grid covering all 30 Districts
   const HIGHWAYS = [
-    // 1. NH-6 Sonapur Tunnel Mountain Pass (RED - Active Landslide ⚠️)
+    // 1. NH-16 Coastal Trunk Spine (RED - Baitarani River Flood Overtopping Hazard ⚠️)
     {
-      id: "NH-6",
-      name: "NH-6 Sonapur Tunnel Pass (Shillong ➔ Silchar)",
+      id: "NH-16",
+      name: "NH-16 Coastal Arterial Spine (Balasore ➔ Bhadrak ➔ Cuttack ➔ Bhubaneswar ➔ Berhampur)",
       color: "#DC2626",
       coords: [
-        [25.578, 91.893], // Shillong
-        [25.446, 92.203], // Jowai
-        [25.105, 92.361], // Sonapur Tunnel (Landslide Hazard)
-        [24.950, 92.650], // Lumshnong
-        [24.833, 92.779], // Silchar
+        [21.494, 86.932], // Balasore
+        [21.054, 86.495], // Bhadrak
+        [20.898, 86.295], // Baitarani River Bridge (Critical Flood Hazard)
+        [20.851, 86.138], // Jajpur
+        [20.463, 85.882], // Cuttack
+        [20.296, 85.824], // Bhubaneswar
+        [20.180, 85.700], // Khordha
+        [19.800, 85.100], // Chatrapur
+        [19.315, 84.794], // Berhampur
       ] as [number, number][],
     },
-    // 2. NH-27 4-Lane East-West Commercial Expressway (GREEN - Safe All-Weather)
+    // 2. NH-55 Central Industrial Expressway (GREEN - All-Weather Safe)
     {
-      id: "NH-27",
-      name: "NH-27 4-Lane East-West Corridor (Guwahati ➔ Lumding ➔ Silchar)",
+      id: "NH-55",
+      name: "NH-55 Central Industrial Expressway (Cuttack ➔ Dhenkanal ➔ Angul ➔ Sambalpur)",
       color: "#059669",
       coords: [
-        [26.144, 91.736], // Guwahati
-        [26.250, 92.340], // Morigaon
-        [26.000, 92.850], // Doboka
-        [25.750, 93.180], // Lumding
-        [25.176, 93.018], // Haflong
-        [24.833, 92.779], // Silchar
+        [20.463, 85.882], // Cuttack
+        [20.662, 85.596], // Dhenkanal
+        [20.844, 85.101], // Angul
+        [21.160, 84.580], // Rairakhol
+        [21.467, 83.978], // Sambalpur
       ] as [number, number][],
     },
-    // 3. NH-37 Brahmaputra Valley & Kaziranga (ORANGE - River Flood Inundation)
-    {
-      id: "NH-37",
-      name: "NH-37 Kaziranga Brahmaputra Highway",
-      color: "#D97706",
-      coords: [
-        [26.144, 91.736], // Guwahati
-        [26.345, 92.684], // Nagaon
-        [26.580, 93.170], // Kaziranga
-        [26.750, 94.216], // Jorhat
-        [27.472, 94.912], // Dibrugarh
-        [27.500, 95.360], // Tinsukia
-      ] as [number, number][],
-    },
-    // 4. NH-13 Trans-Arunachal Frontier (ORANGE - Sela Pass Rockfall / Ice)
-    {
-      id: "NH-13",
-      name: "NH-13 Trans-Arunachal Highway (Tezpur ➔ Tawang)",
-      color: "#D97706",
-      coords: [
-        [26.652, 92.793], // Tezpur
-        [27.264, 92.416], // Bomdila
-        [27.502, 92.103], // Sela Pass
-        [27.586, 91.866], // Tawang
-      ] as [number, number][],
-    },
-    // 5. NH-15 Brahmaputra North Bank Highway (GREEN - Safe High Road)
-    {
-      id: "NH-15",
-      name: "NH-15 North Bank Highway (Baihata ➔ Tezpur ➔ Pasighat)",
-      color: "#059669",
-      coords: [
-        [26.340, 91.710], // Baihata Chariali
-        [26.430, 92.030], // Mangaldai
-        [26.652, 92.793], // Tezpur
-        [27.240, 94.100], // North Lakhimpur
-        [27.480, 94.570], // Dhemaji
-        [28.060, 95.330], // Pasighat
-      ] as [number, number][],
-    },
-    // 6. NH-306 & NH-54 Mizoram Lifeline (YELLOW - Continuous Monsoon Rain)
-    {
-      id: "NH-306",
-      name: "NH-306 Southern Arterial (Silchar ➔ Aizawl ➔ Lunglei)",
-      color: "#EAB308",
-      coords: [
-        [24.833, 92.779], // Silchar
-        [24.505, 92.756], // Vairengte
-        [24.225, 92.678], // Kolasib
-        [23.730, 92.717], // Aizawl
-        [22.880, 92.740], // Lunglei
-      ] as [number, number][],
-    },
-    // 7. NH-2 / NH-29 Nagaland & Manipur Hills Spine (ORANGE - Pagala Pahar Sinking Hill)
-    {
-      id: "NH-2",
-      name: "NH-2 / NH-29 Trans-Hills Spine (Dimapur ➔ Kohima ➔ Imphal)",
-      color: "#D97706",
-      coords: [
-        [25.906, 93.727], // Dimapur
-        [25.675, 94.108], // Kohima
-        [25.260, 94.020], // Senapati
-        [24.817, 93.936], // Imphal
-        [24.430, 93.680], // Churachandpur
-      ] as [number, number][],
-    },
-    // 8. NH-8 Tripura Lifeline (GREEN - Safe Paved Arterial)
-    {
-      id: "NH-8",
-      name: "NH-8 Tripura Lifeline (Silchar ➔ Agartala ➔ Sabroom)",
-      color: "#059669",
-      coords: [
-        [24.833, 92.779], // Silchar
-        [24.370, 92.160], // Dharmanagar
-        [23.920, 91.850], // Ambassa
-        [23.831, 91.286], // Agartala
-        [23.000, 91.700], // Sabroom
-      ] as [number, number][],
-    },
-    // 9. NH-17 Lower Assam Plain (GREEN - Safe Valley Road)
-    {
-      id: "NH-17",
-      name: "NH-17 Lower Assam Link (Guwahati ➔ Goalpara ➔ Dhubri)",
-      color: "#059669",
-      coords: [
-        [26.144, 91.736], // Guwahati
-        [25.980, 90.990], // Dudhnoi
-        [26.180, 90.620], // Goalpara
-        [26.020, 89.980], // Dhubri
-      ] as [number, number][],
-    },
-    // 10. NH-10 Teesta Valley Mountain Pass (RED - Teesta River Embankment Collapse)
-    {
-      id: "NH-10",
-      name: "NH-10 Teesta Valley Mountain Pass (Siliguri ➔ Gangtok)",
-      color: "#DC2626",
-      coords: [
-        [26.720, 88.420], // Siliguri
-        [26.880, 88.470], // Sevoke
-        [27.170, 88.530], // Rangpo
-        [27.338, 88.606], // Gangtok
-      ] as [number, number][],
-    },
-    // 11. NH-31 / NH-27 West Bengal & Siliguri Corridor (GREEN - Safe Entry)
-    {
-      id: "NH-31",
-      name: "NH-31 North Bengal Entryway (Siliguri ➔ Alipurduar ➔ Bongaigaon)",
-      color: "#059669",
-      coords: [
-        [26.720, 88.420], // Siliguri
-        [26.540, 88.720], // Jalpaiguri
-        [26.490, 89.520], // Alipurduar
-        [26.470, 90.560], // Bongaigaon
-        [26.144, 91.736], // Guwahati
-      ] as [number, number][],
-    },
-    // 12. NH-53 Barak-Manipur Road (RED - Landslide Cutoff on Noney Hill)
+    // 3. NH-53 Western Mining Expressway (GREEN - Safe High Capacity)
     {
       id: "NH-53",
-      name: "NH-53 Jiribam-Imphal Highway (Silchar ➔ Jiribam ➔ Imphal)",
-      color: "#DC2626",
-      coords: [
-        [24.833, 92.779], // Silchar
-        [24.800, 93.120], // Jiribam
-        [24.780, 93.600], // Noney Hill (Active Mudflow)
-        [24.817, 93.936], // Imphal
-      ] as [number, number][],
-    },
-    // 13. NH-102 Asian Highway Border Link (GREEN - Safe Export Line)
-    {
-      id: "NH-102",
-      name: "NH-102 Asian Highway (Imphal ➔ Thoubal ➔ Moreh Border)",
+      name: "NH-53 Western Mining Expressway (Paradip ➔ Cuttack ➔ Sambalpur ➔ Bargarh)",
       color: "#059669",
       coords: [
-        [24.817, 93.936], // Imphal
-        [24.630, 93.990], // Thoubal
-        [24.240, 94.310], // Moreh Border
+        [20.264, 86.671], // Paradip Port
+        [20.463, 85.882], // Cuttack
+        [20.844, 85.101], // Angul
+        [21.467, 83.978], // Sambalpur
+        [21.334, 83.623], // Bargarh
       ] as [number, number][],
     },
-    // 14. Haflong-Umrangso All-Weather Green Bypass (GREEN - Safe Detour)
+    // 4. NH-20 Northern Mining Corridor (ORANGE - Kanjipani Ghat Rockfall Caution)
     {
-      id: "HAFLONG-BYPASS",
-      name: "Haflong-Umrangso All-Weather Green Bypass",
+      id: "NH-20",
+      name: "NH-20 Northern Mineral Corridor (Cuttack ➔ Panikoili ➔ Keonjhar ➔ Barbil)",
+      color: "#D97706",
+      coords: [
+        [20.463, 85.882], // Cuttack
+        [20.900, 86.150], // Panikoili
+        [21.217, 85.983], // Anandapur
+        [21.517, 85.503], // Kanjipani Ghat (Rockfall Hazard)
+        [21.629, 85.582], // Keonjhar
+        [22.120, 85.390], // Barbil
+      ] as [number, number][],
+    },
+    // 5. NH-26 Western-Southern Trunk (YELLOW - Continuous Monsoon Rain)
+    {
+      id: "NH-26",
+      name: "NH-26 Western-Southern Spine (Bargarh ➔ Balangir ➔ Bhawanipatna ➔ Jeypore ➔ Koraput)",
+      color: "#EAB308",
+      coords: [
+        [21.334, 83.623], // Bargarh
+        [20.711, 83.487], // Balangir
+        [19.907, 83.167], // Bhawanipatna
+        [18.858, 82.569], // Jeypore
+        [18.814, 82.711], // Koraput
+      ] as [number, number][],
+    },
+    // 6. NH-326 Southern Tribal Lifeline (GREEN - Open Route)
+    {
+      id: "NH-326",
+      name: "NH-326 Southern Tribal Lifeline (Rayagada ➔ Koraput ➔ Malkangiri)",
       color: "#059669",
       coords: [
-        [25.510, 92.740], // Umrangso
-        [25.176, 93.018], // Haflong
-        [24.833, 92.779], // Silchar
+        [19.167, 83.417], // Rayagada
+        [18.814, 82.711], // Koraput
+        [18.344, 81.895], // Malkangiri
+      ] as [number, number][],
+    },
+    // 7. Biju Expressway Western Economic Spine (GREEN - Safe High Speed)
+    {
+      id: "BIJU-EXPRESSWAY",
+      name: "Biju Expressway (Rourkela ➔ Jharsuguda ➔ Sambalpur ➔ Balangir ➔ Koraput)",
+      color: "#059669",
+      coords: [
+        [22.260, 84.854], // Rourkela
+        [21.855, 84.006], // Jharsuguda
+        [21.467, 83.978], // Sambalpur
+        [20.711, 83.487], // Balangir
+        [19.907, 83.167], // Bhawanipatna
+        [18.814, 82.711], // Koraput
+      ] as [number, number][],
+    },
+    // 8. NH-57 Central Agro Highway (GREEN - Open Route)
+    {
+      id: "NH-57",
+      name: "NH-57 Central Agro Highway (Khordha ➔ Nayagarh ➔ Boudh ➔ Balangir)",
+      color: "#059669",
+      coords: [
+        [20.180, 85.700], // Khordha
+        [20.128, 85.106], // Nayagarh
+        [20.840, 84.327], // Boudh
+        [20.838, 83.916], // Subarnapur (Sonepur)
+        [20.711, 83.487], // Balangir
+      ] as [number, number][],
+    },
+    // 9. NH-316 Jagannath Dham Highway (GREEN - Coastal Tourism & Relief)
+    {
+      id: "NH-316",
+      name: "NH-316 Jagannath Dham Highway (Bhubaneswar ➔ Puri)",
+      color: "#059669",
+      coords: [
+        [20.296, 85.824], // Bhubaneswar
+        [20.080, 85.830], // Pipili
+        [19.813, 85.831], // Puri
+      ] as [number, number][],
+    },
+    // 10. NH-49 Northern Trans-Odisha (GREEN - Safe Inter-State Entry)
+    {
+      id: "NH-49",
+      name: "NH-49 Northern Corridor (Baripada ➔ Keonjhar ➔ Deogarh ➔ Jharsuguda)",
+      color: "#059669",
+      coords: [
+        [21.934, 86.736], // Baripada
+        [21.629, 85.582], // Keonjhar
+        [21.536, 84.733], // Deogarh
+        [21.855, 84.006], // Jharsuguda
       ] as [number, number][],
     }
   ];
 
-  // 8 Active Moving Vehicles continuously animating along the highway coordinates
+  // 8 Active Moving Vehicles continuously animating along Odisha corridors
   const [vehicles, setVehicles] = useState<MovingVehicle[]>([
     {
       id: "V1",
-      name: "Fuel Tanker AS-01-GB-4819",
+      name: "Medical Oxygen Carrier OD-05-GC-9104",
       type: "FUEL",
       icon: "⛽",
       routeCoords: [
-        [25.578, 91.893],
-        [25.446, 92.203],
-        [25.105, 92.361],
-        [24.950, 92.650],
-        [24.833, 92.779],
+        [20.264, 86.671], // Paradip
+        [20.463, 85.882], // Cuttack
+        [20.844, 85.101], // Angul
+        [21.467, 83.978], // Sambalpur
       ],
       currentIdx: 0,
       speed: 0.035,
-      color: "#DC2626",
-      roadName: "NH-6 Sonapur Pass (In Danger)",
+      color: "#059669",
+      roadName: "NH-53 Green Corridor (Paradip ➔ Burla VIMSAR)",
     },
     {
       id: "V2",
-      name: "Freight Carrier AS-11-BC-3042",
+      name: "OSDMA Flood Relief Truck OD-02-B-3042",
       type: "CARGO",
       icon: "🚚",
       routeCoords: [
-        [26.144, 91.736],
-        [26.345, 92.684],
-        [26.580, 93.170],
-        [26.750, 94.216],
-        [27.472, 94.912],
-        [27.500, 95.360],
+        [20.296, 85.824], // Bhubaneswar
+        [20.463, 85.882], // Cuttack
+        [20.851, 86.138], // Jajpur
+        [21.054, 86.495], // Bhadrak
+        [21.494, 86.932], // Balasore
       ],
       currentIdx: 0,
       speed: 0.045,
-      color: "#D97706",
-      roadName: "NH-37 Kaziranga Highway",
+      color: "#DC2626",
+      roadName: "NH-16 Baitarani Bridge Approach (Flood Alert)",
     },
     {
       id: "V3",
-      name: "Life Support Ambulance MZ-01-A-4422",
+      name: "Critical ICU Ambulance OD-02-A-4422",
       type: "AMBULANCE",
       icon: "🚑",
       routeCoords: [
-        [24.833, 92.779],
-        [24.505, 92.756],
-        [24.225, 92.678],
-        [23.730, 92.717],
-        [22.880, 92.740],
+        [20.296, 85.824], // AIIMS Bhubaneswar
+        [20.463, 85.882], // SCB Medical Cuttack
       ],
       currentIdx: 0,
-      speed: 0.05,
-      color: "#EAB308",
-      roadName: "NH-306 Aizawl Lifeline",
+      speed: 0.06,
+      color: "#059669",
+      roadName: "Twin City Expressway (AIIMS ➔ SCB Emergency)",
     },
     {
       id: "V4",
-      name: "Border Supply Convoy AR-01-M-9081",
+      name: "Eastern Ghats Supply Convoy OD-10-M-9081",
       type: "CONVOY",
       icon: "🚛",
       routeCoords: [
-        [26.652, 92.793],
-        [27.264, 92.416],
-        [27.502, 92.103],
-        [27.586, 91.866],
+        [19.315, 84.794], // Berhampur
+        [19.167, 83.417], // Rayagada
+        [18.814, 82.711], // Koraput
+        [18.344, 81.895], // Malkangiri
       ],
       currentIdx: 0,
       speed: 0.038,
-      color: "#D97706",
-      roadName: "NH-13 Sela Pass Pass",
+      color: "#EAB308",
+      roadName: "NH-326 Southern Tribal Life Corridor",
     },
     {
       id: "V5",
-      name: "PWD Heavy Crane AS-01-X-8800",
+      name: "Works Dept Heavy JCB Excavator OD-04-X-8800",
       type: "RECOVERY",
       icon: "🚜",
       routeCoords: [
-        [25.510, 92.740],
-        [25.176, 93.018],
-        [24.833, 92.779],
+        [21.629, 85.582], // Keonjhar
+        [21.517, 85.503], // Kanjipani Ghat
       ],
       currentIdx: 0,
-      speed: 0.028,
-      color: "#059669",
-      roadName: "Haflong Green Bypass",
+      speed: 0.025,
+      color: "#D97706",
+      roadName: "NH-20 Kanjipani Ghat Emergency Clearance",
     },
     {
       id: "V6",
-      name: "Patrol Intercept AS-01-P-2026",
+      name: "Odisha Police Highway Patrol OD-07-P-2026",
       type: "PATROL",
       icon: "🚙",
       routeCoords: [
-        [26.144, 91.736],
-        [26.250, 92.340],
-        [26.000, 92.850],
-        [25.750, 93.180],
+        [20.296, 85.824], // Bhubaneswar
+        [20.180, 85.700], // Khordha
+        [19.800, 85.100], // Chatrapur
+        [19.315, 84.794], // Berhampur
       ],
       currentIdx: 0,
       speed: 0.055,
       color: "#059669",
-      roadName: "NH-27 4-Lane Corridor",
+      roadName: "NH-16 Coastal Patrol Intercept",
     },
     {
       id: "V7",
-      name: "Inter-State Express Bus WB-73-E-1011",
+      name: "Inter-District Biju Express Bus OD-14-E-1011",
       type: "BUS",
       icon: "🚌",
       routeCoords: [
-        [26.720, 88.420],
-        [26.540, 88.720],
-        [26.490, 89.520],
-        [26.470, 90.560],
-        [26.144, 91.736],
+        [22.260, 84.854], // Rourkela
+        [21.855, 84.006], // Jharsuguda
+        [21.467, 83.978], // Sambalpur
+        [20.844, 85.101], // Angul
+        [20.296, 85.824], // Bhubaneswar
       ],
       currentIdx: 0,
       speed: 0.048,
       color: "#059669",
-      roadName: "NH-31 North Bengal Corridor",
+      roadName: "Biju Express Public Corridor",
     },
     {
       id: "V8",
-      name: "Moreh Border Supply TR-01-S-5566",
+      name: "Dhamra Port LNG Feeder OD-01-S-5566",
       type: "SUPPLY",
       icon: "🚚",
       routeCoords: [
-        [24.817, 93.936],
-        [24.630, 93.990],
-        [24.240, 94.310],
+        [20.803, 86.974], // Dhamra Port
+        [21.054, 86.495], // Bhadrak
+        [20.851, 86.138], // Jajpur Steel Hub
       ],
       currentIdx: 0,
       speed: 0.042,
       color: "#059669",
-      roadName: "NH-102 Moreh Border Link",
+      roadName: "Dhamra Port Industrial Evacuation Route",
     }
   ]);
 
-  // Initialize Full-Screen Map
+  // Initialize Full-Screen Map centered on Odisha
   useEffect(() => {
     if (typeof window === "undefined" || !mapContainerRef.current) return;
     if (mapInstanceRef.current) return;
@@ -362,7 +304,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
     const L = require("leaflet");
 
     const map = L.map(mapContainerRef.current, {
-      center: [25.80, 92.70],
+      center: [20.50, 84.80], // Centered right on Odisha geographical centroid
       zoom: 7,
       minZoom: 6,
       maxZoom: 16,
@@ -403,7 +345,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
       }).addTo(map);
     });
 
-    // Add Landslide Blockage Hazard Markers on NH-6, NH-10, NH-53
+    // Add Odisha Hazard Markers on NH-16 (Baitarani River), NH-20 (Kanjipani Ghat), and Kalinga Ghat
     const hazardIcon = L.divIcon({
       className: "custom-div-icon",
       html: `<div style="position: relative; display: flex; align-items: center; justify-content: center;">
@@ -414,17 +356,17 @@ export const FullScreenLiveMapHero: React.FC = () => {
       iconAnchor: [14, 14],
     });
 
-    L.marker([25.105, 92.361], { icon: hazardIcon })
+    L.marker([20.898, 86.295], { icon: hazardIcon })
       .addTo(map)
-      .bindTooltip("<b>🔴 NH-6 Sonapur Tunnel: Active Landslide Blockage</b>", { sticky: true });
+      .bindTooltip("<b>🔴 NH-16 Baitarani River Bridge: Flood Water Overtopping Alert</b>", { sticky: true });
 
-    L.marker([27.170, 88.530], { icon: hazardIcon })
+    L.marker([21.517, 85.503], { icon: hazardIcon })
       .addTo(map)
-      .bindTooltip("<b>🔴 NH-10 Rangpo: Teesta River Overtopping</b>", { sticky: true });
+      .bindTooltip("<b>🔴 NH-20 Kanjipani Ghat: Active Landslide & Rockfall Caution</b>", { sticky: true });
 
-    L.marker([24.780, 93.600], { icon: hazardIcon })
+    L.marker([20.083, 84.533], { icon: hazardIcon })
       .addTo(map)
-      .bindTooltip("<b>🔴 NH-53 Noney Hill: Active Sinking Mudflow</b>", { sticky: true });
+      .bindTooltip("<b>🔴 Kalinga Ghat (SH-41): Monsoon Slope Inundation</b>", { sticky: true });
 
     return () => {
       map.remove();
@@ -495,7 +437,6 @@ export const FullScreenLiveMapHero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Premium Branded Executive Letter Outline & Depth
   const letterBorderHeadline: React.CSSProperties = {
     WebkitTextStroke: "1.4px #FFFFFF",
     paintOrder: "stroke fill",
@@ -568,9 +509,9 @@ export const FullScreenLiveMapHero: React.FC = () => {
         </div>
       </header>
 
-      {/* 3. Center Floating Hero (Clean, Non-Overlapping Regional Multilingual Presentation) */}
+      {/* 3. Center Floating Hero */}
       <div className="relative z-20 max-w-4xl w-full mx-auto text-center my-auto pointer-events-auto space-y-4 px-4">
-        {/* Top Kicker - Dynamic Regional Language */}
+        {/* Top Kicker */}
         <div 
           style={letterBorderSub}
           className="flex items-center justify-center gap-2 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-emerald-950"
@@ -579,7 +520,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
           <span>{t.kicker}</span>
         </div>
 
-        {/* Main Title - Pure Branded Luxury in Chosen Language */}
+        {/* Main Title */}
         <h1 
           style={letterBorderHeadline}
           className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.12]"
@@ -591,7 +532,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
           <span className="text-stone-950 font-black">{t.title3}</span>
         </h1>
 
-        {/* Subtitle - Translated in Chosen Regional Language */}
+        {/* Subtitle */}
         <p 
           style={letterBorderSub}
           className="text-sm sm:text-base md:text-lg text-stone-900 font-extrabold leading-relaxed max-w-2xl mx-auto"
@@ -599,7 +540,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
           {t.subtitle}
         </p>
 
-        {/* Single Prominent Glowing Login or Signup Button */}
+        {/* Prominent Login / Signup Action */}
         <div className="pt-4 flex items-center justify-center">
           <Link
             href="/login"
@@ -624,7 +565,7 @@ export const FullScreenLiveMapHero: React.FC = () => {
           </div>
         </div>
 
-        {/* 8 State Node Sync Coverage Pill */}
+        {/* 30 District Node Sync Coverage Pill */}
         <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-stone-200/90 shadow-xl text-stone-800 text-xs flex items-center gap-3 font-mono pointer-events-auto">
           <div className="flex items-center gap-2">
             <Globe2 className="w-3.5 h-3.5 text-emerald-800" />

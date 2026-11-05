@@ -47,7 +47,7 @@ export const Navbar: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-base tracking-tight text-stone-900">
-                NER–MargDarshak
+                Odisha MargDarshak
               </span>
               <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-200">
                 Gov Logistics AI

@@ -185,11 +185,11 @@ export const MasterDataDashboardView: React.FC = () => {
           onChange={(e) => setSelectedState(e.target.value)}
           className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 font-mono outline-none"
         >
-          <option value="">All States</option>
-          <option value="Assam">Assam</option>
-          <option value="Meghalaya">Meghalaya</option>
-          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-          <option value="Mizoram">Mizoram</option>
+          <option value="">All Districts</option>
+          <option value="Khordha">Khordha</option>
+          <option value="Cuttack">Cuttack</option>
+          <option value="Balasore">Balasore</option>
+          <option value="Sambalpur">Sambalpur</option>
         </select>
       </div>
 

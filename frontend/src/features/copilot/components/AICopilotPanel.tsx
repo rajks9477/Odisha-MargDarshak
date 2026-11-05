@@ -43,7 +43,7 @@ export const AICopilotPanel: React.FC<Props> = ({ defaultOpen = false, onClose }
       {
         id: "msg-0",
         sender: "COPILOT",
-        text: "Namaste Officer! I am your **NER–MargDarshak Decision Support Copilot**. Ask me anything about highway road passability, verified ground landslides, critical relief shipments, IMD heavy-rainfall warnings, or cascading district risks.",
+        text: "Namaste Officer! I am your **Odisha MargDarshak Decision Support Copilot**. Ask me anything about highway road passability, verified ground landslides, critical relief shipments, IMD heavy-rainfall warnings, or cascading district risks.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
     ]);
@@ -124,7 +124,7 @@ export const AICopilotPanel: React.FC<Props> = ({ defaultOpen = false, onClose }
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h3 className="text-xs font-bold text-slate-100">NER AI Copilot</h3>
+              <h3 className="text-xs font-bold text-slate-100">Odisha AI Copilot</h3>
               <span className="text-[9px] font-mono text-cyan-400 bg-cyan-950/80 px-1.5 py-0.2 rounded border border-cyan-800">
                 RAG Engine V1.4
               </span>

@@ -107,9 +107,9 @@ export const GovernmentCommandCenterView: React.FC = () => {
             <Building className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-stone-900">NER Government Command Center</h2>
+            <h2 className="text-base font-bold text-stone-900">Odisha Government Command Center</h2>
             <p className="text-xs text-stone-500">
-              Unified multi-modal decision support dashboard for District, State & MDoNER Officers
+              Unified multi-modal decision support dashboard for District Collectors, OSDMA, ODRAF & State Works Dept
             </p>
           </div>
         </div>
@@ -131,7 +131,7 @@ export const GovernmentCommandCenterView: React.FC = () => {
       {/* Grounded Disclaimer */}
       <div className="p-2.5 bg-[#FAF8F5] border border-[#E8E2D8] rounded-xl flex items-center justify-between text-xs font-mono text-[10px]">
         <span className="text-stone-600">
-          Command Hub: Ministry of Development of North Eastern Region (MDoNER) & State PWD
+          Command Hub: Odisha State Disaster Management Authority (OSDMA) & Works Dept
         </span>
         <span className="text-[#7F5539] font-bold">[Demo Simulated Command Intelligence]</span>
       </div>

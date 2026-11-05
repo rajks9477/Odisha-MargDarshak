@@ -185,7 +185,7 @@ export default function MyRoutePage() {
             </Link>
             <div>
               <h1 className="text-base font-bold text-white tracking-tight">My Route & Active Trip</h1>
-              <p className="text-[11px] text-slate-400">NER Strategic Mountain Transit</p>
+              <p className="text-[11px] text-slate-400">Odisha Strategic Freight & Transit</p>
             </div>
           </div>
 

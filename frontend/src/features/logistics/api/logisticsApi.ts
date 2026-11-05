@@ -134,7 +134,7 @@ export const logisticsApi = {
         delayed_corridors_count: 1,
         total_in_transit_tonnes: 28.2,
         delivered_today_count: 1,
-        data_source: "NER-MargDarshak Supply Chain Intelligence Engine",
+        data_source: "Odisha MargDarshak Supply Chain Intelligence Engine",
       };
     }
 

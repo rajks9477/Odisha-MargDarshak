@@ -52,8 +52,8 @@ class Shipment(Base):
 
     origin_hub_id = Column(String(50), ForeignKey("warehouse_hubs.id"), nullable=True)
     destination_hub_id = Column(String(50), ForeignKey("warehouse_hubs.id"), nullable=True)
-    origin_name = Column(String(150), nullable=False, default="Guwahati Central Medical & Relief Depot")
-    destination_name = Column(String(150), nullable=False, default="Silchar Civil Hospital & Relief Camp")
+    origin_name = Column(String(150), nullable=False, default="Bhubaneswar Central Medical & Relief Depot")
+    destination_name = Column(String(150), nullable=False, default="Balasore District Headquarters Hospital & Relief Base")
 
     assigned_driver_id = Column(String(50), ForeignKey("users.id"), nullable=True, index=True)
     assigned_vehicle_id = Column(String(50), ForeignKey("vehicles.id"), nullable=True)
@@ -68,7 +68,7 @@ class Shipment(Base):
     estimated_arrival = Column(DateTime(timezone=True), nullable=True)
     delivered_at = Column(DateTime(timezone=True), nullable=True)
 
-    risk_impact_summary = Column(Text, default="Corridor monitored. Sonapur landslide alert active along NH-6.", nullable=True)
+    risk_impact_summary = Column(Text, default="Corridor monitored. Baitarani river flood alert active along NH-16.", nullable=True)
 
 class ShipmentAuditLog(Base):
     __tablename__ = "shipment_audit_logs"

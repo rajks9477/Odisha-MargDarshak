@@ -1,68 +1,67 @@
-export const NER_STATES = [
-  "Arunachal Pradesh",
-  "Assam",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Sikkim",
-  "Tripura"
+export const ODISHA_DISTRICTS = [
+  "Angul",
+  "Balangir",
+  "Balasore",
+  "Bargarh",
+  "Bhadrak",
+  "Boudh",
+  "Cuttack",
+  "Deogarh",
+  "Dhenkanal",
+  "Gajapati",
+  "Ganjam",
+  "Jagatsinghpur",
+  "Jajpur",
+  "Jharsuguda",
+  "Kalahandi",
+  "Kandhamal",
+  "Kendrapara",
+  "Kendujhar",
+  "Khordha",
+  "Koraput",
+  "Malkangiri",
+  "Mayurbhanj",
+  "Nabarangpur",
+  "Nayagarh",
+  "Nuapada",
+  "Puri",
+  "Rayagada",
+  "Sambalpur",
+  "Subarnapur",
+  "Sundargarh"
 ] as const;
 
-export type NERState = typeof NER_STATES[number];
+export type OdishaDistrict = typeof ODISHA_DISTRICTS[number];
 
-export const NER_DISTRICTS: Record<NERState, string[]> = {
-  "Arunachal Pradesh": [
-    "Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", 
-    "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", 
-    "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", 
-    "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding", "Kamle", "Pakke Kessang", "Shi Yomi", "Leparada", "Itanagar Capital Complex"
-  ],
-  "Assam": [
-    "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", 
-    "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", 
-    "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", 
-    "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", 
-    "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", 
-    "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong", "Bajali", "Tamulpur"
-  ],
-  "Manipur": [
-    "Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", 
-    "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", 
-    "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"
-  ],
-  "Meghalaya": [
-    "East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "Eastern West Khasi Hills", 
-    "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", 
-    "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"
-  ],
-  "Mizoram": [
-    "Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", 
-    "Lunglei", "Mamit", "Saitual", "Serchhip", "Siaha"
-  ],
-  "Nagaland": [
-    "Chümoukedima", "Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", 
-    "Mon", "Niuland", "Noklak", "Peren", "Phek", "Shamator", "Tseminyü", "Tuensang", "Wokha", "Zünheboto"
-  ],
-  "Sikkim": [
-    "Gangtok", "Gyalshing", "Mangan", "Namchi", "Pakyong", "Soreng"
-  ],
-  "Tripura": [
-    "Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", 
-    "Unakoti", "West Tripura"
-  ]
+export const ODISHA_STATES = [
+  "Odisha"
+] as const;
+
+export const ODISHA_DISTRICTS_MAP: Record<string, string[]> = {
+  "Odisha": [...ODISHA_DISTRICTS]
+};
+
+// Backward-compatibility aliases for existing imports
+export const NER_STATES = [
+  "Odisha"
+] as const;
+
+export type NERState = "Odisha";
+
+export const NER_DISTRICTS: Record<string, string[]> = {
+  "Odisha": [...ODISHA_DISTRICTS]
 };
 
 export const GOV_DEPARTMENTS = [
-  "Public Works Department (PWD Roads & Bridges)",
-  "State Disaster Management Authority (SDMA / DDMA)",
-  "Border Roads Organisation (BRO)",
-  "Department of Food, Civil Supplies & Consumer Affairs",
-  "Department of Health & Family Welfare",
-  "Department of Transport & Logistics",
-  "National Highways & Infrastructure Development Corp (NHIDCL)",
-  "State Disaster Response Force (SDRF)",
-  "State Police / Traffic Coordination Cell"
+  "Works Department (Roads & Bridges, Odisha)",
+  "Odisha State Disaster Management Authority (OSDMA / DDMA)",
+  "Odisha Disaster Rapid Action Force (ODRAF)",
+  "National Highways Authority of India (NHAI RO Odisha)",
+  "Department of Food Supplies & Consumer Welfare (Odisha)",
+  "Health & Family Welfare Department (Odisha)",
+  "Commerce & Transport Department (Odisha)",
+  "Odisha State Police / Highway Traffic Cell",
+  "Fire & Emergency Services (Odisha)"
 ];
 
 export type UserRole = "CITIZEN" | "DRIVER" | "FIELD_OFFICER" | "DISTRICT_ADMIN" | "CENTRAL_ADMIN";
@@ -82,7 +81,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     role: "CITIZEN",
     label: "Citizen / Commuter",
     badgeColor: "bg-emerald-50 text-emerald-800 border-emerald-200",
-    description: "Public road accessibility status, incident & blockage reporting, weather disruption alerts.",
+    description: "Public road accessibility status, incident & blockage reporting, weather disruption alerts across Odisha.",
     defaultStatus: "ACTIVE",
     dashboardPath: "/dashboard/citizen"
   },
@@ -90,7 +89,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     role: "DRIVER",
     label: "Commercial / Supply Driver",
     badgeColor: "bg-slate-100 text-slate-800 border-slate-200",
-    description: "Essential commodity transport, assigned route navigation, delay reporting & emergency diversions.",
+    description: "Essential commodity transport, assigned corridor navigation, delay reporting & emergency diversions.",
     defaultStatus: "ACTIVE",
     dashboardPath: "/dashboard/driver"
   },
@@ -112,9 +111,9 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
   },
   CENTRAL_ADMIN: {
     role: "CENTRAL_ADMIN",
-    label: "NER Central Command / MDoNER",
+    label: "State Command Center / OSDMA",
     badgeColor: "bg-stone-100 text-stone-900 border-stone-300 font-semibold",
-    description: "NER-wide intelligence, regional connectivity analytics, cross-state user management & audit logs.",
+    description: "Odisha state-wide intelligence, regional connectivity analytics, cross-district user management & audit logs.",
     defaultStatus: "PENDING_APPROVAL",
     dashboardPath: "/dashboard/central-admin"
   }
@@ -123,52 +122,52 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
 export const DEMO_USERS = [
   {
     role: "CENTRAL_ADMIN" as UserRole,
-    title: "Central Admin (NER Command)",
-    name: "Shri Rajesh Sharma",
-    email: "admin@nermargdarshak.gov.in",
-    password: "Admin@NER2026",
-    badge: "MDoNER / NER Director",
-    state: "Assam",
-    district: "Kamrup Metropolitan"
+    title: "Central Admin (State Command)",
+    name: "Shri Asit Tripathy",
+    email: "admin@odishamargdarshak.gov.in",
+    password: "Admin@Odisha2026",
+    badge: "OSDMA / State Admin",
+    state: "Odisha",
+    district: "Khordha"
   },
   {
     role: "DRIVER" as UserRole,
     title: "Driver (Essential Carrier)",
-    name: "Biren Gogoi",
-    email: "driver.biren@nermargdarshak.in",
+    name: "Biren Behera",
+    email: "driver.biren@odishamargdarshak.in",
     password: "Driver@Pass123",
     badge: "Heavy Commercial Operator",
-    state: "Assam",
-    district: "Dibrugarh"
+    state: "Odisha",
+    district: "Cuttack"
   },
   {
     role: "FIELD_OFFICER" as UserRole,
-    title: "Field Officer (Tawang, Arunachal)",
-    name: "Er. Tashi Norbu",
-    email: "officer.tawang@nermargdarshak.gov.in",
-    password: "Officer@Tawang2026",
-    badge: "PWD Executive Engineer",
-    state: "Arunachal Pradesh",
-    district: "Tawang"
+    title: "Field Officer (Bhadrak / Baitarani)",
+    name: "Er. Soumya Ranjan Nayak",
+    email: "officer.bhadrak@odishamargdarshak.gov.in",
+    password: "Officer@Bhadrak2026",
+    badge: "Works Dept Executive Engineer",
+    state: "Odisha",
+    district: "Bhadrak"
   },
   {
     role: "CITIZEN" as UserRole,
-    title: "Citizen (Gangtok, Sikkim)",
-    name: "Rinzin Doma",
-    email: "citizen.gangtok@nermargdarshak.in",
+    title: "Citizen (Bhubaneswar, Khordha)",
+    name: "Rashmita Sahoo",
+    email: "citizen.bhubaneswar@odishamargdarshak.in",
     password: "Citizen@Pass123",
     badge: "Resident Commuter",
-    state: "Sikkim",
-    district: "Gangtok"
+    state: "Odisha",
+    district: "Khordha"
   },
   {
     role: "DISTRICT_ADMIN" as UserRole,
-    title: "District Admin (Kamrup Metro)",
-    name: "Dr. Ananya Baruah",
-    email: "district.kamrup@nermargdarshak.gov.in",
-    password: "Admin@Kamrup2026",
+    title: "District Admin (Balasore DDMA)",
+    name: "Dr. Priyadarshi Mohapatra",
+    email: "district.balasore@odishamargdarshak.gov.in",
+    password: "Admin@Balasore2026",
     badge: "DDMA Nodal Officer",
-    state: "Assam",
-    district: "Kamrup Metropolitan"
+    state: "Odisha",
+    district: "Balasore"
   }
 ];

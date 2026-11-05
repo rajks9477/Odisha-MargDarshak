@@ -37,9 +37,9 @@ export default function CitizenDashboard() {
   const [apiTesting, setApiTesting] = useState(false);
 
   // Form mock report
-  const [reportRoad, setReportRoad] = useState("NH-10 Siliguri - Gangtok Highway");
+  const [reportRoad, setReportRoad] = useState("NH-16 Baitarani River Bridge Sector");
   const [reportSeverity, setReportSeverity] = useState("MEDIUM_DELAY");
-  const [reportDetails, setReportDetails] = useState("Mud accumulation near 29th Mile due to heavy overnight rain. Single-lane movement.");
+  const [reportDetails, setReportDetails] = useState("Water overtopping near Baitarani approach road due to upstream monsoon crest. Single-lane movement.");
   const [reportSubmitted, setReportSubmitted] = useState(false);
 
   const handleTestApi = async () => {
@@ -153,7 +153,7 @@ export default function CitizenDashboard() {
               <div className="p-4 rounded-2xl bg-white border border-stone-200 shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-rose-700 flex items-center gap-1.5">
-                    <AlertTriangle className="w-4 h-4 text-rose-600" /> NH-6 Sonapur Tunnel Corridor (Shillong ➔ Silchar)
+                    <AlertTriangle className="w-4 h-4 text-rose-600" /> NH-16 Baitarani River Bridge Corridor (Bhadrak ➔ Jajpur)
                   </span>
                   <span className="text-[10px] font-mono text-stone-400">8 mins ago</span>
                 </div>
@@ -185,7 +185,7 @@ export default function CitizenDashboard() {
               <div className="p-4 rounded-2xl bg-white border border-stone-200 shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> NH-27 East-West 4-Lane Corridor (Guwahati ➔ Nagaon)
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> NH-16 Coastal 6-Lane Corridor (Bhubaneswar ➔ Cuttack)
                   </span>
                   <span className="text-[10px] font-mono text-stone-400">1 hour ago</span>
                 </div>

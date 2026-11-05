@@ -105,10 +105,14 @@ export const AnalyticsDashboardView: React.FC = () => {
             className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 font-mono outline-none"
           >
             <option value="ALL">All 8 NE States</option>
-            <option value="Meghalaya">Meghalaya</option>
-            <option value="Assam">Assam</option>
-            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-            <option value="Mizoram">Mizoram</option>
+            <option value="Khordha">Khordha</option>
+            <option value="Cuttack">Cuttack</option>
+            <option value="Bhadrak">Bhadrak</option>
+            <option value="Balasore">Balasore</option>
+            <option value="Kendujhar">Kendujhar</option>
+            <option value="Sambalpur">Sambalpur</option>
+            <option value="Ganjam">Ganjam</option>
+            <option value="Koraput">Koraput</option>
           </select>
 
           <button

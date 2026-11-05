@@ -12,7 +12,7 @@ interface IncidentTypeOption {
 }
 
 const INCIDENT_TYPES: IncidentTypeOption[] = [
-  { type: IncidentType.LANDSLIDE, label: "Landslide / Rockfall", icon: "⛰️", tag: "Most Common in NER", color: "border-amber-500/40 bg-amber-500/10 text-amber-300" },
+  { type: IncidentType.LANDSLIDE, label: "Landslide / Rockfall", icon: "⛰️", tag: "Prevalent in Ghats & Hilly Districts", color: "border-amber-500/40 bg-amber-500/10 text-amber-300" },
   { type: IncidentType.FLOOD, label: "Flash Flood / Waterlogging", icon: "🌊", tag: "Monsoon Hazard", color: "border-blue-500/40 bg-blue-500/10 text-blue-300" },
   { type: IncidentType.ROAD_BLOCKAGE, label: "Road Blockage / Obstruction", icon: "🚧", tag: "Traffic Stoppage", color: "border-orange-500/40 bg-orange-500/10 text-orange-300" },
   { type: IncidentType.ACCIDENT, label: "Vehicle Collision / Accident", icon: "💥", tag: "Emergency Support", color: "border-red-500/40 bg-red-500/10 text-red-300" },

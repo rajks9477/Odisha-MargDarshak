@@ -21,8 +21,8 @@ class UserCreateAdminRequest(BaseModel):
     phone: str
     password: str
     role: UserRole
-    state: Optional[str] = "Assam"
-    district: Optional[str] = "Kamrup"
+    state: Optional[str] = "Odisha"
+    district: Optional[str] = "Khordha"
     department: Optional[str] = "Logistics & Transport"
     employee_id: Optional[str] = None
     designation: Optional[str] = None

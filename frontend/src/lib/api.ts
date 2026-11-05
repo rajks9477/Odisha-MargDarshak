@@ -54,7 +54,7 @@ export class ApiClient {
       });
     } catch (networkErr: any) {
       throw {
-        detail: "Cannot connect to NER-MargDarshak backend server. Please verify the backend is running.",
+        detail: "Cannot connect to Odisha MargDarshak backend server. Please verify the backend is running.",
         status: 503
       } as ApiError;
     }

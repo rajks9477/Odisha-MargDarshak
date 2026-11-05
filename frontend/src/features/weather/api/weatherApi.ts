@@ -73,10 +73,10 @@ export const weatherApi = {
     if (!res.ok) {
       return [
         {
-          id: "IMD-GUWAHATI-RMC",
-          name: "India Meteorological Department (IMD) Regional Meteorological Centre, Guwahati",
+          id: "IMD-BHUBANESWAR-MC",
+          name: "India Meteorological Department (IMD) Meteorological Centre, Bhubaneswar",
           type: "AUTOMATIC_WEATHER_STATION",
-          covered_states: ["Assam", "Meghalaya", "Arunachal Pradesh"],
+          covered_states: ["Odisha"],
           data_quality: "VERIFIED_GOVT_SIMULATION",
           status: "OPERATIONAL",
         },

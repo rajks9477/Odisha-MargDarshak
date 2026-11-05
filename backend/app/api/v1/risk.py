@@ -76,7 +76,7 @@ async def predict_route_risk(
     all_factors = []
 
     for seg in segments:
-        road_id = seg.road_id or "NH-6-SONAPUR-01"
+        road_id = seg.road_id or "NH-16-BAITARANI-01"
         try:
             pred = await evaluate_road_risk(db, road_id=road_id)
             seg_risk_score = pred.risk_score
@@ -188,11 +188,11 @@ async def list_model_registry(
 
     return [
         ModelRegistryResponse(
-            id="MDL-NER-GBM-V1",
+            id="MDL-ODI-GBM-V1",
             model_name="NER_ROAD_DISRUPTION_CLASSIFIER",
             model_version=model.model_version,
             algorithm="HistGradientBoostingClassifier",
-            training_dataset_version="NER-HAZARDS-CORPUS-2026-Q1",
+            training_dataset_version="ODISHA-HAZARDS-CORPUS-2026-Q1",
             trained_at=datetime.now(timezone.utc),
             roc_auc=metrics.get("roc_auc", 0.912),
             pr_auc=metrics.get("pr_auc", 0.884),
@@ -212,11 +212,11 @@ async def retrain_baseline_model(
     update_production_model(model, metrics)
 
     return ModelRegistryResponse(
-        id=f"MDL-NER-GBM-{model.model_version}",
+        id=f"MDL-ODI-GBM-{model.model_version}",
         model_name="NER_ROAD_DISRUPTION_CLASSIFIER",
         model_version=model.model_version,
         algorithm="HistGradientBoostingClassifier",
-        training_dataset_version="NER-HAZARDS-CORPUS-2026-Q1",
+        training_dataset_version="ODISHA-HAZARDS-CORPUS-2026-Q1",
         trained_at=datetime.now(timezone.utc),
         roc_auc=metrics.get("roc_auc", 0.915),
         pr_auc=metrics.get("pr_auc", 0.888),

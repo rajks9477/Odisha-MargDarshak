@@ -4,32 +4,32 @@ from sqlalchemy.future import select
 from app.models.risk import TerrainFeature
 
 DEMO_TERRAIN_PROFILES = {
-    "SONAPUR": {
-        "elevation_m": 1280.0,
-        "slope_deg": 34.5,
-        "river_distance_m": 85.0,
-        "soil_saturation_index": 0.88,
-        "historical_landslide_count": 8,
-        "historical_flood_count": 3,
-        "source": "GSI_LANDSLIDE_ATLAS_SRTM_TEST",
+    "BAITARANI": {
+        "elevation_m": 42.0,
+        "slope_deg": 3.5,
+        "river_distance_m": 40.0,
+        "soil_saturation_index": 0.92,
+        "historical_landslide_count": 0,
+        "historical_flood_count": 9,
+        "source": "GSI_ODISHA_FLOOD_TERRAIN_SRTM",
     },
-    "VAIRENGTE": {
-        "elevation_m": 820.0,
-        "slope_deg": 22.0,
-        "river_distance_m": 220.0,
-        "soil_saturation_index": 0.52,
-        "historical_landslide_count": 2,
+    "KANJIPANI": {
+        "elevation_m": 890.0,
+        "slope_deg": 32.0,
+        "river_distance_m": 180.0,
+        "soil_saturation_index": 0.85,
+        "historical_landslide_count": 7,
         "historical_flood_count": 1,
-        "source": "GSI_LANDSLIDE_ATLAS_SRTM_TEST",
+        "source": "GSI_EASTERN_GHATS_SLOPE_MODEL",
     },
     "DEFAULT": {
-        "elevation_m": 550.0,
-        "slope_deg": 12.0,
-        "river_distance_m": 450.0,
-        "soil_saturation_index": 0.35,
+        "elevation_m": 110.0,
+        "slope_deg": 8.0,
+        "river_distance_m": 350.0,
+        "soil_saturation_index": 0.40,
         "historical_landslide_count": 1,
-        "historical_flood_count": 0,
-        "source": "GSI_LANDSLIDE_ATLAS_SRTM_TEST",
+        "historical_flood_count": 2,
+        "source": "GSI_ODISHA_TERRAIN_SRTM",
     }
 }
 
@@ -42,10 +42,10 @@ async def get_or_create_terrain_feature(db: AsyncSession, road_id: str, road_nam
         return existing
 
     key = "DEFAULT"
-    if "sonapur" in road_id.lower() or "sonapur" in road_name.lower() or "nh-6" in road_name.lower():
-        key = "SONAPUR"
-    elif "vairengte" in road_id.lower() or "nh-306" in road_name.lower():
-        key = "VAIRENGTE"
+    if "baitarani" in road_id.lower() or "baitarani" in road_name.lower() or "nh-16" in road_name.lower():
+        key = "BAITARANI"
+    elif "kanjipani" in road_id.lower() or "nh-20" in road_name.lower() or "koraput" in road_name.lower():
+        key = "KANJIPANI"
 
     prof = DEMO_TERRAIN_PROFILES.get(key, DEMO_TERRAIN_PROFILES["DEFAULT"])
     terrain = TerrainFeature(

@@ -8,8 +8,8 @@ class WeatherObservationResponse(BaseModel):
 
     id: str
     location_name: str
-    district: Optional[str] = "East Jaintia Hills"
-    state: Optional[str] = "Meghalaya"
+    district: Optional[str] = "Bhadrak"
+    state: Optional[str] = "Odisha"
     latitude: float
     longitude: float
     rainfall_1h_mm: float

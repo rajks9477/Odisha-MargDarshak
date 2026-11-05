@@ -75,331 +75,310 @@ export interface HighwayRiskEntity {
 
 export const REGIONAL_HIGHWAYS_DATA: HighwayRiskEntity[] = [
   {
-    id: "RD-NH-6-SONAPUR",
-    road_number: "NH-6",
-    name: "NH-6 Sonapur Tunnel Mountain Pass (Shillong ➔ Silchar)",
-    state: "Meghalaya / Assam",
-    districts_traversed: ["East Jaintia Hills", "Cachar", "Ri Bhoi"],
+    id: "RD-NH-16-BAITARANI",
+    road_number: "NH-16",
+    name: "NH-16 Baitarani River Bridge Arterial Spine (Cuttack -> Bhadrak -> Balasore)",
+    state: "Bhadrak / Jajpur / Balasore",
+    districts_traversed: ["Bhadrak", "Jajpur", "Balasore", "Cuttack", "Khordha"],
     risk_level: "CRITICAL",
-    risk_score: 84.5,
-    disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "Severe Mountain Landslide & Heavy Mudflow",
-    threat_time_window: "Imminent / Active (Next 2 to 6 Hours)",
-    precipitation_mm_24h: 88.5,
-    slope_gradient_deg: 36.2,
-    soil_saturation_pct: 96,
-    historical_failures_count: 7,
-    ai_explanation: "Continuous 88.5 mm monsoonal precipitation combined with a 36.2° steep slope has oversaturated the subsoil to 96% capacity, creating high hydrostatic pressure and active slope failure near the tunnel ingress.",
-    recommended_action: "Halt multi-axle freight convoys at Jowai and divert emergency light cargo via Umrangso-Haflong bypass.",
-    coordinates: [
-      [25.578, 91.893], // Shillong
-      [25.446, 92.203], // Jowai
-      [25.105, 92.361], // Sonapur Tunnel
-      [24.950, 92.650], // Lumshnong
-      [24.833, 92.779], // Silchar
-    ],
-  },
-  {
-    id: "RD-NH-37-KAZIRANGA",
-    road_number: "NH-37",
-    name: "NH-37 Brahmaputra Valley & Kaziranga Highway",
-    state: "Assam",
-    districts_traversed: ["Nagaon", "Golaghat", "Jorhat"],
-    risk_level: "HIGH",
-    risk_score: 68.0,
+    risk_score: 88.5,
     disaster_type: "FLASH_FLOOD_OVERFLOW",
-    disaster_title: "Brahmaputra River Inundation & Flash Flood Submergence",
-    threat_time_window: "Next 6 to 14 Hours (River Peak Level Approaching)",
-    precipitation_mm_24h: 72.0,
-    slope_gradient_deg: 4.5,
-    soil_saturation_pct: 94,
-    historical_failures_count: 4,
-    ai_explanation: "Upstream surge from Arunachal foothills is elevating the Brahmaputra water table, causing riverback water overflow onto low-lying road stretches between Bokakhat and Kohora.",
-    recommended_action: "Impose 30 km/h speed limit, activate SDRF boat standby at animal crossing corridors, and prepare flood barriers.",
+    disaster_title: "Baitarani River Peak Water Overtopping & Bridge Inundation",
+    threat_time_window: "Imminent / Active (Next 2 to 6 Hours)",
+    precipitation_mm_24h: 115.0,
+    slope_gradient_deg: 3.5,
+    soil_saturation_pct: 98,
+    historical_failures_count: 8,
+    ai_explanation: "Continuous 115.0 mm upstream precipitation across the Baitarani river catchment has pushed water levels to 18.25m (+0.42m above danger mark) at Anandapur gauging station, causing water overflow and single-lane stoppage.",
+    recommended_action: "Halt multi-axle freight convoys at Panikoili and divert emergency relief cargo via NH-53/NH-20 Anandapur bypass.",
     coordinates: [
-      [26.185, 91.745], // Guwahati
-      [26.345, 92.684], // Nagaon
-      [26.580, 93.170], // Kaziranga
-      [26.750, 94.216], // Jorhat
-      [27.472, 94.912], // Dibrugarh
+      [21.494, 86.932], // Balasore
+      [21.054, 86.495], // Bhadrak
+      [20.898, 86.295], // Baitarani River Bridge
+      [20.851, 86.138], // Jajpur
+      [20.463, 85.882], // Cuttack
+      [20.296, 85.824], // Bhubaneswar
     ],
   },
   {
-    id: "RD-NH-27-EXPRESS",
-    road_number: "NH-27",
-    name: "NH-27 East-West Commercial Highway (Guwahati ➔ Lumding)",
-    state: "Assam",
-    districts_traversed: ["Kamrup Metro", "Morigaon", "Hojai"],
+    id: "RD-NH-20-KANJIPANI",
+    road_number: "NH-20",
+    name: "NH-20 Northern Mining Corridor & Kanjipani Ghat (Panikoili -> Keonjhar)",
+    state: "Kendujhar",
+    districts_traversed: ["Kendujhar", "Jajpur"],
+    risk_level: "HIGH",
+    risk_score: 74.0,
+    disaster_type: "LANDSLIDE_DEBRIS",
+    disaster_title: "Kanjipani Ghat Slope Collapse & Rockfall Alert",
+    threat_time_window: "Next 4 to 12 Hours (Active Slope Creep)",
+    precipitation_mm_24h: 88.0,
+    slope_gradient_deg: 34.0,
+    soil_saturation_pct: 92,
+    historical_failures_count: 7,
+    ai_explanation: "Heavy torrential showers have loosened weathered laterite rock boulders along km 34-36 of Kanjipani Ghat, producing debris accumulation across the uphill freight lane.",
+    recommended_action: "Pre-position Works Dept JCB hydraulic excavators at Kanjipani pass and restrict night transit of heavy mining trailers.",
+    coordinates: [
+      [20.851, 86.138], // Jajpur
+      [21.217, 85.983], // Anandapur
+      [21.517, 85.503], // Kanjipani Ghat Pass
+      [21.629, 85.582], // Keonjhar
+      [22.120, 85.390], // Barbil
+    ],
+  },
+  {
+    id: "RD-NH-55-EXPRESS",
+    road_number: "NH-55",
+    name: "NH-55 Central Industrial Expressway (Cuttack -> Dhenkanal -> Angul -> Sambalpur)",
+    state: "Cuttack / Sambalpur",
+    districts_traversed: ["Cuttack", "Dhenkanal", "Angul", "Sambalpur"],
     risk_level: "LOW",
     risk_score: 18.0,
     disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Normal All-Weather Smooth Transit",
+    disaster_title: "Normal All-Weather Industrial Corridor Transit",
     threat_time_window: "Safe Transit Window (Next 48 Hours Stable)",
-    precipitation_mm_24h: 18.0,
-    slope_gradient_deg: 2.1,
-    soil_saturation_pct: 35,
+    precipitation_mm_24h: 16.0,
+    slope_gradient_deg: 2.5,
+    soil_saturation_pct: 38,
     historical_failures_count: 0,
-    ai_explanation: "4-lane reinforced elevated embankment with automated culvert drainage operating with zero obstruction.",
+    ai_explanation: "4-lane reinforced industrial corridor with automated drainage culverts functioning at normal clearance capacity.",
     recommended_action: "Maintain standard high-speed logistics dispatch schedules.",
     coordinates: [
-      [26.185, 91.745], // Guwahati
-      [26.250, 92.340], // Morigaon
-      [26.000, 92.850], // Doboka
-      [25.750, 93.180], // Lumding
+      [20.463, 85.882], // Cuttack
+      [20.662, 85.596], // Dhenkanal
+      [20.844, 85.101], // Angul
+      [21.467, 83.978], // Sambalpur
     ],
   },
   {
-    id: "RD-NH-13-TAWANG",
-    road_number: "NH-13",
-    name: "NH-13 Trans-Arunachal Highway & Sela Tunnel (Tezpur ➔ Tawang)",
-    state: "Arunachal Pradesh / Assam",
-    districts_traversed: ["Sonitpur", "West Kameng", "Tawang"],
-    risk_level: "HIGH",
-    risk_score: 72.5,
-    disaster_type: "SNOW_ICE_BLOCK",
-    disaster_title: "High-Altitude Sela Pass Rockfall & Ice Glaze",
-    threat_time_window: "Next 4 to 12 Hours (Night Frost & Slush Drop)",
-    precipitation_mm_24h: 54.0,
-    slope_gradient_deg: 38.0,
-    soil_saturation_pct: 82,
-    historical_failures_count: 5,
-    ai_explanation: "Sub-zero mountain temperatures combined with wet precipitation have formed black ice on switchbacks approaching Sela Pass tunnel approach, with minor loose boulder movement.",
-    recommended_action: "Enforce anti-skid tire chains and deploy BRO snow clearing graders at Jaswant Garh checkpoint.",
+    id: "RD-NH-53-PARADIP",
+    road_number: "NH-53",
+    name: "NH-53 Western Mining & Port Expressway (Paradip -> Cuttack -> Sambalpur -> Bargarh)",
+    state: "Khordha / Cuttack",
+    districts_traversed: ["Jagatsinghpur", "Cuttack", "Angul", "Sambalpur", "Bargarh"],
+    risk_level: "LOW",
+    risk_score: 22.0,
+    disaster_type: "CLEAR_TRANSIT",
+    disaster_title: "Deepwater Port Freight & Chemical Supply Passage",
+    threat_time_window: "Safe Transit Window (Unrestricted)",
+    precipitation_mm_24h: 24.0,
+    slope_gradient_deg: 1.8,
+    soil_saturation_pct: 42,
+    historical_failures_count: 1,
+    ai_explanation: "High-capacity port corridor with sound bridge approaches and reinforced storm runoffs.",
+    recommended_action: "Open for 24/7 heavy commercial and containerized logistics movement.",
     coordinates: [
-      [26.652, 92.793], // Tezpur
-      [27.264, 92.416], // Bomdila
-      [27.502, 92.103], // Sela Pass
-      [27.586, 91.866], // Tawang
+      [20.264, 86.671], // Paradip Port
+      [20.463, 85.882], // Cuttack
+      [20.844, 85.101], // Angul
+      [21.467, 83.978], // Sambalpur
+      [21.334, 83.623], // Bargarh
     ],
   },
   {
-    id: "RD-NH-306-AIZAWL",
-    road_number: "NH-306",
-    name: "NH-306 Southern Arterial Lifeline (Silchar ➔ Aizawl)",
-    state: "Assam / Mizoram",
-    districts_traversed: ["Cachar", "Kolasib", "Aizawl"],
+    id: "RD-NH-26-SOUTHERN",
+    road_number: "NH-26",
+    name: "NH-26 Western-Southern Trunk (Bargarh -> Balangir -> Bhawanipatna -> Koraput)",
+    state: "Koraput / Balangir",
+    districts_traversed: ["Bargarh", "Balangir", "Kalahandi", "Koraput"],
     risk_level: "MEDIUM",
     risk_score: 48.0,
     disaster_type: "TORRENTIAL_RAINFALL",
     disaster_title: "Moderate Hill Slush & Heavy Mountain Downpour",
     threat_time_window: "Next 8 to 18 Hours (Heavy Rainfall Passing)",
-    precipitation_mm_24h: 62.0,
-    slope_gradient_deg: 26.5,
-    soil_saturation_pct: 78,
+    precipitation_mm_24h: 64.0,
+    slope_gradient_deg: 24.0,
+    soil_saturation_pct: 79,
     historical_failures_count: 3,
-    ai_explanation: "Continuous monsoon squall is creating surface mud accumulation near Vairengte checkpost. Road foundation remains stable but braking distance is increased.",
-    recommended_action: "Single-lane convoy pacing with mandatory 50-meter separation between fuel tankers.",
+    ai_explanation: "Active monsoon squall over Eastern Ghats highlands causing waterlogging and reduced tire traction on winding ghat sections.",
+    recommended_action: "Enforce 40 km/h speed limit and 60-meter convoy separation on mountain hairpins.",
     coordinates: [
-      [24.833, 92.779], // Silchar
-      [24.505, 92.756], // Vairengte
-      [24.225, 92.678], // Kolasib
-      [23.730, 92.717], // Aizawl
+      [21.334, 83.623], // Bargarh
+      [20.711, 83.487], // Balangir
+      [19.907, 83.167], // Bhawanipatna
+      [18.858, 82.569], // Jeypore
+      [18.814, 82.711], // Koraput
     ],
   },
   {
-    id: "RD-NH-2-KOHIMA",
-    road_number: "NH-2",
-    name: "NH-2 Trans-Hills Spine (Dimapur ➔ Kohima ➔ Imphal)",
-    state: "Nagaland / Manipur",
-    districts_traversed: ["Dimapur", "Kohima", "Senapati", "Imphal West"],
+    id: "RD-SH-41-KALINGA",
+    road_number: "SH-41",
+    name: "SH-41 Kalinga Ghat Mountain Pass (Ganjam -> Kandhamal)",
+    state: "Ganjam / Kandhamal",
+    districts_traversed: ["Ganjam", "Kandhamal"],
     risk_level: "HIGH",
-    risk_score: 70.0,
+    risk_score: 72.0,
     disaster_type: "LANDSLIDE_DEBRIS",
-    disaster_title: "Pagala Pahar Sinking Zone & Mud Debris",
-    threat_time_window: "Next 3 to 10 Hours (Active Slope Creep)",
-    precipitation_mm_24h: 69.0,
-    slope_gradient_deg: 33.0,
+    disaster_title: "Kalinga Ghat Slope Slush & Mountain Mudflow Alert",
+    threat_time_window: "Next 3 to 10 Hours (Active Slope Inundation)",
+    precipitation_mm_24h: 76.0,
+    slope_gradient_deg: 32.5,
     soil_saturation_pct: 89,
-    historical_failures_count: 6,
-    ai_explanation: "Pagala Pahar geological fault line is experiencing localized soil displacement following 69 mm rain, causing road shoulder subsidence.",
-    recommended_action: "Deploy SDRF spotters at sinking zones and restrict heavy goods vehicles above 20 tons.",
+    historical_failures_count: 5,
+    ai_explanation: "Heavy precipitation in Kandhamal highlands is washing surface topsoil across hairpin bends between Bhanjanagar and Phulbani.",
+    recommended_action: "Deploy ODRAF road patrol spotters and divert multi-axle freight via Aska-Bhanjanagar bypass.",
     coordinates: [
-      [25.906, 93.727], // Dimapur
-      [25.675, 94.108], // Kohima
-      [25.260, 94.020], // Senapati
-      [24.817, 93.936], // Imphal
+      [19.930, 84.580], // Bhanjanagar
+      [20.083, 84.533], // Kalinga Ghat Pass
+      [20.479, 84.234], // Phulbani
     ],
   },
   {
-    id: "RD-NH-8-AGARTALA",
-    road_number: "NH-8",
-    name: "NH-8 Southern Link Corridor (Silchar ➔ Agartala)",
-    state: "Tripura / Assam",
-    districts_traversed: ["North Tripura", "Dhalai", "West Tripura"],
+    id: "RD-NH-326-TRIBAL",
+    road_number: "NH-326",
+    name: "NH-326 Southern Tribal Lifeline (Rayagada -> Koraput -> Malkangiri)",
+    state: "Koraput / Malkangiri",
+    districts_traversed: ["Rayagada", "Koraput", "Malkangiri"],
     risk_level: "LOW",
-    risk_score: 22.0,
+    risk_score: 24.0,
     disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Low Risk Stable Valley Passage",
-    threat_time_window: "Safe Transit Window (Next 36 Hours Stable)",
-    precipitation_mm_24h: 24.0,
-    slope_gradient_deg: 8.0,
-    soil_saturation_pct: 45,
+    disaster_title: "Remote Tribal Supply Corridor Open",
+    threat_time_window: "Safe Transit Window (Stable)",
+    precipitation_mm_24h: 22.0,
+    slope_gradient_deg: 14.0,
+    soil_saturation_pct: 46,
     historical_failures_count: 1,
-    ai_explanation: "Widened 2-lane bituminous highway with sound concrete retaining walls and clear water channels.",
-    recommended_action: "All freight vehicles cleared for unrestricted transit.",
+    ai_explanation: "Corridor clear of major structural defects; regular supply distribution to Malkangiri functioning smoothly.",
+    recommended_action: "Maintain routine health & grain convoys.",
     coordinates: [
-      [24.833, 92.779], // Silchar
-      [24.370, 92.160], // Dharmanagar
-      [23.920, 91.850], // Ambassa
-      [23.831, 91.286], // Agartala
+      [19.167, 83.417], // Rayagada
+      [18.814, 82.711], // Koraput
+      [18.344, 81.895], // Malkangiri
     ],
   },
   {
-    id: "RD-NH-10-GANGTOK",
-    road_number: "NH-10",
-    name: "NH-10 Teesta Valley Mountain Arterial (Siliguri ➔ Gangtok)",
-    state: "Sikkim / West Bengal",
-    districts_traversed: ["Pakyong", "Gangtok"],
-    risk_level: "CRITICAL",
-    risk_score: 86.0,
-    disaster_type: "FLASH_FLOOD_OVERFLOW",
-    disaster_title: "Teesta River Turbulent Overflow & Bank Erosion",
-    threat_time_window: "Immediate Alert (Next 1 to 5 Hours)",
-    precipitation_mm_24h: 94.0,
-    slope_gradient_deg: 41.0,
-    soil_saturation_pct: 98,
-    historical_failures_count: 8,
-    ai_explanation: "Teesta river water level is running 1.4m above warning level near 29th Mile, washing away road embankment toe and threatening severe carriageway collapse.",
-    recommended_action: "Total suspension of non-essential civilian vehicles. Divert essential traffic via Lava-Algarah ridge.",
-    coordinates: [
-      [26.720, 88.420], // Siliguri
-      [27.170, 88.530], // Rangpo
-      [27.338, 88.606], // Gangtok
-    ],
-  },
-  {
-    id: "RD-HAFLONG-BYPASS",
-    road_number: "SH-Haflong",
-    name: "Haflong-Umrangso All-Weather Green Bypass Corridor",
-    state: "Assam",
-    districts_traversed: ["Dima Hasao", "Cachar"],
+    id: "RD-ODISHA-BYPASS",
+    road_number: "NH-53/20",
+    name: "Anandapur-Keonjhar All-Weather Emergency Bypass Corridor",
+    state: "Khordha / Kendujhar",
+    districts_traversed: ["Cuttack", "Dhenkanal", "Kendujhar", "Balasore"],
     risk_level: "LOW",
     risk_score: 16.5,
     disaster_type: "CLEAR_TRANSIT",
-    disaster_title: "Safe Valley Detour for Blocked NH-6 Freight",
+    disaster_title: "Safe High-Ground Bypass Detour for Blocked Baitarani Traffic",
     threat_time_window: "Safe Transit Window (Recommended Alternative)",
-    precipitation_mm_24h: 22.0,
-    slope_gradient_deg: 12.0,
-    soil_saturation_pct: 42,
+    precipitation_mm_24h: 18.0,
+    slope_gradient_deg: 6.0,
+    soil_saturation_pct: 38,
     historical_failures_count: 0,
-    ai_explanation: "Stable geological ridge with deep RCC culverts and zero landslide vulnerability.",
-    recommended_action: "Recommended as prime diversion route for all Southern Assam & Mizoram relief convoys.",
+    ai_explanation: "Stable elevated inland bypass bypassing the flood-prone coastal river basins with zero inundation risk.",
+    recommended_action: "Recommended as prime detour for all Northern Odisha, Kolkata, and Port-bound freight convoys.",
     coordinates: [
-      [25.510, 92.740], // Umrangso
-      [25.176, 93.018], // Haflong
-      [24.833, 92.779], // Silchar
+      [20.463, 85.882], // Cuttack
+      [20.662, 85.596], // Dhenkanal
+      [21.217, 85.983], // Anandapur
+      [21.494, 86.932], // Balasore
     ],
   }
 ];
 
 export const REGIONAL_ACTIVE_VEHICLES: HighwayVehicleEntity[] = [
   {
-    id: "VEH-AS-01-GB-4819",
-    vehicle_number: "AS-01-GB-4819",
+    id: "VEH-OD-05-GC-9104",
+    vehicle_number: "OD-05-GC-9104",
     vehicle_type: "FUEL_TANKER",
-    type_label: "10-Wheeler Petroleum Tanker",
-    driver_name: "Biren Das",
-    driver_phone: "+91 98640 12345",
-    current_road_id: "RD-NH-6-SONAPUR",
-    current_road_name: "NH-6 Sonapur Tunnel Mountain Pass",
-    cargo: "20,000 Litres High Speed Diesel (IOCL)",
-    speed_kmh: 42,
-    lat: 25.140,
-    lng: 92.340,
-    threat_status: "IN_DANGER",
-    danger_distance_km: 3.8,
-    hazard_ahead_description: "Active Landslide & Mud Debris Blockage at Sonapur Tunnel (3.8 km ahead)",
-    state: "Meghalaya / Assam",
-  },
-  {
-    id: "VEH-AS-11-BC-3042",
-    vehicle_number: "AS-11-BC-3042",
-    vehicle_type: "HEAVY_TRUCK",
-    type_label: "14-Wheeler Essential Grain Carrier",
-    driver_name: "Rajesh Kalita",
-    driver_phone: "+91 94350 78901",
-    current_road_id: "RD-NH-37-KAZIRANGA",
-    current_road_name: "NH-37 Kaziranga Brahmaputra Highway",
-    cargo: "25 Metric Tonnes Rice (FCI Depot)",
-    speed_kmh: 52,
-    lat: 26.540,
-    lng: 93.120,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 11.4,
-    hazard_ahead_description: "Brahmaputra River Overtopping & Waterlogging (11.4 km ahead)",
-    state: "Assam",
-  },
-  {
-    id: "VEH-AR-01-M-9081",
-    vehicle_number: "AR-01-M-9081",
-    vehicle_type: "HEAVY_TRUCK",
-    type_label: "All-Terrain Mountain Cargo Carrier",
-    driver_name: "Tashi Norbu",
-    driver_phone: "+91 94360 45678",
-    current_road_id: "RD-NH-13-TAWANG",
-    current_road_name: "NH-13 Trans-Arunachal & Sela Pass",
-    cargo: "Medical Gas Cylinders & High-Altitude Ration",
-    speed_kmh: 34,
-    lat: 27.460,
-    lng: 92.140,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 6.2,
-    hazard_ahead_description: "Sub-zero Black Ice Glaze & Rockfall Risk (6.2 km ahead)",
-    state: "Arunachal Pradesh",
-  },
-  {
-    id: "VEH-MZ-01-A-4422",
-    vehicle_number: "MZ-01-A-4422",
-    vehicle_type: "AMBULANCE",
-    type_label: "Advanced Life Support Ambulance",
-    driver_name: "Lalhmingthanga",
-    driver_phone: "+91 98620 54321",
-    current_road_id: "RD-NH-306-AIZAWL",
-    current_road_name: "NH-306 Southern Arterial",
-    cargo: "Emergency Patient Transit & Plasma Units",
-    speed_kmh: 58,
-    lat: 24.320,
-    lng: 92.690,
-    threat_status: "SAFE",
-    danger_distance_km: 0,
-    hazard_ahead_description: "Moderate hill rain - clear transit with caution",
-    state: "Mizoram",
-  },
-  {
-    id: "VEH-NL-07-C-1290",
-    vehicle_number: "NL-07-C-1290",
-    vehicle_type: "RATION_CARRIER",
-    type_label: "Multi-Axle Supply Truck",
-    driver_name: "Kevichusa Angami",
-    driver_phone: "+91 94360 11223",
-    current_road_id: "RD-NH-2-KOHIMA",
-    current_road_name: "NH-2 Trans-Hills Corridor",
-    cargo: "Essential Baby Food & Medical Supplies",
+    type_label: "16-Wheeler Medical Oxygen Tanker",
+    driver_name: "Biren Behera",
+    driver_phone: "+91 94370 12345",
+    current_road_id: "RD-NH-16-BAITARANI",
+    current_road_name: "NH-16 Baitarani River Bridge Corridor",
+    cargo: "22,000 Litres Liquid Medical Oxygen (IOCL)",
     speed_kmh: 38,
-    lat: 25.540,
-    lng: 94.080,
-    threat_status: "APPROACHING_HAZARD",
-    danger_distance_km: 5.5,
-    hazard_ahead_description: "Pagala Pahar Sinking Zone Soil Displacement (5.5 km ahead)",
-    state: "Nagaland",
+    lat: 20.910,
+    lng: 86.320,
+    threat_status: "IN_DANGER",
+    danger_distance_km: 2.4,
+    hazard_ahead_description: "Active River Flood Overtopping at Baitarani Bridge (2.4 km ahead)",
+    state: "Bhadrak / Jajpur / Balasore",
   },
   {
-    id: "VEH-AS-01-X-8800",
-    vehicle_number: "AS-01-X-8800",
+    id: "VEH-OD-02-B-3042",
+    vehicle_number: "OD-02-B-3042",
+    vehicle_type: "HEAVY_TRUCK",
+    type_label: "14-Wheeler OSDMA Relief Grain Carrier",
+    driver_name: "Soumya Ranjan Nayak",
+    driver_phone: "+91 94371 78901",
+    current_road_id: "RD-NH-16-BAITARANI",
+    current_road_name: "NH-16 Coastal Arterial Spine",
+    cargo: "25 Metric Tonnes Rice & Water Packets",
+    speed_kmh: 48,
+    lat: 20.870,
+    lng: 86.210,
+    threat_status: "APPROACHING_HAZARD",
+    danger_distance_km: 8.6,
+    hazard_ahead_description: "Baitarani Flood Water Inundation (8.6 km ahead)",
+    state: "Bhadrak / Jajpur / Balasore",
+  },
+  {
+    id: "VEH-OD-04-X-8800",
+    vehicle_number: "OD-04-X-8800",
     vehicle_type: "CRANE_EXCAVATOR",
-    type_label: "PWD Heavy Hydraulic Crane & Clearer",
-    driver_name: "Hemanta Bora",
-    driver_phone: "+91 98640 99001",
-    current_road_id: "RD-HAFLONG-BYPASS",
-    current_road_name: "Haflong-Umrangso Green Bypass",
-    cargo: "Disaster Road Clearance Gear & Earthmovers",
-    speed_kmh: 30,
-    lat: 25.220,
-    lng: 92.980,
+    type_label: "Works Dept Hydraulic JCB Excavator",
+    driver_name: "Hemanta Mohanty",
+    driver_phone: "+91 94372 99001",
+    current_road_id: "RD-NH-20-KANJIPANI",
+    current_road_name: "NH-20 Kanjipani Ghat Corridor",
+    cargo: "Slope Debris Clearing Machinery & Winch",
+    speed_kmh: 32,
+    lat: 21.500,
+    lng: 85.520,
+    threat_status: "APPROACHING_HAZARD",
+    danger_distance_km: 4.1,
+    hazard_ahead_description: "Kanjipani Ghat Rockfall & Mud Slip (4.1 km ahead)",
+    state: "Kendujhar",
+  },
+  {
+    id: "VEH-OD-02-A-4422",
+    vehicle_number: "OD-02-A-4422",
+    vehicle_type: "AMBULANCE",
+    type_label: "Advanced Life Support ICU Ambulance",
+    driver_name: "Rajesh Jena",
+    driver_phone: "+91 98610 54321",
+    current_road_id: "RD-NH-55-EXPRESS",
+    current_road_name: "Twin City Medical Corridor (AIIMS -> SCB)",
+    cargo: "Critical Trauma Patient & Blood Plasma",
+    speed_kmh: 65,
+    lat: 20.410,
+    lng: 85.860,
     threat_status: "SAFE",
     danger_distance_km: 0,
-    hazard_ahead_description: "All-weather bypass clear and secure",
-    state: "Assam",
+    hazard_ahead_description: "Expressway clear with green medical corridor active",
+    state: "Cuttack / Sambalpur",
+  },
+  {
+    id: "VEH-OD-10-M-9081",
+    vehicle_number: "OD-10-M-9081",
+    vehicle_type: "RATION_CARRIER",
+    type_label: "Eastern Ghats Heavy Relief Truck",
+    driver_name: "Tapan Sahu",
+    driver_phone: "+91 94380 45678",
+    current_road_id: "RD-NH-26-SOUTHERN",
+    current_road_name: "NH-26 Western-Southern Spine",
+    cargo: "Essential Baby Nutrition & Primary Vaccines",
+    speed_kmh: 40,
+    lat: 19.820,
+    lng: 83.120,
+    threat_status: "APPROACHING_HAZARD",
+    danger_distance_km: 7.2,
+    hazard_ahead_description: "Eastern Ghats Hill Slush & Heavy Rain (7.2 km ahead)",
+    state: "Koraput / Balangir",
+  },
+  {
+    id: "VEH-OD-07-P-2026",
+    vehicle_number: "OD-07-P-2026",
+    vehicle_type: "HEAVY_TRUCK",
+    type_label: "Odisha Police Highway Patrol & Intercept",
+    driver_name: "ASI Bikash Rout",
+    driver_phone: "+91 94374 11223",
+    current_road_id: "RD-ODISHA-BYPASS",
+    current_road_name: "Anandapur-Keonjhar Bypass Patrol",
+    cargo: "Emergency Road Diversion Cones & Radio Base",
+    speed_kmh: 56,
+    lat: 21.180,
+    lng: 85.920,
+    threat_status: "SAFE",
+    danger_distance_km: 0,
+    hazard_ahead_description: "Bypass traffic moving smoothly without delay",
+    state: "Khordha / Kendujhar",
   }
 ];
 
@@ -500,7 +479,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
     const L = require("leaflet");
 
     const map = L.map(mapContainerRef.current, {
-      center: [26.00, 92.80],
+      center: [20.50, 84.80],
       zoom: 7,
       minZoom: 6,
       maxZoom: 18,
@@ -672,7 +651,7 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm sm:text-base font-bold text-stone-900">
-                NER Regional Highway GIS Map & Active Fleet Intercept
+                Odisha State Highway GIS Map & Active Fleet Intercept
               </h2>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
                 Live Moving Vehicles ({filteredVehicles.length})
@@ -693,14 +672,13 @@ export const CentralAdminRegionalRiskMap: React.FC = () => {
               onChange={(e) => setFilterState(e.target.value)}
               className="bg-transparent text-stone-800 font-semibold outline-none text-xs cursor-pointer"
             >
-              <option value="ALL">All States (NER)</option>
-              <option value="Assam">Assam</option>
-              <option value="Meghalaya">Meghalaya</option>
-              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-              <option value="Mizoram">Mizoram</option>
-              <option value="Nagaland">Nagaland</option>
-              <option value="Tripura">Tripura</option>
-              <option value="Sikkim">Sikkim</option>
+              <option value="ALL">All Odisha Corridors</option>
+              <option value="Bhadrak">Bhadrak / Coastal Spine</option>
+              <option value="Kendujhar">Kendujhar / Mining Corridor</option>
+              <option value="Cuttack">Cuttack / Industrial</option>
+              <option value="Koraput">Koraput / Southern Ghats</option>
+              <option value="Khordha">Khordha / Capital</option>
+              <option value="Ganjam">Ganjam / Southern</option>
             </select>
           </div>
 

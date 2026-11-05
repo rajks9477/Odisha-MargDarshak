@@ -42,7 +42,7 @@ class DisasterAlertEvent(Base):
     latitude = Column(Float, nullable=False, default=25.20)
     longitude = Column(Float, nullable=False, default=92.35)
 
-    issued_by = Column(String(150), nullable=False, default="IMD Regional Meteorological Centre, Guwahati")
+    issued_by = Column(String(150), nullable=False, default="IMD Meteorological Centre, Bhubaneswar")
     issued_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     valid_until = Column(DateTime(timezone=True), nullable=True)
 

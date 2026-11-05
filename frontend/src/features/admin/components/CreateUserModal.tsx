@@ -17,7 +17,7 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onClose, onSuccess })
   const [phone, setPhone] = useState("+91");
   const [password, setPassword] = useState("Admin@Pass2026");
   const [role, setRole] = useState<UserRole>("DRIVER");
-  const [state, setState] = useState("Assam");
+  const [state, setState] = useState("Odisha");
   const [district, setDistrict] = useState("Kamrup");
   const [department, setDepartment] = useState("Transport Logistics");
   const [employeeId, setEmployeeId] = useState("");
@@ -136,14 +136,7 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onClose, onSuccess })
                 onChange={(e) => setState(e.target.value)}
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 outline-none focus:border-cyan-500"
               >
-                <option value="Assam">Assam</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Sikkim">Sikkim</option>
+                <option value="Odisha">Odisha</option>
               </select>
             </div>
             <div>

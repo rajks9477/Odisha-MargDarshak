@@ -36,7 +36,7 @@ const DynamicMapContainer = dynamic(
     loading: () => (
       <div className="w-full h-full min-h-[600px] rounded-3xl bg-slate-950 border border-slate-800 flex flex-col items-center justify-center gap-3 text-slate-400">
         <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-        <span className="text-xs font-bold uppercase tracking-wider">Loading NER GIS Map Engine...</span>
+        <span className="text-xs font-bold uppercase tracking-wider">Loading Odisha GIS Map Engine...</span>
       </div>
     ),
   }

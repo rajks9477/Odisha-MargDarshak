@@ -19,4 +19,4 @@ class GeneratedReportRecord(Base):
     csv_content = Column(Text, nullable=False, default="")
 
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
-    data_provenance = Column(String(150), default="NER-MargDarshak Analytics Engine V1.0 [DEMO / SIMULATED REPORT]", nullable=False)
+    data_provenance = Column(String(150), default="Odisha MargDarshak Analytics Engine V1.0 [DEMO / SIMULATED REPORT]", nullable=False)

@@ -73,7 +73,7 @@ export const VehicleStatusCard: React.FC<VehicleStatusCardProps> = ({ vehicle })
             <div className="text-[10px] uppercase font-bold text-stone-400">Allocated Department</div>
             <div className="text-xs font-bold text-stone-800">{vehicle.department}</div>
             <div className="text-[11px] text-emerald-800 font-semibold font-mono">
-              {vehicle.district ? `${vehicle.district}, ` : ""}{vehicle.state || "Assam"}
+              {vehicle.district ? `${vehicle.district}, ` : ""}{vehicle.state || "Odisha"}
             </div>
           </div>
         )}

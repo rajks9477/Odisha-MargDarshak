@@ -29,7 +29,7 @@ class CopilotResponse(BaseModel):
     proposed_action: Optional[ProposedAction] = None
     conversation_id: str
     timestamp: datetime
-    data_provenance: str = "NER-MargDarshak RAG Engine [Ground Platform Data Grounded]"
+    data_provenance: str = "Odisha MargDarshak RAG Engine [Ground Platform Data Grounded]"
 
 class ActionApprovalRequest(BaseModel):
     action_type: str

@@ -33,7 +33,7 @@ class PlannedRoute(Base):
     destination_longitude = Column(Float, nullable=False)
     
     route_type = Column(Enum(RouteType), nullable=False, default=RouteType.RECOMMENDED, index=True)
-    corridor_title = Column(String(150), nullable=False) # e.g. "NH-6 Primary Spine via Sonapur Tunnel"
+    corridor_title = Column(String(150), nullable=False) # e.g. "NH-16 Primary Spine via Baitarani Bridge"
     
     # GeoJSON LineString coordinates string: [[lon, lat], [lon, lat], ...]
     geometry_geojson = Column(Text, nullable=False)

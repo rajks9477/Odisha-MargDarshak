@@ -5,7 +5,7 @@ from app.ml.models.gradient_boosting_model import GradientBoostingRiskModel
 def generate_grounded_training_dataset(num_samples: int = 1200) -> Tuple[np.ndarray, np.ndarray]:
     """
     Generates realistic, grounded synthetic-historical hazard training observations for
-    North Eastern highway corridors (Sonapur, Lubha, Jowai, Vairengte).
+    Odisha highway corridors (Mahanadi, Brahmani, Baitarani river basins and Eastern Ghats ghat sections).
     Features: 14 dimensions matching FEATURE_NAMES.
     """
     np.random.seed(42)
@@ -79,7 +79,7 @@ def train_baseline_model() -> Tuple[GradientBoostingRiskModel, Dict[str, float]]
     X_val, y_val = X[train_idx:val_idx], y[train_idx:val_idx]
     X_test, y_test = X[val_idx:], y[val_idx:]
 
-    model = GradientBoostingRiskModel(model_version="ner-gradient-boost-v1.0")
+    model = GradientBoostingRiskModel(model_version="odisha-gradient-boost-v1.0")
     model.fit(X_train, y_train)
 
     metrics = model.evaluate(X_test, y_test)

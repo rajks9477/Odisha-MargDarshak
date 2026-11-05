@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NER–MargDarshak | AI Logistics & Accessibility Intelligence Platform",
-  description: "AI-Powered Smart Logistics & Accessibility Intelligence Platform for the North Eastern Region of India (NER). Real-time road monitoring, predictive disruption alerts, and RBAC-secured emergency supply coordination.",
+  title: "Odisha MargDarshak | AI Logistics & Accessibility Intelligence Platform",
+  description: "AI-Powered Smart Logistics & Accessibility Intelligence Platform for Odisha. Real-time road monitoring, predictive multi-hazard disruption alerts (floods, cyclones, landslides), and RBAC-secured emergency supply coordination across all 30 districts of Odisha.",
 };
 
 export default function RootLayout({

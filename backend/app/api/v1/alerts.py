@@ -203,7 +203,7 @@ async def alerts_websocket_endpoint(websocket: WebSocket, token: Optional[str] =
         # Send initial connected greeting
         await websocket.send_json({
             "type": "CONNECTION_ESTABLISHED",
-            "message": "Connected to NER-MargDarshak real-time notification stream",
+            "message": "Connected to Odisha MargDarshak real-time notification stream",
             "timestamp": datetime.now(timezone.utc).isoformat(),
         })
         while True:

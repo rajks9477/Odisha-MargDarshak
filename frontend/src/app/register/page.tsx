@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { 
-  NER_STATES, 
-  NER_DISTRICTS, 
+  ODISHA_STATES, 
+  ODISHA_DISTRICTS_MAP, 
   GOV_DEPARTMENTS, 
   ROLE_CONFIGS, 
   UserRole, 
@@ -44,8 +44,8 @@ export default function RegisterPage() {
   const [role, setRole] = useState<UserRole>("CITIZEN");
 
   // Gov & Field specific fields
-  const [state, setState] = useState<NERState>("Assam");
-  const [district, setDistrict] = useState<string>("Kamrup Metropolitan");
+  const [state, setState] = useState<NERState>("Odisha");
+  const [district, setDistrict] = useState<string>("Khordha");
   const [department, setDepartment] = useState<string>(GOV_DEPARTMENTS[0]);
   const [employeeId, setEmployeeId] = useState("");
   const [designation, setDesignation] = useState("");
@@ -55,7 +55,7 @@ export default function RegisterPage() {
   // When state changes, update available districts
   const handleStateChange = (newState: NERState) => {
     setState(newState);
-    const availableDistricts = NER_DISTRICTS[newState] || [];
+    const availableDistricts = ODISHA_DISTRICTS_MAP[newState] || [];
     if (availableDistricts.length > 0) {
       setDistrict(availableDistricts[0]);
     }
@@ -153,7 +153,7 @@ export default function RegisterPage() {
             </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight">
-            Create NER–MargDarshak Account
+            Create Odisha MargDarshak Account
           </h1>
           <p className="text-xs sm:text-sm text-stone-600">
             Register for regional accessibility & logistics coordination
@@ -404,13 +404,13 @@ export default function RegisterPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-stone-700">Assigned NER State</label>
+                  <label className="block text-xs font-bold text-stone-700">Assigned State</label>
                   <select
                     value={state}
                     onChange={(e) => handleStateChange(e.target.value as NERState)}
                     className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#E8E2D8] focus:border-emerald-700 rounded-xl text-xs sm:text-sm text-stone-900 outline-none"
                   >
-                    {NER_STATES.map((st) => (
+                    {ODISHA_STATES.map((st) => (
                       <option key={st} value={st}>
                         {st}
                       </option>
@@ -419,13 +419,13 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-stone-700">Assigned District</label>
+                  <label className="block text-xs font-bold text-stone-700">Assigned District (30 Districts of Odisha)</label>
                   <select
                     value={district}
                     onChange={(e) => setDistrict(e.target.value)}
                     className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#E8E2D8] focus:border-emerald-700 rounded-xl text-xs sm:text-sm text-stone-900 outline-none"
                   >
-                    {(NER_DISTRICTS[state] || []).map((dist) => (
+                    {(ODISHA_DISTRICTS_MAP[state] || []).map((dist) => (
                       <option key={dist} value={dist}>
                         {dist}
                       </option>
@@ -441,7 +441,7 @@ export default function RegisterPage() {
                     type="text"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
-                    placeholder="e.g. AS-PWD-KM-9921"
+                    placeholder="e.g. OD-WORKS-KHO-9921"
                     className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#E8E2D8] focus:border-emerald-700 rounded-xl text-xs sm:text-sm text-stone-900 outline-none"
                     required
                   />

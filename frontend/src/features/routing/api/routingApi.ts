@@ -29,18 +29,18 @@ export const routingApi = {
     } catch {
       // Fallback predefined hubs
       return [
-        { id: "GUWAHATI", name: "Guwahati Central Hub, Assam", latitude: 26.18, longitude: 91.73 },
-        { id: "SHILLONG", name: "Shillong Nodal Depot, Meghalaya", latitude: 25.57, longitude: 91.88 },
-        { id: "SILCHAR", name: "Silchar Food & Medical Depot, Assam", latitude: 24.83, longitude: 92.79 },
-        { id: "AIZAWL", name: "Aizawl Central Granary, Mizoram", latitude: 23.73, longitude: 92.71 },
-        { id: "AGARTALA", name: "Agartala Supply Hub, Tripura", latitude: 23.83, longitude: 91.28 },
-        { id: "TEZPUR", name: "Tezpur Military Gateway, Assam", latitude: 26.65, longitude: 92.79 },
-        { id: "TAWANG", name: "Tawang Strategic Depot, Arunachal Pradesh", latitude: 27.58, longitude: 91.86 },
-        { id: "ITANAGAR", name: "Itanagar Capital Hub, Arunachal Pradesh", latitude: 27.08, longitude: 93.60 },
-        { id: "DIMAPUR", name: "Dimapur Commercial Railhead, Nagaland", latitude: 25.90, longitude: 93.72 },
-        { id: "KOHIMA", name: "Kohima Mountain Ridge, Nagaland", latitude: 25.67, longitude: 94.10 },
-        { id: "IMPHAL", name: "Imphal Valley Supply Center, Manipur", latitude: 24.81, longitude: 93.93 },
-        { id: "GANGTOK", name: "Gangtok Hill Depot, Sikkim", latitude: 27.33, longitude: 88.61 },
+        { id: "BHUBANESWAR", name: "Bhubaneswar Central Logistics Hub, Khordha", latitude: 20.296, longitude: 85.824 },
+        { id: "CUTTACK", name: "Cuttack Twin City Distribution Depot, Cuttack", latitude: 20.462, longitude: 85.882 },
+        { id: "BALASORE", name: "Balasore Industrial and Food Terminal, Balasore", latitude: 21.493, longitude: 86.933 },
+        { id: "BHADRAK", name: "Bhadrak Baitarani Gateway Depot, Bhadrak", latitude: 21.054, longitude: 86.501 },
+        { id: "PARADIP", name: "Paradip Major Deepwater Port, Jagatsinghpur", latitude: 20.264, longitude: 86.611 },
+        { id: "SAMBALPUR", name: "Sambalpur Western Logistics Center, Sambalpur", latitude: 21.467, longitude: 83.977 },
+        { id: "ROURKELA", name: "Rourkela Steel City Logistics Depot, Sundargarh", latitude: 22.260, longitude: 84.853 },
+        { id: "BERHAMPUR", name: "Berhampur Southern Distribution Depot, Ganjam", latitude: 19.315, longitude: 84.794 },
+        { id: "KORAPUT", name: "Koraput Tribal and Mountain Logistics Hub, Koraput", latitude: 18.813, longitude: 82.713 },
+        { id: "ANGUL", name: "Angul Industrial Mineral Corridor, Angul", latitude: 20.844, longitude: 85.151 },
+        { id: "JHARSUGUDA", name: "Jharsuguda Multi-Modal Rail-Road Hub, Jharsuguda", latitude: 21.855, longitude: 84.006 },
+        { id: "PURI", name: "Puri Coastal Logistics Center, Puri", latitude: 19.813, longitude: 85.831 },
       ];
     }
   },

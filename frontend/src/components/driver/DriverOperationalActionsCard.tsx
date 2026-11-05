@@ -46,7 +46,7 @@ export const DriverOperationalActionsCard: React.FC = () => {
             </span>
           </div>
           <p className="text-[11px] sm:text-xs text-stone-600 leading-snug">
-            Select your Origin &amp; Destination anywhere across 8 NER States to view shortest road routes, landslide risk color-coding &amp; turn-by-turn voice navigation.
+            Select your Origin &amp; Destination anywhere across 30 Odisha Districts to view shortest road routes, landslide risk color-coding &amp; turn-by-turn voice navigation.
           </p>
         </div>
 
@@ -58,10 +58,10 @@ export const DriverOperationalActionsCard: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-2 text-[11px] font-semibold">
             <Link
-              href="/dashboard/driver/route-planning?from=Guwahati&to=Silchar"
+              href="/dashboard/driver/route-planning?from=Bhubaneswar&to=Balasore"
               className="p-2 rounded-xl bg-white/90 border border-emerald-200/80 hover:border-emerald-600 hover:bg-emerald-50/50 text-stone-800 hover:text-emerald-950 transition-all flex items-center justify-between shadow-2xs min-w-0 group/link"
             >
-              <span className="truncate">🛣️ Guwahati ➔ Silchar</span>
+              <span className="truncate">🛣️ Bhubaneswar ➔ Balasore</span>
               <ArrowRight className="w-3 h-3 text-emerald-700 group-hover/link:translate-x-0.5 transition-transform shrink-0 ml-1" />
             </Link>
             <Link
@@ -72,14 +72,14 @@ export const DriverOperationalActionsCard: React.FC = () => {
               <ArrowRight className="w-3 h-3 text-emerald-700 group-hover/link:translate-x-0.5 transition-transform shrink-0 ml-1" />
             </Link>
             <Link
-              href="/dashboard/driver/route-planning?from=Dimapur&to=Kohima"
+              href="/dashboard/driver/route-planning?from=Bhubaneswar&to=Sambalpur"
               className="p-2 rounded-xl bg-white/90 border border-emerald-200/80 hover:border-emerald-600 hover:bg-emerald-50/50 text-stone-800 hover:text-emerald-950 transition-all flex items-center justify-between shadow-2xs min-w-0 group/link"
             >
-              <span className="truncate">🌲 Dimapur ➔ Kohima</span>
+              <span className="truncate">🌲 Bhubaneswar ➔ Sambalpur</span>
               <ArrowRight className="w-3 h-3 text-emerald-700 group-hover/link:translate-x-0.5 transition-transform shrink-0 ml-1" />
             </Link>
             <Link
-              href="/dashboard/driver/route-planning?from=Guwahati&to=Tawang"
+              href="/dashboard/driver/route-planning?from=Cuttack&to=Berhampur"
               className="p-2 rounded-xl bg-white/90 border border-emerald-200/80 hover:border-emerald-600 hover:bg-emerald-50/50 text-stone-800 hover:text-emerald-950 transition-all flex items-center justify-between shadow-2xs min-w-0 group/link"
             >
               <span className="truncate">❄️ Tezpur ➔ Tawang</span>

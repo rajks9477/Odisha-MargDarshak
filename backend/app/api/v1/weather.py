@@ -25,7 +25,7 @@ router = APIRouter(prefix="/weather", tags=["Weather & Disaster Intelligence"])
 
 @router.get("/district", response_model=WeatherObservationResponse)
 async def get_weather_for_district(
-    location: str = Query(default="Sonapur (East Jaintia Hills, Meghalaya)"),
+    location: str = Query(default="Bhubaneswar (Khordha, Odisha)"),
     current_user: User = Depends(require_roles([UserRole.DRIVER, UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER, UserRole.CITIZEN])),
     db: AsyncSession = Depends(get_db),
 ) -> Any:
@@ -37,7 +37,7 @@ async def get_regional_summary(
     current_user: User = Depends(require_roles([UserRole.DRIVER, UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER, UserRole.CITIZEN])),
     db: AsyncSession = Depends(get_db),
 ) -> Any:
-    """Returns state-level and district-level weather overview across the 8 North Eastern states."""
+    """Returns state-level and district-level weather overview across the 30 districts of Odisha."""
     return await get_regional_weather_summaries(db)
 
 @router.get("/corridor/{road_id}", response_model=WeatherObservationResponse)
@@ -46,8 +46,8 @@ async def get_corridor_weather(
     current_user: User = Depends(require_roles([UserRole.DRIVER, UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER])),
     db: AsyncSession = Depends(get_db),
 ) -> Any:
-    """Retrieves weather observation for a specific highway corridor (e.g. NH-6, NH-306, NH-13)."""
-    location_name = "Sonapur" if "SONAPUR" in road_id or "NH-6" in road_id else "Guwahati"
+    """Retrieves weather observation for a specific highway corridor (e.g. NH-16, NH-55, NH-53, NH-26)."""
+    location_name = "Bhadrak" if "COASTAL" in road_id or "NH-16" in road_id else "Bhubaneswar"
     return await get_district_weather(db, location_name)
 
 @router.get("/disasters/active", response_model=List[DisasterAlertResponse])
@@ -88,26 +88,26 @@ async def get_data_sources_registry(
     """Returns data provenance registry and active weather stations."""
     return [
         {
-            "id": "IMD-GUWAHATI-RMC",
-            "name": "India Meteorological Department (IMD) Regional Meteorological Centre, Guwahati",
+            "id": "IMD-BHUBANESWAR-MC",
+            "name": "India Meteorological Department (IMD) Meteorological Centre, Bhubaneswar",
             "type": "AUTOMATIC_WEATHER_STATION",
-            "covered_states": ["Assam", "Meghalaya", "Arunachal Pradesh", "Nagaland", "Manipur", "Mizoram", "Tripura"],
+            "covered_states": ["Odisha"],
             "data_quality": "VERIFIED_GOVT_SIMULATION",
             "status": "OPERATIONAL",
         },
         {
-            "id": "CWC-BRAHMAPUTRA-BARAK",
-            "name": "Central Water Commission (CWC) Brahmaputra & Barak Basin Station",
+            "id": "CWC-MAHANADI-BASIN",
+            "name": "Central Water Commission (CWC) Mahanadi & Eastern Rivers Basin Organisation",
             "type": "RIVER_GAUGE_TELEMETRY",
-            "covered_states": ["Assam", "Meghalaya", "Mizoram"],
+            "covered_states": ["Odisha"],
             "data_quality": "VERIFIED_GOVT_SIMULATION",
             "status": "OPERATIONAL",
         },
         {
-            "id": "SDMA-MEGHALAYA-OBSERVATORY",
-            "name": "Meghalaya State Disaster Management Authority (SDMA) Sonapur Probe",
-            "type": "SLOPE_SATURATION_RAINGAUGE",
-            "covered_states": ["Meghalaya"],
+            "id": "OSDMA-STATE-SEOC",
+            "name": "Odisha State Disaster Management Authority (OSDMA) State Emergency Operations Centre",
+            "type": "CYCLONE_FLOOD_DISASTER_GRID",
+            "covered_states": ["Odisha"],
             "data_quality": "VERIFIED_GOVT_SIMULATION",
             "status": "OPERATIONAL",
         },

@@ -73,7 +73,7 @@ export const riskApi = {
   },
 
   /**
-   * Fetch corridor summary across all NER highways
+   * Fetch corridor summary across all Odisha highways
    */
   async getCorridorSummary(): Promise<RoadRiskSummary[]> {
     const res = await fetch(`${API_BASE}/risk/corridor-summary`, {
@@ -98,11 +98,11 @@ export const riskApi = {
     if (!res.ok) {
       return [
         {
-          id: "MDL-NER-GBM-V1",
-          model_name: "NER_ROAD_DISRUPTION_CLASSIFIER",
+          id: "MDL-ODISHA-GBM-V1",
+          model_name: "ODISHA_ROAD_DISRUPTION_CLASSIFIER",
           model_version: "v1.2.4",
           algorithm: "HistGradientBoostingClassifier",
-          training_dataset_version: "NER-HAZARDS-CORPUS-2026-Q1",
+          training_dataset_version: "ODISHA-HAZARDS-CORPUS-2026-Q1",
           trained_at: new Date().toISOString(),
           roc_auc: 0.912,
           pr_auc: 0.884,

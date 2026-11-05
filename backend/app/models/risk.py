@@ -78,7 +78,7 @@ class RiskPrediction(Base):
     risk_level = Column(Enum(RiskLevelEnum), nullable=False, default=RiskLevelEnum.LOW, index=True)
     confidence_pct = Column(Float, nullable=False, default=85.0) # 0 to 100%
     
-    model_version = Column(String(50), default="ner-gradient-boost-v1.0", nullable=False)
+    model_version = Column(String(50), default="odisha-gradient-boost-v1.0", nullable=False)
     
     # Stored JSON strings for explanation
     feature_summary_json = Column(Text, nullable=False, default="{}")
@@ -106,7 +106,7 @@ class ModelRegistryEntry(Base):
     model_version = Column(String(50), default="v1.0.0", nullable=False, unique=True)
     algorithm = Column(String(100), default="HistGradientBoostingClassifier", nullable=False)
     
-    training_dataset_version = Column(String(100), default="NER-HAZARDS-CORPUS-2026-Q1", nullable=False)
+    training_dataset_version = Column(String(100), default="ODISHA-HAZARDS-CORPUS-2026-Q1", nullable=False)
     trained_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     
     roc_auc = Column(Float, default=0.912, nullable=False)

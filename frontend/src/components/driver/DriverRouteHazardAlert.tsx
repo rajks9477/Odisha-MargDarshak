@@ -50,7 +50,7 @@ export const DriverRouteHazardAlert: React.FC<DriverRouteHazardAlertProps> = ({
   }, []);
 
   // Check if driver has an active trip and if any incident falls along their route corridor
-  const activeCorridor = trip?.corridor_name || "NH-6 Guwahati-Shillong-Silchar Mountain Corridor";
+  const activeCorridor = trip?.corridor_name || "NH-16 Bhubaneswar-Cuttack-Balasore Coastal Corridor";
   const activeRoadId = trip?.corridor_name?.toLowerCase().includes("nh-6") ? "NH-6" : "";
 
   // Route-matched incidents (e.g. matching NH-6 or corridor text)
@@ -359,7 +359,7 @@ export const DriverRouteHazardAlert: React.FC<DriverRouteHazardAlertProps> = ({
             {/* Modal Footer */}
             <div className="p-4 bg-stone-950 border-t border-stone-800 flex items-center justify-between">
               <span className="text-[11px] text-stone-400">
-                Cryptographically signed &amp; verified via SIH MDoNER Telemetry
+                Cryptographically signed &amp; verified via OSDMA / ODRAF State Telemetry
               </span>
               <button
                 type="button"

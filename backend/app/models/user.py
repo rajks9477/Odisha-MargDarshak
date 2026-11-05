@@ -31,8 +31,8 @@ class User(Base):
     
     # Government & Field assignment fields
     department = Column(String(100), nullable=True) # e.g. "Public Works Department", "Disaster Management Authority", "Food & Civil Supplies"
-    state = Column(String(100), nullable=True) # e.g. "Assam", "Arunachal Pradesh", "Meghalaya", etc.
-    district = Column(String(100), nullable=True) # e.g. "Kamrup Metropolitan", "Tawang", "East Khasi Hills", etc.
+    state = Column(String(100), nullable=True, default="Odisha") # e.g. "Odisha"
+    district = Column(String(100), nullable=True, default="Khordha") # e.g. "Khordha", "Cuttack", "Puri", etc.
     employee_id = Column(String(50), nullable=True) # Government / Driver ID
     designation = Column(String(100), nullable=True) # e.g. "Assistant Executive Engineer", "Zonal Transport Officer"
     

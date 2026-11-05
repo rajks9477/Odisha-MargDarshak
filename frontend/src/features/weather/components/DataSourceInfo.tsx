@@ -9,7 +9,7 @@ export const DataSourceInfo: React.FC = () => {
       <div className="flex items-center gap-2">
         <Database className="w-4 h-4 text-purple-400 shrink-0" />
         <span className="font-semibold text-slate-300">
-          Feeds: IMD Regional Centre Guwahati • CWC Brahmaputra Basin • Meghalaya SDMA
+          Feeds: IMD Meteorological Centre Bhubaneswar • CWC Mahanadi Basin • OSDMA State Emergency Operations Centre
         </span>
       </div>
 

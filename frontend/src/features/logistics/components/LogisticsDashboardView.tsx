@@ -42,8 +42,8 @@ export const LogisticsDashboardView: React.FC = () => {
   const [newDescription, setNewDescription] = useState<string>("");
   const [newPriority, setNewPriority] = useState<CargoPriority>(CargoPriority.CRITICAL);
   const [newWeight, setNewWeight] = useState<number>(2000);
-  const [newOrigin, setNewOrigin] = useState<string>("Guwahati Central Medical Depot");
-  const [newDestination, setNewDestination] = useState<string>("Silchar Civil Hospital");
+  const [newOrigin, setNewOrigin] = useState<string>("Bhubaneswar Central Medical Depot (AIIMS/Capital Hospital)");
+  const [newDestination, setNewDestination] = useState<string>("Balasore District Headquarter Hospital (Fakir Mohan MCH)");
   const [submitting, setSubmitting] = useState<boolean>(false);
 
   const loadData = async () => {
@@ -187,7 +187,7 @@ export const LogisticsDashboardView: React.FC = () => {
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
           <input
             type="text"
-            placeholder="Search consignment by title, origin or destination (e.g. ICU Medicines, Silchar)..."
+            placeholder="Search consignment by title, origin or destination (e.g. ICU Medicines, Balasore)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"

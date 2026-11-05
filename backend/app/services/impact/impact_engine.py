@@ -32,7 +32,7 @@ async def calculate_cascading_impact(
     r_stmt = select(Road).where(Road.id == road_id)
     r_res = await db.execute(r_stmt)
     road = r_res.scalar_one_or_none()
-    road_name = road.road_name if road else "NH-6 Sonapur Corridor"
+    road_name = road.road_name if road else "NH-16 Baitarani River Bridge Corridor"
 
     # 2. Fetch Active Shipments in Transit
     s_stmt = select(Shipment).where(Shipment.status != ShipmentStatusEnum.DELIVERED)
@@ -65,21 +65,21 @@ async def calculate_cascading_impact(
             name=road_name,
             status="BLOCKED" if severity == "CRITICAL" else "RESTRICTED",
             risk_score=88.5,
-            details=f"Highway corridor {road_id} passability compromised.",
+            details=f"Odisha Highway corridor {road_id} passability compromised.",
         )
     )
     edges.append(ImpactEdgeResponse(source_id=inc_node_id, target_id=road_node_id, relationship="DISRUPTS"))
 
     # Node 3: Affected Primary Route
-    route_node_id = f"NODE-RTE-GUW-SIL"
+    route_node_id = f"NODE-RTE-BBSR-BAL"
     nodes.append(
         ImpactNodeResponse(
             id=route_node_id,
             node_type="ROUTE",
-            name="Guwahati - Silchar Arterial Spine (NH-6)",
+            name="Bhubaneswar - Cuttack - Balasore Coastal Arterial Spine (NH-16)",
             status="HIGH_RISK",
             risk_score=84.0,
-            details="Primary logistics corridor connecting Assam & Meghalaya to Barak Valley & Mizoram.",
+            details="Primary logistics corridor connecting Khordha, Cuttack, Jajpur, Bhadrak, and Balasore with northern ports.",
         )
     )
     edges.append(ImpactEdgeResponse(source_id=road_node_id, target_id=route_node_id, relationship="TRAVERSES"))
@@ -87,7 +87,7 @@ async def calculate_cascading_impact(
     # Nodes 4+: Affected Shipments & Vehicles
     affected_shipments_count = 0
     critical_supplies_count = 0
-    affected_districts_set = set(["East Jaintia Hills", "Cachar", "Aizawl", "Kolasib"])
+    affected_districts_set = set(["Bhadrak", "Balasore", "Jajpur", "Kendrapara"])
 
     for idx, shp in enumerate(shipments[:3]):
         affected_shipments_count += 1
@@ -117,7 +117,7 @@ async def calculate_cascading_impact(
                 name=f"{dist} District Supply Line",
                 status="EXPOSED",
                 risk_score=78.0,
-                details=f"District dependent on NH-6 supply dispatches for civil & medical relief.",
+                details=f"District dependent on NH-16 supply dispatches for civil & medical relief.",
             )
         )
         # Link from last shipment to district
@@ -126,7 +126,7 @@ async def calculate_cascading_impact(
 
     # Summary narrative chain
     summary_chain = (
-        f"{hazard_type.replace('_', ' ')} on {road_name} -> Disrupted Guwahati-Silchar Spine -> "
+        f"{hazard_type.replace('_', ' ')} on {road_name} -> Disrupted Coastal NH-16 Corridor -> "
         f"{affected_shipments_count} Active Relief Consignments Delayed ({critical_supplies_count} Critical ICU Supplies) -> "
         f"Service Exposure across {len(affected_districts_set)} Districts."
     )

@@ -55,6 +55,6 @@ async def get_active_anomalies(
     current_user: User = Depends(require_roles([UserRole.DRIVER, UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER, UserRole.CITIZEN])),
     db: AsyncSession = Depends(get_db),
 ) -> Any:
-    """Lists active spatial change anomalies across North Eastern transportation corridors."""
-    anom1 = await analyze_corridor_satellite_change(db, road_id="NH-6-SONAPUR-01")
+    """Lists active spatial change anomalies across Odisha transportation corridors."""
+    anom1 = await analyze_corridor_satellite_change(db, road_id="NH-16-BAITARANI-01")
     return [anom1]

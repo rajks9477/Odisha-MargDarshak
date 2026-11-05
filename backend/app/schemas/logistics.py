@@ -46,8 +46,8 @@ class CreateShipmentRequest(BaseModel):
     cargo_description: str
     priority: CargoPriorityEnum = CargoPriorityEnum.CRITICAL
     weight_kg: float = Field(default=1500.0, gt=0.0)
-    origin_name: str = "Guwahati Central Depot"
-    destination_name: str = "Silchar Civil Hospital & Relief Camp"
+    origin_name: str = "Bhubaneswar Central Depot"
+    destination_name: str = "Balasore District Hospital & Relief Camp"
     assigned_driver_id: Optional[str] = None
     assigned_vehicle_id: Optional[str] = None
 

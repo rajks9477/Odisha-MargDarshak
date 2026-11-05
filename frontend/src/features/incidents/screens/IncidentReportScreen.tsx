@@ -37,8 +37,8 @@ export const IncidentReportScreen: React.FC = () => {
   const [longitude, setLongitude] = useState<number>(92.285);
   const [accuracy, setAccuracy] = useState<number>(5.0);
   const [locationSource, setLocationSource] = useState<LocationSource>("GPS");
-  const [roadName, setRoadName] = useState<string>("NH-6 Guwahati-Shillong Highway");
-  const [districtName, setDistrictName] = useState<string>("East Jaintia Hills, Meghalaya");
+  const [roadName, setRoadName] = useState<string>("NH-16 Baitarani River Bridge Section");
+  const [districtName, setDistrictName] = useState<string>("Bhadrak District, Odisha");
 
   // Media & Voice State
   const [photos, setPhotos] = useState<{ file: File; dataUrl: string; originalSize: number; compressedSize: number }[]>([]);

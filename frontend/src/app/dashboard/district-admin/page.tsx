@@ -92,7 +92,7 @@ export default function DistrictAdminDashboard() {
             <Building2 className="w-4 h-4 text-purple-700" /> District Disaster & Logistics Administration (DDMA)
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-stone-900">
-            District Command: {user?.district || "Kamrup Metropolitan"} ({user?.state || "Assam"})
+            District Command: {user?.district || "Khordha"} ({user?.state || "Odisha"})
           </h2>
           <p className="text-xs sm:text-sm text-stone-600 mt-1">
             District-wide essential supply corridor oversight, local road diversion clearances, and Field Officer approvals.

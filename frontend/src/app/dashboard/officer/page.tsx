@@ -511,7 +511,7 @@ export default function OfficerDashboard() {
                 onChange={(e) => setActionNote(e.target.value)}
                 placeholder={
                   actionType === "VERIFY"
-                    ? "e.g. Ground inspection confirmed mudslide 500m before Sonapur tunnel. Excavator on site."
+                    ? "e.g. Ground inspection confirmed river overflow 500m before Baitarani bridge. Emergency team on site."
                     : "Enter remarks..."
                 }
                 className="w-full p-3 rounded-xl bg-[#FAF8F5] border border-[#E8E2D8] text-stone-900 text-xs focus:border-amber-700 focus:outline-none"

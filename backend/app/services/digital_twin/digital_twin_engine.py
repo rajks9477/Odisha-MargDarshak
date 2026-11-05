@@ -35,56 +35,67 @@ async def assemble_digital_twin_network(db: AsyncSession) -> DigitalTwinNetworkS
     # 2. Build Nodes (Warehouses, Hospitals, Junctions)
     nodes: List[DigitalTwinNodeSchema] = [
         DigitalTwinNodeSchema(
-            id="NODE-WH-GHY-01",
+            id="NODE-WH-BBSR-01",
             node_type="WAREHOUSE_HUB",
-            name="Guwahati Central Staging Depot",
-            latitude=26.1445,
-            longitude=91.7362,
-            district="Kamrup Metropolitan",
-            state="Assam",
+            name="Bhubaneswar Central Multi-Modal Logistics Hub",
+            latitude=20.2961,
+            longitude=85.8245,
+            district="Khordha",
+            state="Odisha",
             current_status="OPERATIONAL",
-            connected_road_ids=["NH-27-GUW-NAG-01", "NH-6-SONAPUR-01"],
+            connected_road_ids=["NH-16-COASTAL-01", "NH-57-CENTRAL-01"],
         ),
         DigitalTwinNodeSchema(
-            id="NODE-HOSP-SIL-01",
+            id="NODE-HOSP-SCB-01",
             node_type="HOSPITAL",
-            name="Silchar Civil Emergency Hospital",
-            latitude=24.8333,
-            longitude=92.7789,
-            district="Cachar",
-            state="Assam",
-            current_status="AT_RISK_MEDICINE_DELAY",
-            connected_road_ids=["NH-6-SONAPUR-01"],
-        ),
-        DigitalTwinNodeSchema(
-            id="NODE-BRG-SON-01",
-            node_type="BRIDGE_JUNCTION",
-            name="Sonapur River Bridge & Tunnel Section",
-            latitude=25.2167,
-            longitude=92.3667,
-            district="East Jaintia Hills",
-            state="Meghalaya",
-            current_status="CRITICAL_BLOCKED",
-            connected_road_ids=["NH-6-SONAPUR-01"],
-        ),
-        DigitalTwinNodeSchema(
-            id="NODE-WH-TAW-01",
-            node_type="WAREHOUSE_HUB",
-            name="Tawang Border Supply Depot",
-            latitude=27.5858,
-            longitude=91.8594,
-            district="Tawang",
-            state="Arunachal Pradesh",
+            name="SCB Medical College & Apex Emergency Hospital",
+            latitude=20.4780,
+            longitude=85.8900,
+            district="Cuttack",
+            state="Odisha",
             current_status="OPERATIONAL",
-            connected_road_ids=["NH-13-TAW-BOM-01"],
+            connected_road_ids=["NH-16-COASTAL-01", "NH-55-INDUSTRIAL-01"],
+        ),
+        DigitalTwinNodeSchema(
+            id="NODE-BRG-BAIT-01",
+            node_type="BRIDGE_JUNCTION",
+            name="Baitarani River High-Level Bridge (Akhuapada)",
+            latitude=21.0450,
+            longitude=86.4800,
+            district="Bhadrak",
+            state="Odisha",
+            current_status="AT_RISK_FLOOD_OVERFLOW",
+            connected_road_ids=["NH-16-COASTAL-01"],
+        ),
+        DigitalTwinNodeSchema(
+            id="NODE-WH-PRD-01",
+            node_type="WAREHOUSE_HUB",
+            name="Paradip Deepwater Port Cargo Terminal",
+            latitude=20.3160,
+            longitude=86.6114,
+            district="Jagatsinghpur",
+            state="Odisha",
+            current_status="OPERATIONAL",
+            connected_road_ids=["NH-53-PARADIP-01"],
+        ),
+        DigitalTwinNodeSchema(
+            id="NODE-HOSP-KOR-01",
+            node_type="HOSPITAL",
+            name="SLN Medical College Hospital Koraput",
+            latitude=18.8250,
+            longitude=82.7210,
+            district="Koraput",
+            state="Odisha",
+            current_status="OPERATIONAL",
+            connected_road_ids=["NH-26-SOUTHERN-01", "NH-326-GHATS-01"],
         ),
     ]
 
     # 3. Build Edges (Highway Corridors)
     edges: List[DigitalTwinEdgeSchema] = []
     for r in roads:
-        start_n = "NODE-WH-GHY-01"
-        end_n = "NODE-HOSP-SIL-01" if "NH-6" in r.road_name else "NODE-WH-TAW-01"
+        start_n = "NODE-WH-BBSR-01"
+        end_n = "NODE-HOSP-SCB-01" if "NH-16" in r.road_name else "NODE-WH-PRD-01"
         edges.append(
             DigitalTwinEdgeSchema(
                 road_id=r.id,
@@ -92,8 +103,8 @@ async def assemble_digital_twin_network(db: AsyncSession) -> DigitalTwinNetworkS
                 start_node_id=start_n,
                 end_node_id=end_n,
                 status=r.status.value if hasattr(r.status, "value") else str(r.status),
-                risk_score=92.4 if r.status == RoadStatus.RED else 24.5,
-                current_speed_kmh=12.5 if r.status == RoadStatus.RED else 55.0,
+                risk_score=91.2 if r.status == RoadStatus.RED else 22.0,
+                current_speed_kmh=12.5 if r.status == RoadStatus.RED else 58.0,
             )
         )
 
@@ -110,22 +121,22 @@ async def assemble_digital_twin_network(db: AsyncSession) -> DigitalTwinNetworkS
         active_incidents_count=len(incidents),
         active_shipments_count=len(shipments),
         active_vehicles_count=18,
-        data_provenance="NER-MargDarshak Live Digital Twin State [DEMO UNIFIED NETWORK]",
+        data_provenance="Odisha MargDarshak Live Digital Twin State [ODISHA STATE GIS UNIFIED NETWORK]",
     )
 
 async def trace_entity_dependencies(db: AsyncSession, entity_id: str) -> EntityDependencyResponse:
     """Traces full dependency chain for selected entity in the Digital Twin graph."""
     chain = [
-        {"layer": "ROAD_SEGMENT", "id": "NH-6-SONAPUR-01", "name": "NH-6 Sonapur Tunnel", "status": "RED_BLOCKED"},
-        {"layer": "ACTIVE_ROUTE", "id": "RTE-GUW-SIL-01", "name": "Guwahati-Silchar Primary Trunk", "status": "DISRUPTED"},
-        {"layer": "HEAVY_VEHICLE", "id": "VEH-AS-01-EV-2026", "name": "12-Ton Refrigerated EV Truck", "status": "HALTED"},
-        {"layer": "CRITICAL_SHIPMENT", "id": "SHP-MED-NH6-01", "name": "Life-Saving ICU Medicines", "status": "CORRIDOR_DELAYED"},
-        {"layer": "IMPACTED_FACILITY", "id": "NODE-HOSP-SIL-01", "name": "Silchar Civil Hospital", "status": "ICU_STOCK_EXPOSURE"},
+        {"layer": "ROAD_SEGMENT", "id": "NH-16-BAITARANI-01", "name": "NH-16 Baitarani River Bridge", "status": "RED_BLOCKED"},
+        {"layer": "ACTIVE_ROUTE", "id": "RTE-BBSR-BAL-01", "name": "Bhubaneswar-Balasore Coastal Spine", "status": "DISRUPTED"},
+        {"layer": "HEAVY_VEHICLE", "id": "VEH-OD-05-GC-9104", "name": "16-Ton Refrigerated HCV Carrier", "status": "HALTED"},
+        {"layer": "CRITICAL_SHIPMENT", "id": "SHP-MED-NH16-01", "name": "Life-Saving ICU Medicines", "status": "CORRIDOR_DELAYED"},
+        {"layer": "IMPACTED_FACILITY", "id": "NODE-HOSP-BAL-01", "name": "Balasore District Headquarters Hospital", "status": "ICU_STOCK_EXPOSURE"},
     ]
 
     return EntityDependencyResponse(
         entity_id=entity_id,
-        entity_name="NH-6 Sonapur Highway Section",
+        entity_name="NH-16 Baitarani River Bridge Section",
         entity_type="ROAD_CORRIDOR",
         current_status="CRITICAL_DISRUPTION",
         dependency_chain=chain,

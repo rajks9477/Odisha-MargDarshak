@@ -80,7 +80,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
 
         // Add CartoDB Dark Matter / OSM Tile Layer
         L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-          attribution: '&copy; <a href="https://carto.com/">CARTO</a> • NER-MargDarshak GIS',
+          attribution: '&copy; <a href="https://carto.com/">CARTO</a> • Odisha MargDarshak GIS',
           maxZoom: 19,
         }).addTo(map);
 

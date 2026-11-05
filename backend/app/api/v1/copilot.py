@@ -73,15 +73,15 @@ async def get_sample_prompts(
     """Returns curated prompt suggestions based on user operational role."""
     if current_user.role in [UserRole.DISTRICT_ADMIN, UserRole.CENTRAL_ADMIN, UserRole.FIELD_OFFICER]:
         return [
-            "Which highway corridors are currently blocked by landslides?",
-            "How many critical medicine shipments are delayed today?",
-            "What districts are affected by the NH-6 Sonapur disruption?",
-            "Summarize IMD red alert weather warnings across Assam and Meghalaya.",
+            "Which highway corridors are currently blocked by floods or landslides?",
+            "How many critical medicine shipments are delayed across Odisha today?",
+            "What districts are affected by the NH-16 Baitarani bridge disruption?",
+            "Summarize IMD red alert weather warnings across coastal Odisha districts.",
         ]
     else:
         return [
-            "Is the Guwahati to Silchar route safe right now?",
-            "Show me current road conditions and active landslide warnings.",
-            "What is the rainfall status in East Jaintia Hills?",
-            "Recommend the safest route to avoid monsoon flood hazards.",
+            "Is the Bhubaneswar to Balasore route safe right now?",
+            "Show me current road conditions and active flood warnings.",
+            "What is the rainfall status in Bhadrak and Jajpur?",
+            "Recommend the safest route to avoid monsoon flood hazards in Odisha.",
         ]

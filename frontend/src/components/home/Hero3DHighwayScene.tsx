@@ -21,12 +21,12 @@ export const Hero3DHighwayScene: React.FC = () => {
   const getCurvePoint = (pct: number, curveId: number) => {
     const t = pct / 100;
     if (curveId === 1) {
-      // 🟢 Safe Green Highway (Shillong ➔ Silchar Valley Bypass)
+      // 🟢 Safe Green Highway (Cuttack ➔ Balasore Valley Bypass)
       const x = 50 + t * 500 + Math.sin(t * Math.PI * 2) * 60;
       const y = 260 - Math.sin(t * Math.PI) * 110 + t * 40;
       return { x, y };
     } else if (curveId === 2) {
-      // ⚡ Direct Spine (Guwahati ➔ Kaziranga ➔ Dibrugarh) - Green to Orange/Red
+      // ⚡ Direct Spine (Bhubaneswar ➔ Cuttack ➔ Balasore) - Green to Orange/Red
       const x = 80 + t * 460;
       const y = 140 + Math.sin(t * Math.PI * 2.5) * 45;
       return { x, y };
@@ -177,23 +177,23 @@ export const Hero3DHighwayScene: React.FC = () => {
           <text x="0" y="-12" fill="#FCA5A5" fontSize="7" fontWeight="bold" textAnchor="middle">RED: Landslide Alert</text>
         </g>
 
-        {/* 5. Waypoint Hub Pins (Guwahati, Shillong, Silchar, Tawang) */}
-        {/* Guwahati Hub */}
+        {/* 5. Waypoint Hub Pins (Bhubaneswar, Cuttack, Balasore, Tawang) */}
+        {/* Bhubaneswar Hub */}
         <g transform="translate(50, 275)">
           <circle cx="0" cy="0" r="5" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-          <text x="0" y="14" fill="#E2E8F0" fontSize="8" fontWeight="bold" textAnchor="middle">Guwahati Hub</text>
+          <text x="0" y="14" fill="#E2E8F0" fontSize="8" fontWeight="bold" textAnchor="middle">Bhubaneswar Hub</text>
         </g>
 
-        {/* Shillong Junction */}
+        {/* Cuttack Junction */}
         <g transform="translate(240, 240)">
           <circle cx="0" cy="0" r="4.5" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-          <text x="0" y="-8" fill="#E2E8F0" fontSize="7.5" fontWeight="bold" textAnchor="middle">Shillong Pass</text>
+          <text x="0" y="-8" fill="#E2E8F0" fontSize="7.5" fontWeight="bold" textAnchor="middle">Cuttack Pass</text>
         </g>
 
-        {/* Silchar Depot */}
+        {/* Balasore Depot */}
         <g transform="translate(590, 235)">
           <circle cx="0" cy="0" r="5.5" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-          <text x="0" y="15" fill="#E2E8F0" fontSize="8" fontWeight="bold" textAnchor="middle">Silchar Depot</text>
+          <text x="0" y="15" fill="#E2E8F0" fontSize="8" fontWeight="bold" textAnchor="middle">Balasore Depot</text>
         </g>
 
         {/* Tawang Terminal */}

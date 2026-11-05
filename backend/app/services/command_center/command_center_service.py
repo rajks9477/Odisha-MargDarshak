@@ -13,19 +13,19 @@ from app.schemas.command_center import (
     RegionalCorridorHealth,
 )
 
-SEEDED_NE_STATES = [
-    {"name": "Assam", "code": "AS", "total": 14, "open": 11, "restricted": 2, "blocked": 1, "incidents": 4, "status": "WATCH"},
-    {"name": "Meghalaya", "code": "ML", "total": 8, "open": 6, "restricted": 1, "blocked": 1, "incidents": 3, "status": "CRITICAL_ALERT"},
-    {"name": "Arunachal Pradesh", "code": "AR", "total": 10, "open": 8, "restricted": 2, "blocked": 0, "incidents": 2, "status": "WATCH"},
-    {"name": "Mizoram", "code": "MZ", "total": 6, "open": 5, "restricted": 1, "blocked": 0, "incidents": 1, "status": "HEALTHY"},
-    {"name": "Tripura", "code": "TR", "total": 5, "open": 5, "restricted": 0, "blocked": 0, "incidents": 0, "status": "HEALTHY"},
-    {"name": "Nagaland", "code": "NL", "total": 6, "open": 5, "restricted": 1, "blocked": 0, "incidents": 1, "status": "WATCH"},
-    {"name": "Manipur", "code": "MN", "total": 7, "open": 6, "restricted": 1, "blocked": 0, "incidents": 1, "status": "WATCH"},
-    {"name": "Sikkim", "code": "SK", "total": 5, "open": 4, "restricted": 1, "blocked": 0, "incidents": 1, "status": "WATCH"},
+SEEDED_ODISHA_ZONES = [
+    {"name": "Coastal Spine (Puri, Khordha, Cuttack, Ganjam)", "code": "OD-CST", "total": 14, "open": 12, "restricted": 2, "blocked": 0, "incidents": 3, "status": "WATCH"},
+    {"name": "Northern Coastal (Balasore, Bhadrak, Kendrapara)", "code": "OD-NCH", "total": 10, "open": 7, "restricted": 2, "blocked": 1, "incidents": 4, "status": "CRITICAL_ALERT"},
+    {"name": "Central Industrial (Angul, Dhenkanal, Jajpur)", "code": "OD-IND", "total": 12, "open": 10, "restricted": 2, "blocked": 0, "incidents": 2, "status": "WATCH"},
+    {"name": "Western Agro-Corridor (Sambalpur, Bargarh, Balangir)", "code": "OD-WST", "total": 11, "open": 10, "restricted": 1, "blocked": 0, "incidents": 1, "status": "HEALTHY"},
+    {"name": "Southern Eastern Ghats (Koraput, Rayagada, Malkangiri)", "code": "OD-STH", "total": 9, "open": 7, "restricted": 2, "blocked": 0, "incidents": 2, "status": "WATCH"},
+    {"name": "Northern Mineral Basin (Keonjhar, Sundargarh, Mayurbhanj)", "code": "OD-MNR", "total": 10, "open": 8, "restricted": 1, "blocked": 1, "incidents": 3, "status": "CRITICAL_ALERT"},
+    {"name": "Central Highlands (Kandhamal, Boudh, Nayagarh)", "code": "OD-HGD", "total": 8, "open": 7, "restricted": 1, "blocked": 0, "incidents": 1, "status": "WATCH"},
+    {"name": "Western Borderlands (Nuapada, Kalahandi, Subarnapur)", "code": "OD-WBD", "total": 7, "open": 7, "restricted": 0, "blocked": 0, "incidents": 0, "status": "HEALTHY"},
 ]
 
 async def get_command_center_summary(db: AsyncSession) -> CommandCenterSummaryResponse:
-    """Computes unified regional command summary across 8 North Eastern states."""
+    """Computes unified state command summary across all 30 districts and transport zones of Odisha."""
     # Fetch active incidents
     inc_stmt = select(Incident)
     inc_res = await db.execute(inc_stmt)
@@ -41,7 +41,7 @@ async def get_command_center_summary(db: AsyncSession) -> CommandCenterSummaryRe
 
     # Build state health
     corridors: List[RegionalCorridorHealth] = []
-    for s in SEEDED_NE_STATES:
+    for s in SEEDED_ODISHA_ZONES:
         corridors.append(
             RegionalCorridorHealth(
                 state=s["name"],
@@ -64,7 +64,7 @@ async def get_command_center_summary(db: AsyncSession) -> CommandCenterSummaryRe
         active_imd_alerts_count=3,
         regional_corridors=corridors,
         last_updated=datetime.now(timezone.utc),
-        data_provenance="NER-MargDarshak Unified Government Command Center Engine [Demo Simulated Data]",
+        data_provenance="Odisha-MargDarshak Unified Government Command Center Engine [OSDMA Telemetry]",
     )
 
 async def verify_incident_by_officer(

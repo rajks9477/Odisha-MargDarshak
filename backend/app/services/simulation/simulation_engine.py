@@ -27,7 +27,7 @@ async def run_what_if_simulation(
     r_stmt = select(Road).where(Road.id == payload.target_road_id)
     r_res = await db.execute(r_stmt)
     road = r_res.scalar_one_or_none()
-    road_name = road.road_name if road else "NH-6 Sonapur Highway"
+    road_name = road.road_name if road else "NH-16 Baitarani River Bridge"
 
     # 2. Create Scenario Record
     scenario = SimulationScenarioRecord(
@@ -53,20 +53,20 @@ async def run_what_if_simulation(
         f"**Hypothetical Simulation Executive Summary:**\n"
         f"Simulating a **{payload.severity_level} {payload.disaster_type}** on corridor **{road_name}** for **{payload.duration_hours} hours**.\n\n"
         f"- **Primary Disruption:** Road segment completely inaccessible for heavy multi-axle freight.\n"
-        f"- **Recommended Bypass Route:** NH-27 / NH-37 (Guwahati-Nagaon-Lumding-Silchar Trunk Line).\n"
+        f"- **Recommended Bypass Route:** NH-53 / NH-20 (Cuttack-Dhenkanal-Keonjhar-Balasore Alternate Corridor).\n"
         f"- **Estimated Rerouting Penalty:** +{extra_delay} hours additional transit time.\n"
         f"- **Relief Consignment Exposure:** {delayed_shipments} critical medicine shipments delayed.\n"
-        f"- **Affected Districts:** East Jaintia Hills (Meghalaya), Cachar (Assam), Dima Hasao (Assam)."
+        f"- **Affected Districts:** Bhadrak, Balasore, Jajpur, Kendrapara (Odisha)."
     )
 
     result_rec = SimulationResultRecord(
         scenario_id=scenario.id,
         affected_roads_count=2,
-        alternate_route_id="RTE-GUW-NAG-SIL-02",
-        alternate_route_name="Guwahati-Nagaon-Silchar Alternate Trunk",
+        alternate_route_id="RTE-ODI-CTK-DHN-BAL-02",
+        alternate_route_name="Cuttack-Dhenkanal-Keonjhar-Balasore Alternate Trunk",
         delayed_shipments_count=delayed_shipments,
         extra_delay_hours=extra_delay,
-        affected_districts_json=json.dumps(["East Jaintia Hills", "Cachar", "Dima Hasao"]),
+        affected_districts_json=json.dumps(["Bhadrak", "Balasore", "Jajpur", "Kendrapara"]),
         summary_markdown=summary,
         created_at=now,
     )

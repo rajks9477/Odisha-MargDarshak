@@ -71,9 +71,9 @@ const DEMO_PERSONAS = [
     badge: "District HQ",
   },
   {
-    role: "Central Admin (NER-Wide)",
+    role: "Central Admin (Odisha-Wide)",
     email: "admin@nermargdarshak.gov.in",
-    pass: "Admin@NER2026",
+    pass: "Admin@Odisha2026",
     desc: "8-state multi-corridor command center, What-If simulation, resilience scoring, audit reports.",
     link: "/dashboard/central-admin",
     badge: "Regional Oversight",
@@ -156,7 +156,7 @@ export default function SystemStatusPage() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-stone-900">
-                NER–MargDarshak v1.0.0 Production Release
+                Odisha MargDarshak v1.0.0 Production Release
               </h2>
               <p className="text-xs text-stone-600">
                 AI-Powered Smart Logistics & Accessibility Intelligence Platform for the North Eastern Region

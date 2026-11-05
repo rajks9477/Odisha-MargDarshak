@@ -7,9 +7,9 @@ import {
   RouteSegment
 } from "../types/routingTypes";
 import { routingApi } from "../api/routingApi";
-import { findNERLocationByName, NER_LOCATIONS_DATABASE } from "./nerLocations";
+import { findOdishaLocationByName, ODISHA_LOCATIONS_DATABASE } from "./nerLocations";
 
-const CACHED_ROUTES_KEY = "ner_cached_planned_routes_v2";
+const CACHED_ROUTES_KEY = "odisha_cached_planned_routes_v2";
 
 export interface NavigationStep {
   instruction: string;
@@ -155,14 +155,14 @@ export class RoutingService {
           icon: "turn-right",
         },
         {
-          instruction: "Bypass active Sonapur mudslide zone via Umrangso Hill Tunnel",
+          instruction: "Bypass active Baitarani river flood zone via NH-53/NH-20 elevated bypass",
           distanceKm: 42.0,
-          roadName: "Reinforced Hill Tunnel Bypass",
+          roadName: "Reinforced Highway Bypass Corridor",
           riskStatus: "GREEN",
           icon: "turn-left",
         },
         {
-          instruction: "Proceed along Haflong All-Weather Ridge with clear drainage",
+          instruction: "Proceed along Keonjhar All-Weather Ridge with clear drainage",
           distanceKm: 95.0,
           roadName: "All-Weather Ridge Corridor",
           riskStatus: "GREEN",
@@ -183,17 +183,17 @@ export class RoutingService {
    * Smart Candidate Generator with coordinate-based math & realistic mountain waypoints
    */
   private static generateSmartCandidateRoutes(params: RouteCalculateParams): PlannedRoute[] {
-    const origName = params.origin_name || "Guwahati Central Logistic Terminal, Assam";
-    const destName = params.destination_name || "Silchar Food & Medical Depot, Assam";
+    const origName = params.origin_name || "Bhubaneswar Central Logistics & Government Command, Odisha";
+    const destName = params.destination_name || "Balasore Industrial Corridor & Port Depot, Odisha";
 
     // Resolve Origin Coordinates
-    const origLoc = findNERLocationByName(origName);
-    const destLoc = findNERLocationByName(destName);
+    const origLoc = findOdishaLocationByName(origName);
+    const destLoc = findOdishaLocationByName(destName);
 
-    const origLat = params.origin_latitude || origLoc?.latitude || 26.185;
-    const origLon = params.origin_longitude || origLoc?.longitude || 91.745;
-    const destLat = params.destination_latitude || destLoc?.latitude || 24.833;
-    const destLon = params.destination_longitude || destLoc?.longitude || 92.779;
+    const origLat = params.origin_latitude || origLoc?.latitude || 20.296;
+    const origLon = params.origin_longitude || origLoc?.longitude || 85.824;
+    const destLat = params.destination_latitude || destLoc?.latitude || 21.494;
+    const destLon = params.destination_longitude || destLoc?.longitude || 86.932;
 
     // Euclidean / Haversine approximate distance
     const latDiff = destLat - origLat;

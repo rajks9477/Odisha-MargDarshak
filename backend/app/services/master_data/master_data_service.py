@@ -52,7 +52,7 @@ async def compute_master_data_summary(db: AsyncSession) -> MasterEntitySummary:
         total_vehicles=max(total_vehicles, 8),
         active_facilities_count=active_fac,
         archived_facilities_count=archived_fac,
-        data_provenance="NER-MargDarshak Master Data Management Engine [DEMO / SIMULATED REGISTRY]",
+        data_provenance="Odisha MargDarshak Master Data Management Engine [DEMO / SIMULATED REGISTRY]",
     )
 
 async def list_master_facilities(

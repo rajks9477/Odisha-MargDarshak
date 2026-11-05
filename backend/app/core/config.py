@@ -3,11 +3,11 @@ from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "NER-MargDarshak"
+    PROJECT_NAME: str = "Odisha MargDarshak"
     API_V1_STR: str = "/api/v1"
     
     # JWT Secrets & Security
-    SECRET_KEY: str = "ner-margdarshak-secret-super-key-2026-secure-token-engine-994ab491"
+    SECRET_KEY: str = "odisha-margdarshak-secret-super-key-2026-secure-token-engine-994ab491"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 # 1 hour
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7 # 7 days
@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     LOCKOUT_DURATION_MINUTES: int = 15
     
     # Database
-    DATABASE_URL: str = "sqlite+aiosqlite:///./ner_margdarshak.db"
+    DATABASE_URL: str = "sqlite+aiosqlite:///./odisha_margdarshak.db"
     
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [

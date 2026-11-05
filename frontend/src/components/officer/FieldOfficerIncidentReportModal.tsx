@@ -39,7 +39,7 @@ interface FieldOfficerIncidentReportModalProps {
 
 const ROAD_PRESETS = [
   {
-    corridor_name: "NH-6 Guwahati-Shillong-Silchar Mountain Corridor",
+    corridor_name: "NH-16 Bhubaneswar-Cuttack-Balasore Coastal Corridor",
     road_id: "NH-6-SONAPUR-01",
     road_name: "NH-6 Sonapur Tunnel Mountain Pass KM-142",
     default_lat: 25.105,
@@ -67,7 +67,7 @@ const ROAD_PRESETS = [
     preset_severity: "HIGH" as const,
   },
   {
-    corridor_name: "NH-13 Trans-Arunachal Highway (Bhalukpong - Tawang)",
+    corridor_name: "NH-55 Cuttack-Dhenkanal-Angul-Sambalpur Corridor",
     road_id: "NH-13-SELA-01",
     road_name: "NH-13 Sela Pass High Altitude Tunnel Approach",
     default_lat: 27.502,
@@ -81,7 +81,7 @@ const ROAD_PRESETS = [
     preset_severity: "CRITICAL" as const,
   },
   {
-    corridor_name: "NH-53 Jiribam - Imphal Lifeline",
+    corridor_name: "NH-20 Kendujhar-Kanjipani Ghat Corridor",
     road_id: "NH-53-NONEY-01",
     road_name: "NH-53 Noney Hill Bridge Approach",
     default_lat: 24.780,
@@ -319,7 +319,7 @@ export const FieldOfficerIncidentReportModal: React.FC<FieldOfficerIncidentRepor
     setIsSubmitting(true);
 
     const newIncident: GeoTaggedIncident = {
-      id: `INC-NER-${Date.now().toString().slice(-6)}`,
+      id: `INC-OD-${Date.now().toString().slice(-6)}`,
       road_id: roadId,
       road_name: roadName,
       corridor_name: corridorName,

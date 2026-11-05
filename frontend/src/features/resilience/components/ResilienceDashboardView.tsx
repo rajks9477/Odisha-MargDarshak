@@ -50,7 +50,7 @@ export const ResilienceDashboardView: React.FC = () => {
           <div>
             <h2 className="text-base font-bold text-slate-100">Resilience & Infrastructure Planning</h2>
             <p className="text-xs text-slate-400">
-              Multi-factorial vulnerability scoring & priority strengthening recommendations across NER corridors
+              Multi-factorial vulnerability scoring & priority strengthening recommendations across Odisha corridors
             </p>
           </div>
         </div>
@@ -62,10 +62,15 @@ export const ResilienceDashboardView: React.FC = () => {
             className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 font-mono outline-none"
           >
             <option value="ALL">All 8 NE States</option>
-            <option value="Meghalaya">Meghalaya</option>
-            <option value="Assam">Assam</option>
-            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-            <option value="Mizoram">Mizoram</option>
+            <option value="Khordha">Khordha (Bhubaneswar)</option>
+            <option value="Cuttack">Cuttack (Mahanadi)</option>
+            <option value="Bhadrak">Bhadrak (Baitarani)</option>
+            <option value="Balasore">Balasore (Coastal)</option>
+            <option value="Kendujhar">Kendujhar (Ghats)</option>
+            <option value="Sambalpur">Sambalpur (Western)</option>
+            <option value="Sundargarh">Sundargarh (Rourkela)</option>
+            <option value="Ganjam">Ganjam (Berhampur)</option>
+            <option value="Koraput">Koraput (Southern)</option>
           </select>
 
           <button

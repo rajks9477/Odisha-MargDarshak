@@ -48,7 +48,7 @@ export const MapLayerControl: React.FC<MapLayerControlProps> = ({
     { key: "bridges" as const, label: "Mountain Bridges & Spans", icon: Truck, color: "text-amber-400" },
     { key: "incidents" as const, label: "Active Road Incidents & Hazards", icon: AlertTriangle, color: "text-rose-400" },
     { key: "vehicles" as const, label: "Assigned Fleet Telemetry", icon: Truck, color: "text-purple-400" },
-    { key: "districts" as const, label: "District Boundaries (NER)", icon: Layers, color: "text-slate-300" },
+    { key: "districts" as const, label: "District Boundaries (Odisha - 30 Districts)", icon: Layers, color: "text-slate-300" },
   ];
 
   const futureLayers = [

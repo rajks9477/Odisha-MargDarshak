@@ -4,42 +4,42 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.models.risk import WeatherObservation
 
-# Realistic IMD AWS weather telemetry for key North Eastern mountain nodal points
+# Realistic IMD AWS weather telemetry for key Odisha nodal points
 DEMO_WEATHER_PROFILES = {
-    "SONAPUR": {
-        "location_name": "Sonapur Tunnel Weather Station (NH-6), Meghalaya",
-        "latitude": 25.10, "longitude": 92.36,
+    "BHADRAK": {
+        "location_name": "Baitarani River AWS (NH-16), Bhadrak, Odisha",
+        "latitude": 21.05, "longitude": 86.50,
         "rainfall_1h_mm": 18.5, "rainfall_6h_mm": 62.0, "rainfall_24h_mm": 115.0, "rainfall_7d_mm": 310.0,
-        "temperature_c": 19.5, "humidity_pct": 96.0,
-        "source": "IMD_AWS_SONAPUR_STATION_TEST",
+        "temperature_c": 27.5, "humidity_pct": 96.0,
+        "source": "IMD_AWS_BHADRAK_STATION",
     },
-    "SHILLONG": {
-        "location_name": "Shillong Peak AWS (NH-6), Meghalaya",
-        "latitude": 25.57, "longitude": 91.88,
-        "rainfall_1h_mm": 2.0, "rainfall_6h_mm": 8.5, "rainfall_24h_mm": 18.0, "rainfall_7d_mm": 45.0,
-        "temperature_c": 18.0, "humidity_pct": 82.0,
-        "source": "IMD_AWS_SHILLONG_STATION_TEST",
+    "BALASORE": {
+        "location_name": "Balasore Coastal Weather Station (NH-16), Odisha",
+        "latitude": 21.49, "longitude": 86.93,
+        "rainfall_1h_mm": 8.0, "rainfall_6h_mm": 28.5, "rainfall_24h_mm": 65.0, "rainfall_7d_mm": 145.0,
+        "temperature_c": 28.0, "humidity_pct": 88.0,
+        "source": "IMD_AWS_BALASORE_STATION",
     },
-    "VAIRENGTE": {
-        "location_name": "Vairengte Gate AWS (NH-306), Mizoram",
-        "latitude": 24.50, "longitude": 92.75,
-        "rainfall_1h_mm": 4.5, "rainfall_6h_mm": 14.0, "rainfall_24h_mm": 28.0, "rainfall_7d_mm": 72.0,
-        "temperature_c": 24.0, "humidity_pct": 88.0,
-        "source": "IMD_AWS_VAIRENGTE_STATION_TEST",
+    "KEONJHAR": {
+        "location_name": "Kanjipani Ghat AWS (NH-20), Keonjhar, Odisha",
+        "latitude": 21.63, "longitude": 85.58,
+        "rainfall_1h_mm": 12.5, "rainfall_6h_mm": 44.0, "rainfall_24h_mm": 88.0, "rainfall_7d_mm": 192.0,
+        "temperature_c": 22.0, "humidity_pct": 92.0,
+        "source": "IMD_AWS_KEONJHAR_STATION",
     },
-    "SILCHAR": {
-        "location_name": "Silchar Valley Station (NH-6/306), Assam",
-        "latitude": 24.83, "longitude": 92.79,
+    "PURI": {
+        "location_name": "Puri Coastal Observatory, Odisha",
+        "latitude": 19.81, "longitude": 85.83,
         "rainfall_1h_mm": 6.0, "rainfall_6h_mm": 22.0, "rainfall_24h_mm": 42.0, "rainfall_7d_mm": 98.0,
-        "temperature_c": 26.0, "humidity_pct": 90.0,
-        "source": "IMD_AWS_SILCHAR_STATION_TEST",
+        "temperature_c": 29.0, "humidity_pct": 90.0,
+        "source": "IMD_AWS_PURI_STATION",
     },
     "DEFAULT": {
-        "location_name": "Guwahati Regional Observatory, Assam",
-        "latitude": 26.18, "longitude": 91.73,
-        "rainfall_1h_mm": 0.5, "rainfall_6h_mm": 2.0, "rainfall_24h_mm": 5.0, "rainfall_7d_mm": 15.0,
-        "temperature_c": 27.5, "humidity_pct": 75.0,
-        "source": "IMD_AWS_REGIONAL_TEST",
+        "location_name": "Bhubaneswar Meteorological Centre, Khordha, Odisha",
+        "latitude": 20.29, "longitude": 85.82,
+        "rainfall_1h_mm": 2.5, "rainfall_6h_mm": 8.0, "rainfall_24h_mm": 15.0, "rainfall_7d_mm": 35.0,
+        "temperature_c": 30.5, "humidity_pct": 78.0,
+        "source": "IMD_AWS_BHUBANESWAR_CENTRE",
     }
 }
 
@@ -50,14 +50,14 @@ async def get_or_create_weather_observation(db: AsyncSession, road_id: str, road
     existing = res.scalars().first()
 
     key = "DEFAULT"
-    if "sonapur" in road_id.lower() or "sonapur" in road_name.lower() or "nh-6" in road_name.lower():
-        key = "SONAPUR"
-    elif "vairengte" in road_id.lower() or "nh-306" in road_name.lower():
-        key = "VAIRENGTE"
-    elif "shillong" in road_id.lower():
-        key = "SHILLONG"
-    elif "silchar" in road_id.lower():
-        key = "SILCHAR"
+    if "bhadrak" in road_id.lower() or "baitarani" in road_name.lower() or "nh-16" in road_name.lower():
+        key = "BHADRAK"
+    elif "balasore" in road_id.lower():
+        key = "BALASORE"
+    elif "keonjhar" in road_id.lower() or "nh-20" in road_name.lower():
+        key = "KEONJHAR"
+    elif "puri" in road_id.lower():
+        key = "PURI"
 
     prof = DEMO_WEATHER_PROFILES.get(key, DEMO_WEATHER_PROFILES["DEFAULT"])
     obs = WeatherObservation(

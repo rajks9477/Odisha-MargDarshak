@@ -75,7 +75,7 @@ export const LocationPreview: React.FC<Props> = ({
         <div className="flex items-start justify-between">
           <div>
             <div className="text-xs font-semibold text-slate-200">
-              {roadName || "NH-6 Guwahati-Shillong Mountain Highway"}
+              {roadName || "NH-16 Bhubaneswar-Cuttack-Balasore Highway"}
             </div>
             <div className="text-[11px] text-slate-400">
               {districtName || "East Jaintia Hills / Kamrup Metropolitan"}
