@@ -311,10 +311,10 @@ export const LocationSearch: React.FC<Props> = ({
         </button>
         <button
           type="button"
-          onClick={() => handlePreset("Tezpur", "Tawang")}
+          onClick={() => handlePreset("Bhubaneswar", "Balasore")}
           className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-[10px] font-semibold text-stone-700 whitespace-nowrap border border-stone-200 cursor-pointer"
         >
-          Tezpur ➔ Tawang (NH-13)
+          Bhubaneswar ➔ Balasore (NH-16)
         </button>
         <button
           type="button"

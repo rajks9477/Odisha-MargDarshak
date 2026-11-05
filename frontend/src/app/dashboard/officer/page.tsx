@@ -170,7 +170,7 @@ export default function OfficerDashboard() {
             Geo-Tagged Incident Verification & Clearance Console
           </h2>
           <p className="text-xs sm:text-sm text-stone-600 mt-1">
-            Jurisdiction: <strong>{user?.district || "East Jaintia Hills / Tawang Sector"}</strong> • Department: <strong>{user?.department || "PWD Border Roads & Disaster Response"}</strong>
+            Jurisdiction: <strong>{user?.district || "Bhadrak / Balasore Sector"}</strong> • Department: <strong>{user?.department || "Works Department & ODRAF"}</strong>
           </p>
         </div>
 
@@ -411,7 +411,7 @@ export default function OfficerDashboard() {
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
         officerName={user?.name || "Er. Tashi Norbu"}
-        department={user?.department || "PWD Border Roads & Disaster Response"}
+        department={user?.department || "Works Department & ODRAF"}
         onIncidentCreated={(newInc) => {
           loadBroadcastedIncidents();
           setSuccessMessage(`Hazard ${newInc.id} on ${newInc.road_name} broadcasted across all portals!`);

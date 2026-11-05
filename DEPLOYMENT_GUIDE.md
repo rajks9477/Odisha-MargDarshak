@@ -130,8 +130,8 @@ This automatically sets up Python virtualenv, installs backend packages, builds 
 
 | Role | Email | Password | Access Area |
 |---|---|---|---|
-| **Central Admin (NER Command)** | `admin@nermargdarshak.gov.in` | `Admin@NER2026` | NER-Wide Command Desk |
-| **Driver (Essential Carrier)** | `driver.biren@nermargdarshak.in` | `Driver@Pass123` | Driver Console & GPS Navigator |
-| **Field Officer (Tawang)** | `officer.tawang@nermargdarshak.gov.in` | `Officer@Tawang2026` | Live Camera Incident Reporting Desk |
-| **Citizen (Gangtok, Sikkim)** | `citizen.gangtok@nermargdarshak.in` | `Citizen@Pass123` | 360° Safety Map & Community Reports |
-| **District Admin (Kamrup Metro)** | `district.kamrup@nermargdarshak.gov.in` | `Admin@Kamrup2026` | District Logistics & Approvals |
+| **Central Admin (Odisha State Command)** | `admin@odishamargdarshak.gov.in` | `Admin@Odisha2026` | Odisha State Command Desk |
+| **Driver (Essential Carrier)** | `driver.biren@odishamargdarshak.in` | `Driver@Pass123` | Driver Console & GPS Navigator |
+| **Field Officer (Bhadrak / ODRAF)** | `officer.bhadrak@odishamargdarshak.gov.in` | `Officer@Bhadrak2026` | Live Camera Incident Reporting Desk |
+| **Citizen (Bhubaneswar, Khordha)** | `citizen.bhubaneswar@odishamargdarshak.in` | `Citizen@Pass123` | 360° Safety Map & Community Reports |
+| **District Admin (Balasore DDMA)** | `district.balasore@odishamargdarshak.gov.in` | `Admin@Balasore2026` | District Logistics & Approvals |

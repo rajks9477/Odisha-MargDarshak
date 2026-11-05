@@ -96,7 +96,7 @@ export const FullScreen3DMapHero: React.FC = () => {
         [26.652, 92.793], // Tezpur
         [27.264, 92.416], // Bomdila
         [27.502, 92.103], // Sela Pass
-        [27.586, 91.866], // Tawang
+        [21.493, 86.913], // Balasore
       ] as [number, number][],
     },
     {

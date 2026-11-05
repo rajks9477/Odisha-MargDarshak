@@ -31,7 +31,7 @@ export const Hero3DHighwayScene: React.FC = () => {
       const y = 140 + Math.sin(t * Math.PI * 2.5) * 45;
       return { x, y };
     } else {
-      // ⛰️ High Mountain Pass (Tezpur ➔ Sela Pass ➔ Tawang)
+      // ⛰️ High Mountain Pass (Bhubaneswar ➔ Cuttack ➔ Balasore)
       const x = 120 + t * 400 + Math.cos(t * Math.PI * 2) * 50;
       const y = 80 + Math.sin(t * Math.PI * 1.8) * 60;
       return { x, y };
@@ -177,7 +177,7 @@ export const Hero3DHighwayScene: React.FC = () => {
           <text x="0" y="-12" fill="#FCA5A5" fontSize="7" fontWeight="bold" textAnchor="middle">RED: Landslide Alert</text>
         </g>
 
-        {/* 5. Waypoint Hub Pins (Bhubaneswar, Cuttack, Balasore, Tawang) */}
+        {/* 5. Waypoint Hub Pins (Bhubaneswar, Cuttack, Balasore, Puri) */}
         {/* Bhubaneswar Hub */}
         <g transform="translate(50, 275)">
           <circle cx="0" cy="0" r="5" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
@@ -196,10 +196,10 @@ export const Hero3DHighwayScene: React.FC = () => {
           <text x="0" y="15" fill="#E2E8F0" fontSize="8" fontWeight="bold" textAnchor="middle">Balasore Depot</text>
         </g>
 
-        {/* Tawang Terminal */}
+        {/* Balasore Coastal Terminal */}
         <g transform="translate(580, 115)">
           <circle cx="0" cy="0" r="4.5" fill="#F59E0B" stroke="#FFFFFF" strokeWidth="1.5" />
-          <text x="0" y="-7" fill="#E2E8F0" fontSize="7.5" fontWeight="bold" textAnchor="middle">Tawang Frontier</text>
+          <text x="0" y="-7" fill="#E2E8F0" fontSize="7.5" fontWeight="bold" textAnchor="middle">Balasore Terminal</text>
         </g>
 
         {/* 6. Moving 3D Trucks on the Highways with Light Beams */}

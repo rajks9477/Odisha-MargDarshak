@@ -193,7 +193,7 @@ export default function CitizenDashboard() {
                   Four-lane expressway is fully clear with 2-way seamless flow. Dry pavement conditions reported across all checkpoints.
                 </p>
                 <div className="text-[11px] text-stone-500 font-medium flex gap-4 pt-1 border-t border-stone-100">
-                  <span>District: Kamrup / Nagaon</span>
+                  <span>District: Khordha / Cuttack</span>
                   <span className="text-emerald-800 font-bold">Status: Safe Highway</span>
                 </div>
               </div>

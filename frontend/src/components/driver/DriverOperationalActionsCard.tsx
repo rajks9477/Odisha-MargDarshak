@@ -82,7 +82,7 @@ export const DriverOperationalActionsCard: React.FC = () => {
               href="/dashboard/driver/route-planning?from=Cuttack&to=Berhampur"
               className="p-2 rounded-xl bg-white/90 border border-emerald-200/80 hover:border-emerald-600 hover:bg-emerald-50/50 text-stone-800 hover:text-emerald-950 transition-all flex items-center justify-between shadow-2xs min-w-0 group/link"
             >
-              <span className="truncate">❄️ Tezpur ➔ Tawang</span>
+              <span className="truncate">❄️ Bhubaneswar ➔ Balasore</span>
               <ArrowRight className="w-3 h-3 text-emerald-700 group-hover/link:translate-x-0.5 transition-transform shrink-0 ml-1" />
             </Link>
           </div>

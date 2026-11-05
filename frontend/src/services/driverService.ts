@@ -81,7 +81,7 @@ export const DEFAULT_MOCK_DRIVER_PROFILE: DriverProfile = {
     capacity_tonnes: 24.5,
     fuel_type: "Diesel / GPS Telematics Active",
     status: "IN_TRANSIT",
-    district: "Kamrup Metropolitan",
+    district: "Khordha",
     state: "Odisha",
     department: "Food & Civil Supplies Essential Logistics",
     fitness_valid_until: "2027-03-31",

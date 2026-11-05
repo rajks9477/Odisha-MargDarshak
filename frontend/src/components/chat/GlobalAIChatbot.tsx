@@ -69,7 +69,7 @@ export const GlobalAIChatbot: React.FC = () => {
     { label: "🔴 NH-6 Baitarani Status", query: "What is the live landslide and traffic status of NH-6 Baitarani River Bridge?" },
     { label: "🟢 Bhubaneswar ➔ Balasore Route", query: "What is the safest all-weather route from Bhubaneswar to Balasore?" },
     { label: "🚚 Live Fleet Telemetry", query: "Show me real-time locations of fuel tankers and supply trucks." },
-    { label: "🌧️ Rainfall Alert Tawang", query: "What are the latest IMD heavy rainfall and landslide warnings for Tawang and Sela Pass?" },
+    { label: "🌧️ Rainfall Alert Balasore", query: "What are the latest IMD heavy rainfall and coastal cyclone warnings for Balasore and Bhadrak?" },
     { label: "🚑 Emergency Green Corridor", query: "How to activate an emergency medical corridor for ambulances across Odisha districts?" },
   ];
 
@@ -184,7 +184,7 @@ export const GlobalAIChatbot: React.FC = () => {
       };
     }
 
-    if (lq.includes("tawang") || lq.includes("sela") || lq.includes("weather") || lq.includes("rain") || lq.includes("imd")) {
+    if (lq.includes("balasore") || lq.includes("bhadrak") || lq.includes("weather") || lq.includes("rain") || lq.includes("imd")) {
       return {
         text: "🌧️ **IMD BHUBANESWAR WEATHER & HIGHWAY HAZARD BULLETIN**\n\n• **Baitarani Basin (Bhadrak / Jajpur):** Heavy precipitation with rising river discharge at NH-16 Baitarani Bridge. Orange Alert Active.\n• **Eastern Ghats (Koraput / Rayagada):** Torrential downpours (140mm / 24h). Slope saturation caution along NH-26 / NH-326.\n• **Mahanadi Estuary (Paradip / Kendrapara):** Squally coastal gusts (50-60 km/h) due to Bay of Bengal depression; port transport regulated.",
         category: "ALERT",

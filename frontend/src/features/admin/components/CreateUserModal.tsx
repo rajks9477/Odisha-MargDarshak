@@ -18,7 +18,7 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onClose, onSuccess })
   const [password, setPassword] = useState("Admin@Pass2026");
   const [role, setRole] = useState<UserRole>("DRIVER");
   const [state, setState] = useState("Odisha");
-  const [district, setDistrict] = useState("Kamrup");
+  const [district, setDistrict] = useState("Khordha");
   const [department, setDepartment] = useState("Transport Logistics");
   const [employeeId, setEmployeeId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -145,7 +145,7 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onClose, onSuccess })
                 type="text"
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                placeholder="Kamrup / Tawang"
+                placeholder="Khordha / Cuttack"
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 outline-none focus:border-cyan-500"
               />
             </div>

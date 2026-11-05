@@ -21,7 +21,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
   const [name, setName] = useState("");
   const [facilityType, setFacilityType] = useState("HOSPITAL");
   const [state, setState] = useState("Odisha");
-  const [district, setDistrict] = useState("Kamrup");
+  const [district, setDistrict] = useState("Khordha");
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("26.144");
   const [longitude, setLongitude] = useState("91.736");
@@ -47,7 +47,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
       setName("");
       setFacilityType("HOSPITAL");
       setState("Odisha");
-      setDistrict("Kamrup");
+      setDistrict("Khordha");
       setAddress("");
       setLatitude("26.144");
       setLongitude("91.736");
@@ -164,7 +164,7 @@ export const CreateFacilityModal: React.FC<Props> = ({
                 required
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                placeholder="Kamrup / Tawang"
+                placeholder="Khordha / Cuttack"
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 outline-none focus:border-cyan-500"
               />
             </div>

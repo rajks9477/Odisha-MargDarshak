@@ -97,7 +97,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           d => (d.email.toLowerCase() === identifier.toLowerCase() || d.role.toLowerCase() === identifier.toLowerCase())
         );
 
-        if (matchedDemo && (pass === matchedDemo.password || pass === "Admin@Odisha2026" || pass === "Admin@Odisha2026" || pass === "Officer@Tawang2026" || pass === "Driver@Pass123" || pass === "Citizen@Pass123" || pass === "Admin@Kamrup2026")) {
+        if (matchedDemo && (pass === matchedDemo.password || pass === "Admin@Odisha2026" || pass === "Officer@Bhadrak2026" || pass === "Admin@Balasore2026" || pass === "Driver@Pass123" || pass === "Citizen@Pass123")) {
           const demoUser: User = {
             id: `usr_${matchedDemo.role.toLowerCase()}_demo`,
             name: matchedDemo.name,
