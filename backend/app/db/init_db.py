@@ -695,7 +695,7 @@ async def init_database():
                 ),
                 Incident(
                     id="INC-BAITARANI-01",
-                    incident_type=IncidentType.FLASH_FLOOD,
+                    incident_type=IncidentType.FLOOD_WATER,
                     severity=IncidentSeverity.CRITICAL,
                     latitude=21.057,
                     longitude=86.495,
@@ -711,7 +711,7 @@ async def init_database():
                 Incident(
                     id="INC-KALINGA-01",
                     incident_type=IncidentType.LANDSLIDE,
-                    severity=IncidentSeverity.HIGH,
+                    severity=IncidentSeverity.CRITICAL,
                     latitude=20.150,
                     longitude=84.450,
                     road_id="NH-59-KALINGA-01",
