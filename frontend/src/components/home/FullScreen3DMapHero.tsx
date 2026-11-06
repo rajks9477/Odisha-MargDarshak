@@ -222,8 +222,8 @@ export const FullScreen3DMapHero: React.FC = () => {
     });
 
     const tileUrls = {
-      LIGHT: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-      TERRAIN: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+      LIGHT: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      TERRAIN: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
       SATELLITE: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     };
 
@@ -281,8 +281,8 @@ export const FullScreen3DMapHero: React.FC = () => {
     const L = require("leaflet");
 
     const tileUrls = {
-      LIGHT: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-      TERRAIN: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+      LIGHT: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      TERRAIN: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
       SATELLITE: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     };
 

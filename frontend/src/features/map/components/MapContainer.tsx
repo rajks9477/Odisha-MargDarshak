@@ -69,8 +69,8 @@ export const MapContainer: React.FC<MapContainerProps> = ({
       if (!isMounted) return;
 
       if (!mapInstanceRef.current && mapContainerRef.current) {
-        const defaultLat = gps?.latitude || 25.570;
-        const defaultLon = gps?.longitude || 91.880;
+        const defaultLat = gps?.latitude || 20.296;
+        const defaultLon = gps?.longitude || 85.824;
 
         const map = L.map(mapContainerRef.current, {
           center: [defaultLat, defaultLon],
@@ -79,7 +79,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
         });
 
         // Add CartoDB Dark Matter / OSM Tile Layer
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: '&copy; <a href="https://carto.com/">CARTO</a> • Odisha MargDarshak GIS',
           maxZoom: 19,
         }).addTo(map);
@@ -119,8 +119,8 @@ export const MapContainer: React.FC<MapContainerProps> = ({
       const map = mapInstanceRef.current;
       if (!map) return;
 
-      const lat = gps?.latitude || 25.570;
-      const lon = gps?.longitude || 91.880;
+      const lat = gps?.latitude || 20.296;
+      const lon = gps?.longitude || 85.824;
       const accuracy = gps?.accuracy || 5;
 
       if (activeLayerIds.has("my_location")) {

@@ -44,7 +44,7 @@ export const MapRouteLayer: React.FC<Props> = ({
     const L = require("leaflet");
 
     const map = L.map(mapContainerRef.current, {
-      center: [25.80, 92.50],
+      center: [20.46, 85.88],
       zoom: 7,
       minZoom: 6,
       maxZoom: 18,
@@ -52,13 +52,13 @@ export const MapRouteLayer: React.FC<Props> = ({
     });
 
     const tileUrls = {
-      LIGHT: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      LIGHT: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       SATELLITE: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      TERRAIN: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+      TERRAIN: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
     };
 
     const tileLayer = L.tileLayer(tileUrls.LIGHT, {
-      attribution: '&copy; OpenStreetMap contributors &amp; CARTO',
+      attribution: '&copy; OpenStreetMap contributors • Odisha MargDarshak',
       maxZoom: 19,
     }).addTo(map);
 
@@ -86,9 +86,9 @@ export const MapRouteLayer: React.FC<Props> = ({
     const L = require("leaflet");
 
     const tileUrls = {
-      LIGHT: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      LIGHT: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       SATELLITE: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      TERRAIN: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+      TERRAIN: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
     };
 
     map.removeLayer((map as any)._tileLayer);

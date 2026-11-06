@@ -30,8 +30,8 @@ export default function RouteMapPreview({
       if (!isMounted || !mapContainerRef.current) return;
 
       if (!mapInstanceRef.current) {
-        const startLat = route.coordinates[0]?.[1] || 26.18;
-        const startLng = route.coordinates[0]?.[0] || 91.73;
+        const startLat = route.coordinates[0]?.[1] || 20.296;
+        const startLng = route.coordinates[0]?.[0] || 85.824;
 
         const map = L.map(mapContainerRef.current, {
           center: [startLat, startLng],
@@ -41,7 +41,7 @@ export default function RouteMapPreview({
         });
 
         // Dark matter tiles
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
         }).addTo(map);
 
