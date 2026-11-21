@@ -28,8 +28,15 @@ services:
       - key: NODE_ENV
         value: "production"
       - key: NEXT_PUBLIC_API_URL
+        value: "/api/v1"
+      - key: BACKEND_INTERNAL_HOST
         fromService:
           type: web
           name: odisha-margdarshak-backend
-          property: url
+          property: host
+      - key: BACKEND_INTERNAL_PORT
+        fromService:
+          type: web
+          name: odisha-margdarshak-backend
+          property: port
     autoDeploy: true
