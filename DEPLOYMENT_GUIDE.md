@@ -50,8 +50,8 @@ Deploy on an Ubuntu Linux virtual server with persistent background processes.
 ### 1. Connect to Server & Clone
 ```bash
 ssh root@your-server-ip
-git clone https://github.com/your-username/NER-MargDarshi.git
-cd NER-MargDarshi
+git clone https://github.com/rajks9477/Odisha-MargDarshak.git
+cd Odisha-MargDarshak
 ```
 
 ### 2. Run Automated Linux Startup Script
